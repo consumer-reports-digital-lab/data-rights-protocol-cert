@@ -1,4 +1,12 @@
+:PROPERTIES:
+:ID:       20220315T101110.042482
+:ROAM_REFS: https://github.com/consumer-reports-digital-lab/data-rights-protocol-cert
+:END:
 #+TITLE: DRP Certification Test Suite and implementation tools
+
+This repository contains the test suite and a number of simple automation tools which drive the test suite.
+
+The test plan itself is still in a pretty rough shape, I've been focused on building up the scaffolding and designing the tools so that we don't drown in JSON files and now all that's left is those JSON files and the test suite itself. I'm planning to start delivering that part this week in this repository.
 
 Find:
 
