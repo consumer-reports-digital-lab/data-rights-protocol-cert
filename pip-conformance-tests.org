@@ -198,31 +198,6 @@ These commands generate Data Rights Requests suitable to be fed in to the swagge
 genjwts -t jwts/simple.json | genreqs -t reqs/donotsell.json 
 #+end_src
 
-#+results:
-:results:
-Generating DRR:
-Constructing DRR against template `reqs/donotsell.json`.
-Overriding template: []
-Reading serialized JWT from stdin...
-Constructing claim.
-Overriding template: []
-Verifying claims: ()
-
-Your JWT has arrived.
-Read JWT... eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJwaXAtdGVzdC1zdWl0ZSIsImF1ZCI6InRoZS1waXAiLCJzdWIiOiJ0aGUtY29uc3VtZXIiLCJuYW1lIjoidGhlLWNvbnN1bWVyIiwicG93ZXJfb2ZfYXR0b3JuZXkiOm51bGwsImVtYWlsIjoidGVzdGNvbnN1bWVyQGNvbnN1bWVyLm9yZyIsInBob25lX251bWJlciI6IjEgNjAyIDU1NSAxMjEyIn0._CbiyDqnorHtPwl-Z81y9m6f3tuhKDzFXSVu2qoJK14
-{
-  "meta": {
-    "version": "0.4"
-  },
-  "relationships": [],
-  "regime": "ccpa",
-  "exercise": [
-    "sale:opt-out"
-  ],
-  "identity": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJwaXAtdGVzdC1zdWl0ZSIsImF1ZCI6InRoZS1waXAiLCJzdWIiOiJ0aGUtY29uc3VtZXIiLCJuYW1lIjoidGhlLWNvbnN1bWVyIiwicG93ZXJfb2ZfYXR0b3JuZXkiOm51bGwsImVtYWlsIjoidGVzdGNvbnN1bWVyQGNvbnN1bWVyLm9yZyIsInBob25lX251bWJlciI6IjEgNjAyIDU1NSAxMjEyIn0._CbiyDqnorHtPwl-Z81y9m6f3tuhKDzFXSVu2qoJK14"
-}
-:end:
-
 ***** 2: =jwts/verified.json= The PIP can accept "verified" credentials
 
 This test case validates that the PIP can accept a JWT token which has claims "marked" as verified. ([[id:20220315T190621.777696][But what is "verified" what is meant by "marked"?]])
@@ -231,31 +206,6 @@ This test case validates that the PIP can accept a JWT token which has claims "m
 genjwts -t jwts/verified.json | genreqs -t reqs/donotsell.json
 #+end_src
 
-#+results:
-:results:
-Generating DRR:
-Constructing DRR against template `reqs/donotsell.json`.
-Overriding template: []
-Reading serialized JWT from stdin...
-Constructing claim.
-Overriding template: []
-Verifying claims: ()
-
-Your JWT has arrived.
-Read JWT... eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJwaXAtdGVzdC1zdWl0ZSIsImF1ZCI6InRoZS1waXAiLCJzdWIiOiJ0aGUtY29uc3VtZXIiLCJuYW1lIjoidGhlLWNvbnN1bWVyIiwicG93ZXJfb2ZfYXR0b3JuZXkiOm51bGwsImVtYWlsIjoidGVzdGNvbnN1bWVyQGNvbnN1bWVyLm9yZyIsInBob25lX251bWJlciI6IjEgNjAyIDU1NSAxMjEyIn0._CbiyDqnorHtPwl-Z81y9m6f3tuhKDzFXSVu2qoJK14
-{
-  "meta": {
-    "version": "0.4"
-  },
-  "relationships": [],
-  "regime": "ccpa",
-  "exercise": [
-    "sale:opt-out"
-  ],
-  "identity": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJwaXAtdGVzdC1zdWl0ZSIsImF1ZCI6InRoZS1waXAiLCJzdWIiOiJ0aGUtY29uc3VtZXIiLCJuYW1lIjoidGhlLWNvbnN1bWVyIiwicG93ZXJfb2ZfYXR0b3JuZXkiOm51bGwsImVtYWlsIjoidGVzdGNvbnN1bWVyQGNvbnN1bWVyLm9yZyIsInBob25lX251bWJlciI6IjEgNjAyIDU1NSAxMjEyIn0._CbiyDqnorHtPwl-Z81y9m6f3tuhKDzFXSVu2qoJK14"
-}
-:end:
-
 ***** 3: =reqs/deletion.json= The PIP can accept deletion requests
 
 This will send a CCPA Deletion request with verified credentials attached.
@@ -263,31 +213,6 @@ This will send a CCPA Deletion request with verified credentials attached.
 #+begin_src shell
 genjwts -t jwts/verified.json | genreqs -t reqs/deletion.json
 #+end_src
-
-#+results:
-:results:
-Generating DRR:
-Constructing DRR against template `reqs/deletion.json`.
-Overriding template: []
-Reading serialized JWT from stdin...
-Constructing claim.
-Overriding template: []
-Verifying claims: ()
-
-Your JWT has arrived.
-Read JWT... eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJwaXAtdGVzdC1zdWl0ZSIsImF1ZCI6InRoZS1waXAiLCJzdWIiOiJ0aGUtY29uc3VtZXIiLCJuYW1lIjoidGhlLWNvbnN1bWVyIiwicG93ZXJfb2ZfYXR0b3JuZXkiOm51bGwsImVtYWlsIjoidGVzdGNvbnN1bWVyQGNvbnN1bWVyLm9yZyIsInBob25lX251bWJlciI6IjEgNjAyIDU1NSAxMjEyIn0._CbiyDqnorHtPwl-Z81y9m6f3tuhKDzFXSVu2qoJK14
-{
-  "meta": {
-    "version": "0.4"
-  },
-  "relationships": [],
-  "regime": "ccpa",
-  "exercise": [
-    "deletion"
-  ],
-  "identity": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJwaXAtdGVzdC1zdWl0ZSIsImF1ZCI6InRoZS1waXAiLCJzdWIiOiJ0aGUtY29uc3VtZXIiLCJuYW1lIjoidGhlLWNvbnN1bWVyIiwicG93ZXJfb2ZfYXR0b3JuZXkiOm51bGwsImVtYWlsIjoidGVzdGNvbnN1bWVyQGNvbnN1bWVyLm9yZyIsInBob25lX251bWJlciI6IjEgNjAyIDU1NSAxMjEyIn0._CbiyDqnorHtPwl-Z81y9m6f3tuhKDzFXSVu2qoJK14"
-}
-:end:
 
 **** Testing Valid Requests
 
