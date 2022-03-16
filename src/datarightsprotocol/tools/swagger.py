@@ -14,7 +14,9 @@ config_path = os.environ.get("DRP_OPENAPI", "../openapi.yaml")
 parms = dict()
 api_doc(app, config_path=config_path, url_prefix='/swagger', title='DRP Requestor', parameters=parms)
 
-@click.command(help="start the DRP swagger tool.")
+CONTEXT_SETTINGS = dict(help_option_names=['-h', '--help'])
+@click.command(help="start the DRP swagger tool.",
+               context_settings=CONTEXT_SETTINGS)
 @click.option("--host", "-h", help="the host IP to listen on, defaults to all IPs/interfaces", default="0.0.0.0")
 @click.option("--port", "-p", help="port to listen on", default=8001)
 def start(host="0.0.0.0", port=8001):

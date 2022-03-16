@@ -14,7 +14,7 @@ def with_claims_from_stdin(drr: DataRightsRequest, input: TextIO) -> str:
     '''
     Augment a partially-constructed DRR with a serialized JWT read from input, probably stdin.
     '''
-    jwt_ser = input.read()
+    jwt_ser = input.read().rstrip()
     click.echo("Read JWT... {}".format(jwt_ser), err=True)
     # being very lazy here; serialize it, deserialize it, replace the identity, serialize it... really??
     drr_ser = drr.json()
@@ -62,7 +62,9 @@ def generate(template: TextIO, jwt: TextIO, override: List[str]):
         return with_claims_from_generator(drr, jwt_filename)
 
 
-@click.command(help="Small utility function to generate a DataRightsRequest and serialize it.")
+CONTEXT_SETTINGS = dict(help_option_names=['-h', '--help'])
+@click.command(help="Small utility function to generate a DataRightsRequest and serialize it.",
+               context_settings=CONTEXT_SETTINGS)
 @click.option('--template', '-t', default="reqs/donotsell.json",
               help='DRR template to populate.',
               type=click.File('r'))

@@ -37,8 +37,9 @@ def generate(template: FilePath,
 
     return pl
     
-
-@click.command(help="Small utility function to generate an IdentityPayload and serialize it.")
+CONTEXT_SETTINGS = dict(help_option_names=['-h', '--help'])
+@click.command(help="Small utility function to generate an IdentityPayload and serialize it.",
+               context_settings=CONTEXT_SETTINGS)
 @click.option('--secret', '-s', default="lolchangeme",
               envvar="JWT_SECRET",
               help="JWT HS256 signing key")
