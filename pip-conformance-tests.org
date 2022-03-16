@@ -184,13 +184,11 @@ it'll be needed for assembling a DRR for OIDC-supporting CBs...
 
 
 
-*** Test Plan
-
-**** Test Cases
+*** Test Cases
 
 These commands generate Data Rights Requests suitable to be fed in to the swagger tool to run through the Test Matrix to validate API behaviors. The [[file:conformance-tools.org][test tools' documentation]] describe how these commands' invocations can be modified to change factors of the JWTs and Request objects to suit your needs.
 
-***** 1: =reqs/donotsell.json= The PIP can accept a simple do not sell request
+**** TC1: =reqs/donotsell.json= The PIP can accept a simple do not sell request
 
 [[file:reqs/donotsell.json][This]] is a simple CCPA Do Not Sell request with a dummy, "unverified" identity [[file:jwts/simple.json][token]]. These types of requests are generally considered to have lower identity verification requirements [XXX].
 
@@ -198,7 +196,7 @@ These commands generate Data Rights Requests suitable to be fed in to the swagge
 genjwts -t jwts/simple.json | genreqs -t reqs/donotsell.json 
 #+end_src
 
-***** 2: =jwts/verified.json= The PIP can accept "verified" credentials
+**** TC2: =jwts/verified.json= The PIP can accept "verified" credentials
 
 This test case validates that the PIP can accept a JWT token which has claims "marked" as verified. ([[id:20220315T190621.777696][But what is "verified" what is meant by "marked"?]])
 
@@ -206,7 +204,7 @@ This test case validates that the PIP can accept a JWT token which has claims "m
 genjwts -t jwts/verified.json | genreqs -t reqs/donotsell.json
 #+end_src
 
-***** 3: =reqs/deletion.json= The PIP can accept deletion requests
+**** TC3: =reqs/deletion.json= The PIP can accept deletion requests
 
 This will send a CCPA Deletion request with verified credentials attached.
 
@@ -214,11 +212,17 @@ This will send a CCPA Deletion request with verified credentials attached.
 genjwts -t jwts/verified.json | genreqs -t reqs/deletion.json
 #+end_src
 
-**** Testing Valid Requests
+**** TC4: =reqs/access.json= broad access request without any specific scope
+
+#+begin_src shell
+genjwts -t jwts/verified.json | genreqs -t reqs/access.json
+#+end_src
+
+*** Testing Valid Request flows
 
 These requests should all complete in an affirmative end-state to validate the most basic behavior of the PIP.
 
-***** Recipe
+**** Recipe
 
 For each Behavior above:
 - Generate the request and submit it in the Swagger tool.
@@ -229,17 +233,42 @@ For each Behavior above:
 - record the request ID in to the tracking sheet
 - Move the request from =open= to =in_progress= to =fulfilled=
 
-***** Behaviors
+**** Behaviors
 
 | Behavior                                                        | Test Case | Overrides                       |
 |-----------------------------------------------------------------+-----------+---------------------------------|
-| The PIP can accept a simple do not sell request                 |         1 | ❌                              |
-| The PIP can accept a request with verified credentials          |         2 | ❌                              |
-| The PIP can accept a simple deletion request                    |         3 | ❌                              |
-| The PIP can accept a deletion request with verified credentials |         3 | jwt: =-v email=                 |
-| The PIP can accept a deletion request with verified credentials |         3 | jwt: =-v phone_number -v email= |
+| The PIP can accept a simple do not sell request                 | TC1       | ❌                              |
+| The PIP can accept a request with verified credentials          | TC2       | ❌                              |
+| The PIP can accept a simple deletion request                    | TC3       | ❌                              |
+| The PIP can accept a deletion request with verified credentials | TC3       | jwt: =-v email=                 |
+| The PIP can accept a deletion request with verified credentials | TC3       | jwt: =-v phone_number -v email= |
+| ...                                                             |           |                                 |
 
-**** NEXT Need User Verification testing
+*** NEXT Agent Revocation
+
+test cases:
+- revoke immediately
+- revoke in need_user_verification stage
+- revoke while being processed =in_progress= by CB backend
+  
+*** NEXT Status Callback validation
+*** NEXT Access Requests
+*** INPROGRESS Test for all Final States
+:LOGBOOK:
+- State "INPROGRESS" from "NEXT"       [2022-03-15 Tue 20:19]
+:END:
+
+**** Recipe
+**** Behaviors
+
+| Behavior                                                                 | Test Case   | Overrides        |
+|--------------------------------------------------------------------------+-------------+------------------|
+| Expect =claim_not_covered= for GDPR request for US phone number identity | TC3         | =-o regime=gdpr= |
+| Expect =too_many_requests= after submitting repeated access requests     | TC4         |                  |
+| Valid-but-garbage token should end in =no_match=                         | TC1 TC3 TC4 |                  |
+| ...                                                                      |             |                  |
+
+*** NEXT Need User Verification testing
 
 ughghghghgh
 
@@ -252,32 +281,6 @@ The redirect URL is another thing for the little Heroku app? it's a "nice to hav
   - =identity= param w/ the JWT associated with the test case
   - =redirect_to= must be set to "something", not sure what...
     
-**** NEXT All request states handed back by the API should be validated
-
-- parse =received_at= to RFC 3339 string
-- status is one of the valid states
-- reason may exist
-
-*** Validating "end states" of valid DRRs
-
-test case preflight:
-- Submit a valid DRR
-- Collect =request_id= from response status
-
-**** Revocation
-
-test cases:
-- revoke immediately
-- revoke in need_user_verification stage
-- revoke while being processed =in_progress= by CB backend
-  
-**** NEXT Denied / Too Many Requests : Repeated requests with same identity token
-**** Denied / No Match
-
-- Submit a DRR with a signed-but-garbage token
-- Collect DRS
-- reason should be no_match
-
 * Appendices
 
 ** 1: But what is this org-mode document, why is this not a Markdown or HTML file?
