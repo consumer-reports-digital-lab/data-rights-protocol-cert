@@ -15,6 +15,7 @@ They're all as simple as can be and written against Python 3.9. Please use a mod
 I recommend installing Python 3.9 in accordance with your operating system's best principles[fn:1], and then install [[https://python-poetry.org/docs/][Poetry]] following that documentation.
 
 #+begin_src shell
+poetry install
 poetry shell
 #+end_src
 
@@ -27,7 +28,36 @@ echo 'org_babel_sh_eoe'
 (datarightsprotocol-SSQrMXUl-py3.9)
 :end:
 
-Alternately, a =shell.nix= is provided for users for the [[https://nixos.org/][Nix Packaging Manager]] which can be instantiated via [[https://nixos.wiki/wiki/Development_environment_with_nix-shell][Nix Shell]] =nix-shell=.
+** Alternatives
+
+*** Nix Dev Shell
+
+The developer of this suite uses a specialized Linux distribution called NixOS. Folks who use it or the [[https://nixos.org/][Nix Packaging Manager]] it's built on can use the =shell.nix= provided to create a hermetic environment for the toolkit which can be instantiated via [[https://nixos.wiki/wiki/Development_environment_with_nix-shell][Nix Shell]] command =nix-shell=.
+
+*** Fallback Dockerfile dev environment
+
+If you don't have a Linux environment available I *strongly recommend* setting one up or at least using Docker to get to a Linux environment with something like:
+
+#+begin_src dockerfile :tangle Dockerfile
+FROM fedora
+VOLUME /data # mount this directory here.
+RUN dnf install -y poetry jq curl bash
+# pre-fetch deps
+COPY pyproject.toml /pyproject.toml 
+RUN poetry install
+WORKDIR /data
+ENV SHELL=bash
+ENV PS1="[drp-cert]# "
+EXPOSE 8000
+EXPOSE 8001
+CMD "/usr/bin/bash" "-c" "poetry shell"
+#+end_src
+
+and invoking it with [[shell:docker build . -t drp/cert && docker run -it -p 8000:8000 -p 8001:8001 -v $PWD:/data drp/cert &][docker build . -t drp/cert && docker run -it -p 8000:8000 -p 8001:8001 -v $PWD:/data drp/cert]]. Invoking it in this fashion will require you to run =poetry install= each time you open the shell, but the dependencies will already be downloaded and cached.
+
+**** NEXT Provide a =docker-compose.yml= to compose the swagger, status server, shell together
+
+This whole "build the shell three times" is going to be tiring quite quickly. Until something like that is in place, work inside this micro-environment will not reliably persist, and data is not going to be shared between different instances of the same container -- at least provide guidance for using =docker exec= to enter in to the running shell.
 
 * =genjwts=: JWT generation script
 
