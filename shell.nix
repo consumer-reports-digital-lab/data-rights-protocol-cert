@@ -6,6 +6,8 @@ in pkgs.mkShell {
   packages = [
     myAppEnv
     pkgs.python39
+    jq
+    curl
     (pkgs.poetry.override { python = pkgs.python39; })
   ];
 }
