@@ -10,7 +10,7 @@ import uvicorn
 # https://github.com/PWZER/swagger-ui-py#oauth2-configuration
 
 app = FastAPI()
-config_path = os.environ.get("DRP_OPENAPI", "openapi.yaml")
+config_path = os.environ.get("DRP_OPENAPI", "../openapi.yaml")
 parms = dict()
 api_doc(app, config_path=config_path, url_prefix='/swagger', title='DRP Requestor', parameters=parms)
 

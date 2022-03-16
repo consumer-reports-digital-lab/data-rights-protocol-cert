@@ -12,10 +12,15 @@ This work product is owned by the [[id:b1633d78-a920-40b7-8f71-9a7caa63cf5a][Con
 
 * Introduction and Set Up
 
-- First of all, follow the Introduction and Setup of the [[file:conformance-tools.org][Tools for the DRP Conformance Test Suite]] document and enter a =poetry shell=
 - This assumes a UNIX-like environment. Developed on linux, mostly assumed to be compatible with macOS and WSL2, I will work with folks to debug issues.
-- install bash, curl, and jq.
-- All of the shell scripts can be copied in to a terminal, and any expected output is included below the commands, though rendering in GitHub or similar platforms may be confusing. [[id:20220305T172433.835616][But what is this org-mode document, why is this not a Markdown or HTML file?]]
+- This assumes you've cloned the [[https://github.com/consumer-reports-digital-lab/data-rights-protocol/][data-rights-protocol]] specification repository and ran =git submodule init= inside of it.
+- This assumes you're working in a terminal which has been =cd cert='d from inside of the specification git checkout.
+- Follow the Introduction and Setup of the [[file:conformance-tools.org][Tools for the DRP Conformance Test Suite]] document and ensure you can enter a =poetry shell=.
+- Open *three terminals*, make sure they're all inside of =poetry shell=.
+  - inside the first run =swagger= to start the Swagger API viewer on =localhost:8000=.
+  - inside the second run =statusserver= to start the testing Authorized Agent's Status Callback Server
+  - the third terminal will be used to submit the data rights requests embedded in this document.
+- All of the shell script snippets included in this document can be copied in to a terminal, and any expected output is included below the commands, though rendering in GitHub or similar platforms may be confusing. [[id:20220305T172433.835616][But what is this document format, why is this not a Markdown or HTML file?]]
 
 * Test Plan
 :PROPERTIES:
@@ -29,9 +34,10 @@ CLOCK: [2021-12-29 Wed 11:20]--[2021-12-29 Wed 12:50] =>  1:30
 
 This thing uses bash, curl, jq, and a bit of python to run conformance validations.
 
-Remember to be in a poetry shell!!
+Remember to be in a =poetry shell=, remember to run =poetry install=
 
 #+begin_src shell
+poetry install
 poetry shell
 #+end_src
 
@@ -175,6 +181,8 @@ it'll be needed for assembling a DRR for OIDC-supporting CBs...
 - Requests are generated with the =genreqs= tool and optionally with =genjwts= to modify the bundled JWT.
 - Requests are submitted with the included =swagger= server available by running =swagger= inside your poetry shell.
 - Each test case will include a command to generate the request, and optionally you'll be able to modify it or the JWT token generation to match your needs.
+
+
 
 *** Test Plan
 
