@@ -59,6 +59,16 @@ and invoking it with [[shell:docker build . -t drp/cert && docker run -it -p 800
 
 This whole "build the shell three times" is going to be tiring quite quickly. Until something like that is in place, work inside this micro-environment will not reliably persist, and data is not going to be shared between different instances of the same container -- at least provide guidance for using =docker exec= to enter in to the running shell.
 
+* Utilities Provided by your System
+
+You'll need to have [[https://stedolan.github.io/jq/][JQ]] installed. You'll need to have [[https://curl.se/][curl]] installed.
+
+Both of these will be available in any reasonable Linux package manager, the =homebrew= distribution.
+
+They're even available even in the [[https://community.chocolatey.org/packages?q=jq][chocolatey]] package manager for Windows, but this test suite *is not targeting or tested on Windows at the moment*.
+
+They're included in the =nix-shell=.
+
 * =genjwts=: JWT generation script
 
 [[file:./src/datarightsprotocol/tools/genjwts.py][tools/genjwts.py]] is a script to generate JWTs signed by a bundled certificate as if it came from a test Authorized Agent.
