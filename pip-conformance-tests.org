@@ -186,26 +186,133 @@ it'll be needed for assembling a DRR for OIDC-supporting CBs...
 
 *** Test Plan
 
-**** Valid DRRs
+**** Test Cases
 
-For each valid DRR in that matrix:
-- Submit the DRR
-- Validate that the response is an [[https://github.com/consumer-reports-digital-lab/data-rights-protocol#303-schema-status-of-a-data-subject-exercise-request][Exercise Status]].
-- Record the =request_id= in each
-- Move request from =open= to an acknowledged =in_progress= state
-- Validate that =status_callback=
-- Validate that [[https://github.com/consumer-reports-digital-lab/data-rights-protocol#203-get-status-data-rights-status-endpoint][GET /status]] is an [[https://github.com/consumer-reports-digital-lab/data-rights-protocol#303-schema-status-of-a-data-subject-exercise-request][Exercise Status]].
+These commands generate Data Rights Requests suitable to be fed in to the swagger tool to run through the Test Matrix to validate API behaviors. The [[file:conformance-tools.org][test tools' documentation]] describe how these commands' invocations can be modified to change factors of the JWTs and Request objects to suit your needs.
 
-This gets us to have a valid DRR inside of the PIP/CB's stack.
+***** 1: =reqs/donotsell.json= The PIP can accept a simple do not sell request
 
-From there even some "valid" DRRs need to be exercised to test:
-- revocation
+[[file:reqs/donotsell.json][This]] is a simple CCPA Do Not Sell request with a dummy, "unverified" identity [[file:jwts/simple.json][token]]. These types of requests are generally considered to have lower identity verification requirements [XXX].
 
-**** Invalid DRRs
+#+begin_src shell
+genjwts -t jwts/simple.json | genreqs -t reqs/donotsell.json 
+#+end_src
 
-Some of these will be immediately rejected, but may also go in to =open= state for a while, this isn't well specified...
+#+results:
+:results:
+Generating DRR:
+Constructing DRR against template `reqs/donotsell.json`.
+Overriding template: []
+Reading serialized JWT from stdin...
+Constructing claim.
+Overriding template: []
+Verifying claims: ()
 
-Generating/collecting these will be a pain in the ass...
+Your JWT has arrived.
+Read JWT... eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJwaXAtdGVzdC1zdWl0ZSIsImF1ZCI6InRoZS1waXAiLCJzdWIiOiJ0aGUtY29uc3VtZXIiLCJuYW1lIjoidGhlLWNvbnN1bWVyIiwicG93ZXJfb2ZfYXR0b3JuZXkiOm51bGwsImVtYWlsIjoidGVzdGNvbnN1bWVyQGNvbnN1bWVyLm9yZyIsInBob25lX251bWJlciI6IjEgNjAyIDU1NSAxMjEyIn0._CbiyDqnorHtPwl-Z81y9m6f3tuhKDzFXSVu2qoJK14
+{
+  "meta": {
+    "version": "0.4"
+  },
+  "relationships": [],
+  "regime": "ccpa",
+  "exercise": [
+    "sale:opt-out"
+  ],
+  "identity": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJwaXAtdGVzdC1zdWl0ZSIsImF1ZCI6InRoZS1waXAiLCJzdWIiOiJ0aGUtY29uc3VtZXIiLCJuYW1lIjoidGhlLWNvbnN1bWVyIiwicG93ZXJfb2ZfYXR0b3JuZXkiOm51bGwsImVtYWlsIjoidGVzdGNvbnN1bWVyQGNvbnN1bWVyLm9yZyIsInBob25lX251bWJlciI6IjEgNjAyIDU1NSAxMjEyIn0._CbiyDqnorHtPwl-Z81y9m6f3tuhKDzFXSVu2qoJK14"
+}
+:end:
+
+***** 2: =jwts/verified.json= The PIP can accept "verified" credentials
+
+This test case validates that the PIP can accept a JWT token which has claims "marked" as verified. ([[id:20220315T190621.777696][But what is "verified" what is meant by "marked"?]])
+
+#+begin_src shell
+genjwts -t jwts/verified.json | genreqs -t reqs/donotsell.json
+#+end_src
+
+#+results:
+:results:
+Generating DRR:
+Constructing DRR against template `reqs/donotsell.json`.
+Overriding template: []
+Reading serialized JWT from stdin...
+Constructing claim.
+Overriding template: []
+Verifying claims: ()
+
+Your JWT has arrived.
+Read JWT... eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJwaXAtdGVzdC1zdWl0ZSIsImF1ZCI6InRoZS1waXAiLCJzdWIiOiJ0aGUtY29uc3VtZXIiLCJuYW1lIjoidGhlLWNvbnN1bWVyIiwicG93ZXJfb2ZfYXR0b3JuZXkiOm51bGwsImVtYWlsIjoidGVzdGNvbnN1bWVyQGNvbnN1bWVyLm9yZyIsInBob25lX251bWJlciI6IjEgNjAyIDU1NSAxMjEyIn0._CbiyDqnorHtPwl-Z81y9m6f3tuhKDzFXSVu2qoJK14
+{
+  "meta": {
+    "version": "0.4"
+  },
+  "relationships": [],
+  "regime": "ccpa",
+  "exercise": [
+    "sale:opt-out"
+  ],
+  "identity": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJwaXAtdGVzdC1zdWl0ZSIsImF1ZCI6InRoZS1waXAiLCJzdWIiOiJ0aGUtY29uc3VtZXIiLCJuYW1lIjoidGhlLWNvbnN1bWVyIiwicG93ZXJfb2ZfYXR0b3JuZXkiOm51bGwsImVtYWlsIjoidGVzdGNvbnN1bWVyQGNvbnN1bWVyLm9yZyIsInBob25lX251bWJlciI6IjEgNjAyIDU1NSAxMjEyIn0._CbiyDqnorHtPwl-Z81y9m6f3tuhKDzFXSVu2qoJK14"
+}
+:end:
+
+***** 3: =reqs/deletion.json= The PIP can accept deletion requests
+
+This will send a CCPA Deletion request with verified credentials attached.
+
+#+begin_src shell
+genjwts -t jwts/verified.json | genreqs -t reqs/deletion.json
+#+end_src
+
+#+results:
+:results:
+Generating DRR:
+Constructing DRR against template `reqs/deletion.json`.
+Overriding template: []
+Reading serialized JWT from stdin...
+Constructing claim.
+Overriding template: []
+Verifying claims: ()
+
+Your JWT has arrived.
+Read JWT... eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJwaXAtdGVzdC1zdWl0ZSIsImF1ZCI6InRoZS1waXAiLCJzdWIiOiJ0aGUtY29uc3VtZXIiLCJuYW1lIjoidGhlLWNvbnN1bWVyIiwicG93ZXJfb2ZfYXR0b3JuZXkiOm51bGwsImVtYWlsIjoidGVzdGNvbnN1bWVyQGNvbnN1bWVyLm9yZyIsInBob25lX251bWJlciI6IjEgNjAyIDU1NSAxMjEyIn0._CbiyDqnorHtPwl-Z81y9m6f3tuhKDzFXSVu2qoJK14
+{
+  "meta": {
+    "version": "0.4"
+  },
+  "relationships": [],
+  "regime": "ccpa",
+  "exercise": [
+    "deletion"
+  ],
+  "identity": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJwaXAtdGVzdC1zdWl0ZSIsImF1ZCI6InRoZS1waXAiLCJzdWIiOiJ0aGUtY29uc3VtZXIiLCJuYW1lIjoidGhlLWNvbnN1bWVyIiwicG93ZXJfb2ZfYXR0b3JuZXkiOm51bGwsImVtYWlsIjoidGVzdGNvbnN1bWVyQGNvbnN1bWVyLm9yZyIsInBob25lX251bWJlciI6IjEgNjAyIDU1NSAxMjEyIn0._CbiyDqnorHtPwl-Z81y9m6f3tuhKDzFXSVu2qoJK14"
+}
+:end:
+
+**** Testing Valid Requests
+
+These requests should all complete in an affirmative end-state to validate the most basic behavior of the PIP.
+
+***** Recipe
+
+For each Behavior above:
+- Generate the request and submit it in the Swagger tool.
+  - Specified overrides should be added as arguments to either of the =genjwts= or =genreqs= commands.
+- Observe:
+  - a 200 http status response
+  - it is an [[https://github.com/consumer-reports-digital-lab/data-rights-protocol#303-schema-status-of-a-data-subject-exercise-request][Exercise Status]] in =open= status.
+- record the request ID in to the tracking sheet
+- Move the request from =open= to =in_progress= to =fulfilled=
+
+***** Behaviors
+
+| Behavior                                                        | Test Case | Overrides                       |
+|-----------------------------------------------------------------+-----------+---------------------------------|
+| The PIP can accept a simple do not sell request                 |         1 | ❌                              |
+| The PIP can accept a request with verified credentials          |         2 | ❌                              |
+| The PIP can accept a simple deletion request                    |         3 | ❌                              |
+| The PIP can accept a deletion request with verified credentials |         3 | jwt: =-v email=                 |
+| The PIP can accept a deletion request with verified credentials |         3 | jwt: =-v phone_number -v email= |
 
 **** NEXT Need User Verification testing
 
@@ -225,14 +332,6 @@ The redirect URL is another thing for the little Heroku app? it's a "nice to hav
 - parse =received_at= to RFC 3339 string
 - status is one of the valid states
 - reason may exist
-
-**** Specific validations for JWTs
-
-- JWT should contain the identity claims
-  - "verified" claims, v. verified claims
-- JWT aud + sub
-  - this depends on who issued the JWT:
-    - AA-signed -> aud is the company, sub is the user's
 
 *** Validating "end states" of valid DRRs
 
@@ -274,3 +373,17 @@ emacs -l ob-shell conformance-tests.org --eval '(display-buffer (get-buffer-crea
 If you execute this command and a GUI appears with this document, and an empty pane called =*drp-conformance*= at the bottom, then you can proceed to execute the commands *inside the document* by clicking in to the source blocks and pressing =Control-c= twice. The output will appear in the bottom pane, and the output will also be stored in the document.
 
 While it's largely unreasonable to expect everyone to use a particular text editor, especially one with such anachronistic tendencies, it's perhaps interesting to think of this document itself as the first version of the DRP test-suite automation.
+
+
+** 2: But what is "verified" what is meant by "marked"?
+:PROPERTIES:
+:ID:       20220315T190621.777696
+:END:
+
+The claims in the identity tokens are basically based on [[https://schema.org/Person][schema.org/Person]] attributes, but specified in *OIDC Core 1.0*, [[https://openid.net/specs/openid-connect-core-1_0.html#rfc.section.5.1][Section 5.1]] (Standard Claims). Consider =phone_number= and =phone_number_verified=:
+
+#+begin_quote
+True if the End-User's phone number has been verified; otherwise false. When this Claim Value is true, this means that the OP took affirmative steps to ensure that this phone number was controlled by the End-User at the time the verification was performed. The means by which a phone number is verified is context-specific, and dependent upon the trust framework or contractual agreements within which the parties are operating. When true, the phone_number Claim MUST be in E.164 format and any extensions MUST be represented in RFC 3966 format. 
+#+end_quote
+
+And thus spoke, the question is our "what is our trust framework or contractual agreements?". This is work for the [[file:../governance.md][governance documentation]] to cover.
