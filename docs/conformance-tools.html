@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2022-03-21 Mon 10:45 -->
+<!-- 2022-03-21 Mon 11:12 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Tools for the DRP Conformance Test Suite</title>
@@ -85,6 +85,11 @@ html {
 </li>
 <li><a href="#org50e64e3">8. <span class="todo INPROGRESS">INPROGRESS</span> The Test Plan document</a></li>
 <li><a href="#orgaf490ff">9. <span class="todo NEXT">NEXT</span> A spreadsheet to track and record Test Plan results</a></li>
+<li><a href="#org0141b91">10. Simple Tools for working with the Org Mode documents</a>
+<ul>
+<li><a href="#org1910393">10.1. Org Mode can be exported to HTML and published:</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
@@ -547,6 +552,48 @@ This spreadsheet will be used to refine the database schema for a future automat
 </p>
 </div>
 </div>
+
+<div id="outline-container-org0141b91" class="outline-2">
+<h2 id="org0141b91"><span class="section-number-2">10.</span> Simple Tools for working with the Org Mode documents</h2>
+<div class="outline-text-2" id="text-10">
+<p>
+In <a href="../../../Code/data-rights-protocol/cert/pip-conformance-tests.html#ID-20220305T172433.835616">PIP Test Suite's Appendix 1</a> I explain a bit why and how these documents are structured as Org Mode instead of Markdown or DOCX or PDF or something. It's fine to not use these tools interactively, though 3rd party plugins for org markup support can be somewhat limited. You probably don't even need to, but if you do, make sure the HTML export is kept in sync. 
+</p>
+</div>
+
+<div id="outline-container-org1910393" class="outline-3">
+<h3 id="org1910393"><span class="section-number-3">10.1.</span> Org Mode can be exported to HTML and <a href="https://orgmode.org/worg/org-tutorials/org-publish-html-tutorial.html">published</a>:</h3>
+<div class="outline-text-3" id="text-10-1">
+<p>
+This <code>drp-publish.el</code> file can be executed in a terminal like:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-shell">emacs --batch -L . -l ob-shell -l drp-publish --file pip-conformance-tests.org  -f publish-drp-test-suite
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span style="color: #3b6ea8;">defun</span> <span style="color: #29838d;">publish-drp-test-suite</span> ()
+  (<span style="color: #3b6ea8;">interactive</span>)
+  (<span style="color: #3b6ea8;">let*</span> ((base-dir (file-name-directory (buffer-file-name))) <span style="color: #b1b1b1;">; </span><span style="color: #b1b1b1;">this file's directory</span>
+         (pub-dir (expand-file-name <span style="color: #4f894c;">"docs"</span> base-dir))        <span style="color: #b1b1b1;">; </span><span style="color: #b1b1b1;">the subdirectory "docs" of this directory for ghpages..</span>
+         (org-export-babel-evaluate nil))                    <span style="color: #b1b1b1;">; </span><span style="color: #b1b1b1;">no sense evaluating code on export</span>
+    <span style="color: #b1b1b1;">;; </span><span style="color: #b1b1b1;">this seems more legible than using a magic ` quote instead of building the project definition procedurally...</span>
+    (org-publish
+     (append '(<span style="color: #4f894c;">"drp-cert"</span>
+               <span style="color: #29838d;">:base-extension</span> <span style="color: #4f894c;">"org</span><span style="color: #3b6ea8; font-weight: bold;">\\</span><span style="color: #3b6ea8; font-weight: bold;">|</span><span style="color: #4f894c;">md"</span>
+               <span style="color: #29838d;">:recursive</span> t
+               <span style="color: #29838d;">:headline-levels</span> 4
+               <span style="color: #29838d;">:publishing-function</span> org-html-publish-to-html)
+             (list <span style="color: #29838d;">:publishing-directory</span> pub-dir)
+             (list <span style="color: #29838d;">:base-directory</span> base-dir)))))
+(<span style="color: #3b6ea8;">provide</span> '<span style="color: #97365b;">drp-publish</span>)
+</pre>
+</div>
+</div>
+</div>
+</div>
 <div id="footnotes">
 <h2 class="footnotes">Footnotes: </h2>
 <div id="text-footnotes">
@@ -564,7 +611,7 @@ Unfortunately it's not so simple to add a command line flag because of how the F
 </div></div>
 <div id="postamble" class="status">
 <p class="author">Author: Ryan Rix</p>
-<p class="date">Created: 2022-03-21 Mon 10:45</p>
+<p class="date">Created: 2022-03-21 Mon 11:12</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

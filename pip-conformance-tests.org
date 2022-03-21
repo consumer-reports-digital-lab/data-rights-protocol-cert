@@ -3,8 +3,9 @@
 :END:
 #+title: DRP PIP Conformance Test Suite
 #+filetags: :Project:Work:ConsumerReports:Development:Writing:
-#+ARCOLOGY_KEY: doc/drp/conformance
+#+ARCOLOGY_KEY: doc/drp/pip-conformance
 #+AUTHOR: Consumer Reports Digital Lab
+#+TYP_TODO: NEXT INPROGRESS DONE CANCELLED
 
 This is the working space for the [[http://datarightsprotocol.org/][Data Rights Protocol]] conformance test suite. Right now I'm developing it as an [[https://orgmode.org/worg/org-contrib/babel/intro.html][Literate Programming]] document which feeds short snippets of code in to a BASH shell behind the scenes.
 
@@ -311,31 +312,7 @@ If you execute this command and a GUI appears with this document, and an empty p
 
 While it's largely unreasonable to expect everyone to use a particular text editor, especially one with such anachronistic tendencies, it's perhaps interesting to think of this document itself as the first version of the DRP test-suite automation.
 
-Org Mode can be exported to HTML and [[https://orgmode.org/worg/org-tutorials/org-publish-html-tutorial.html][published]].
-
-#+begin_src emacs-lisp :results none :tangle drp-publish.el
-(defun publish-drp-test-suite ()
-  (interactive)
-  (let* ((base-dir (file-name-directory (buffer-file-name))) ; this file's directory
-         (pub-dir (expand-file-name "docs" base-dir))        ; the subdirectory "docs" of this directory for ghpages..
-         (org-export-babel-evaluate nil))                    ; no sense evaluating code on export
-    ;; this seems more legible than using a magic ` quote instead of building the project definition procedurally...
-    (org-publish
-     (append '("drp-cert"
-               :base-extension "org\\|md"
-               :recursive t
-               :headline-levels 4
-               :publishing-function org-html-publish-to-html)
-             (list :publishing-directory pub-dir)
-             (list :base-directory base-dir)))))
-(provide 'drp-publish)
-#+end_src
-
-This =drp-publish.el= file can be executed in a terminal like:
-
-#+begin_src shell :exports code :results none
-emacs --batch -L . -l ob-shell -l drp-publish --file pip-conformance-tests.org  -f publish-drp-test-suite
-#+end_src
+There are publishing instructions in the [[file:conformance-tools.org::#20220321T110834.337195][Conformance Tools]] repository.
 
 ** 2: But what is "verified" what is meant by "marked"?
 :PROPERTIES:

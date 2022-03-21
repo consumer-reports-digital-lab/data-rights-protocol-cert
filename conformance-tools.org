@@ -318,6 +318,39 @@ Instead, you get a spreadsheet which can be used to collect the results of each 
 
 This spreadsheet will be used to refine the database schema for a future automated test suite.
 
+* Simple Tools for working with the Org Mode documents
+:PROPERTIES:
+:ID:       20220321T110834.337195
+:END:
+
+In [[id:20220305T172433.835616][PIP Test Suite's Appendix 1]] I explain a bit why and how these documents are structured as Org Mode instead of Markdown or DOCX or PDF or something. It's fine to not use these tools interactively, though 3rd party plugins for org markup support can be somewhat limited. You probably don't even need to, but if you do, make sure the HTML export is kept in sync. 
+
+** Org Mode can be exported to HTML and [[https://orgmode.org/worg/org-tutorials/org-publish-html-tutorial.html][published]]:
+
+This =drp-publish.el= file can be executed in a terminal like:
+
+#+begin_src shell :exports code :results none
+emacs --batch -L . -l ob-shell -l drp-publish --file pip-conformance-tests.org  -f publish-drp-test-suite
+#+end_src
+
+#+begin_src emacs-lisp :results none :tangle drp-publish.el
+(defun publish-drp-test-suite ()
+  (interactive)
+  (let* ((base-dir (file-name-directory (buffer-file-name))) ; this file's directory
+         (pub-dir (expand-file-name "docs" base-dir))        ; the subdirectory "docs" of this directory for ghpages..
+         (org-export-babel-evaluate nil))                    ; no sense evaluating code on export
+    ;; this seems more legible than using a magic ` quote instead of building the project definition procedurally...
+    (org-publish
+     (append '("drp-cert"
+               :base-extension "org\\|md"
+               :recursive t
+               :headline-levels 4
+               :publishing-function org-html-publish-to-html)
+             (list :publishing-directory pub-dir)
+             (list :base-directory base-dir)))))
+(provide 'drp-publish)
+#+end_src
+
 * Footnotes
 
 [fn:1] I will note that the author has not verified that this works on macOS or Windows. There is an assumption within this document and the Test Suite that you will have access to a POSIX-style shell. I have no idea how =poetry shell= works in cmd.exe or powershell, I would highly recommend setting up a WSL2 system. My apologies.

@@ -2,6 +2,9 @@
 :ID:       20220315T130057.751591
 :END:
 #+TITLE: DRP Authorized Agent Conformance Test Suite
+#+ARCOLOGY_KEY: doc/drp/aa-conformance
+#+filetags: :Work:ConsumerReports:Development:Writing:
+#+TYP_TODO: NEXT INPROGRESS DONE CANCELLED
 
 * Introduction
 
