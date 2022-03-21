@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2022-03-21 Mon 10:33 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>DRP Authorized Agent Conformance Test Suite</title>
+<meta name="author" content="Ryan Rix" />
+<meta name="generator" content="Org Mode" />
+<style type="text/css">
+<!--/*--><![CDATA[/*><!--*/
+html {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 768px;
+}
+/*]]>*/-->
+</style>
+</head>
+<body>
+<div id="content" class="content">
+<h1 class="title">DRP Authorized Agent Conformance Test Suite</h1>
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#orgefacfad">1. Introduction</a></li>
+<li><a href="#orgadd027e">2. What does an AA need to be tested for</a></li>
+<li><a href="#orgc8cda3c">3. How do you test an authorized agent?</a></li>
+<li><a href="#orgbd0035d">4. How does the Covered Business Accept/Interact with the AA? (governance/onboarding, etc of new AAs)</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgefacfad" class="outline-2">
+<h2 id="orgefacfad"><span class="section-number-2">1.</span> Introduction</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+this document is highly speculative and has ~0 real work put in to it. The outline is in-progress thinking material. Please open a GH issue with any feedback or reach out directly to the DRP team through the Feedback from at <a href="http://datarightsprotocol.org/">datarightsprotocol.org</a>
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgadd027e" class="outline-2">
+<h2 id="orgadd027e"><span class="section-number-2">2.</span> What does an AA need to be tested for</h2>
+<div class="outline-text-2" id="text-2">
+<ul class="org-ul">
+<li>The AA can discover API endpoints using data-rights.json</li>
+<li>The AA supports submitting requests under which regimes? // Who determines permitted regimes?
+<ul class="org-ul">
+<li>Consumer is the authority on regime</li>
+<li>AA is the delegated authority on regime</li>
+<li>AA chooses the regimes they honor</li>
+<li>CB must honor all regimes</li>
+</ul></li>
+<li>Does the AA submit well-formed requests for those rights?</li>
+<li>Is the AA's identity JWT signed with an attestable key?</li>
+<li>Does the AA support the <code>needs_user_verification</code> flow semantics?</li>
+<li>Does the AA support the asynchronous callback mechanism?</li>
+<li>Does the AA adhere to reasonable rate-limiting for <code>status</code> queries?</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgc8cda3c" class="outline-2">
+<h2 id="orgc8cda3c"><span class="section-number-2">3.</span> How do you test an authorized agent?</h2>
+<div class="outline-text-2" id="text-3">
+<ul class="org-ul">
+<li>A data-rights.json that points to the PIP implementation</li>
+<li>A "reference" PIP implementation accepts requests from the AA</li>
+<li>This PIP implementation has a simple dashboard or API to move requests through the state transitions, query any "internal" state</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgbd0035d" class="outline-2">
+<h2 id="orgbd0035d"><span class="section-number-2">4.</span> How does the Covered Business Accept/Interact with the AA? (governance/onboarding, etc of new AAs)</h2>
+<div class="outline-text-2" id="text-4">
+<ul class="org-ul">
+<li>Acknowledge Each AA in the DRP Trust Network</li>
+<li>Agree/update points of contact at CB for AA (and at AA for CB)</li>
+<li>CB can rely on a Level of Assurance provided by AA for each Consumer
+<ul class="org-ul">
+<li>Lift from eKYC ? <a href="https://bitbucket.org/openid/ekyc-ida/wiki/identifiers">https://bitbucket.org/openid/ekyc-ida/wiki/identifiers</a></li>
+<li>Official definition of LoA: <a href="https://csrc.nist.gov/glossary/term/authenticator_assurance_level#:~:text=Definition(s)%3A,AAL3%20(Very%20high%20confidence)">https://csrc.nist.gov/glossary/term/authenticator_assurance_level#:~:text=Definition(s)%3A,AAL3%20(Very%20high%20confidence)</a>.</li>
+</ul></li>
+</ul>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: Ryan Rix</p>
+<p class="date">Created: 2022-03-21 Mon 10:33</p>
+<p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

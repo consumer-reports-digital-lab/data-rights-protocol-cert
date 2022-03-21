@@ -1,0 +1,698 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2022-03-21 Mon 10:39 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>DRP PIP Conformance Test Suite</title>
+<meta name="author" content="Consumer Reports Digital Lab" />
+<meta name="generator" content="Org Mode" />
+<style type="text/css">
+<!--/*--><![CDATA[/*><!--*/
+html {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 768px;
+}
+/*]]>*/-->
+</style>
+</head>
+<body>
+<div id="content" class="content">
+<h1 class="title">DRP PIP Conformance Test Suite</h1>
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#org0f26801">1. Introduction and Set Up</a></li>
+<li><a href="#org7c47552">2. Test Plan</a>
+<ul>
+<li><a href="#orgb498d94">2.1. Data Rights Discovery Endpoint</a>
+<ul>
+<li><a href="#orgd3c6dd1">2.1.1. Covered Business's domain SHOULD have a <code>/.well-known/data-rights.json</code></a></li>
+<li><a href="#org37121ad">2.1.2. Discovery Endpoint MUST Be Valid JSON</a></li>
+<li><a href="#org69e5232">2.1.3. Discovery Endpoint MUST contain a version field</a></li>
+<li><a href="#org3cdea14">2.1.4. Discovery Endpoint MUST provide an API base</a></li>
+<li><a href="#orgd2728b1">2.1.5. Discovery Endpoint MUST provide a list of actions</a>
+<ul>
+<li><a href="#org0ed5246">2.1.5.1. <span class="todo NEXT">NEXT</span> validate that these are all defined under Supported Rights Actions.</a></li>
+<li><a href="#org6d9ae2c">2.1.5.2. <span class="todo NEXT">NEXT</span> validate that these are all matching regexp <code>[0-9a-z:\-_]</code></a></li>
+</ul>
+</li>
+<li><a href="#org4dbf0cc">2.1.6. Discovery endpoint MAY contain a <code>user_relationships</code> hint set</a></li>
+</ul>
+</li>
+<li><a href="#orgb204205">2.2. <span class="todo NEXT">NEXT</span> OIDC flows</a>
+<ul>
+<li><a href="#org2300ef1">2.2.1. <span class="todo NEXT">NEXT</span> OIDC flow is under-specified, and we need to come up with a roadmap to onboard</a></li>
+<li><a href="#orgf15910c">2.2.2. Discovery Endpoint references OIDC AS</a></li>
+<li><a href="#orgd1e7a2b">2.2.3. OIDC Flow generates a JWT</a></li>
+</ul>
+</li>
+<li><a href="#orgda0ddb1">2.3. Data Rights Requests</a>
+<ul>
+<li><a href="#orgb637dc3">2.3.1. Submitting Data Rights Requests using the Tools for the DRP Conformance Test Suite</a>
+<ul>
+<li><a href="#org243b88b">2.3.1.1. Test Cases</a></li>
+</ul>
+</li>
+<li><a href="#orgb66b317">2.3.2. Testing Valid Request flows</a>
+<ul>
+<li><a href="#orgfa15bc9">2.3.2.1. Recipe</a></li>
+<li><a href="#org86c9172">2.3.2.2. Behaviors</a></li>
+</ul>
+</li>
+<li><a href="#orgc3b9620">2.3.3. <span class="todo NEXT">NEXT</span> Agent Revocation</a></li>
+<li><a href="#org6c2b212">2.3.4. <span class="todo NEXT">NEXT</span> Status Callback validation</a></li>
+<li><a href="#orgb39830e">2.3.5. <span class="todo NEXT">NEXT</span> Access Requests</a></li>
+<li><a href="#orga70e6c8">2.3.6. <span class="todo INPROGRESS">INPROGRESS</span> Test for all Final States</a>
+<ul>
+<li><a href="#orge60c067">2.3.6.1. Recipe</a></li>
+<li><a href="#org6bc7cbf">2.3.6.2. Behaviors</a></li>
+</ul>
+</li>
+<li><a href="#org1fca8c2">2.3.7. <span class="todo NEXT">NEXT</span> Need User Verification testing</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org2ed4b3b">3. Appendices</a>
+<ul>
+<li><a href="#org596e93d">3.1. 1: But what is this org-mode document, why is this not a Markdown or HTML file?</a></li>
+<li><a href="#org722f34d">3.2. 2: But what is "verified" what is meant by "marked"?</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<p>
+This is the working space for the <a href="http://datarightsprotocol.org/">Data Rights Protocol</a> conformance test suite. Right now I'm developing it as an <a href="https://orgmode.org/worg/org-contrib/babel/intro.html">Literate Programming</a> document which feeds short snippets of code in to a BASH shell behind the scenes.
+</p>
+
+<p>
+This work product is licensed under the <a href="./LICENSE.md">Apache Software License v2</a> and owned by the <a href="https://digital-lab.consumerreports.org/">Consumer Reports Digital Lab</a> until transferred in to a <a href="http://datarightsprotocol.org/">DRP</a> governance organization.
+</p>
+
+<div id="outline-container-org0f26801" class="outline-2">
+<h2 id="org0f26801"><span class="section-number-2">1.</span> Introduction and Set Up</h2>
+<div class="outline-text-2" id="text-1">
+<ul class="org-ul">
+<li>This assumes a UNIX-like environment. Developed on linux, mostly assumed to be compatible with macOS and <a href="https://docs.microsoft.com/en-us/windows/wsl/about">WSL2</a>, I will work with folks to debug issues.</li>
+<li>This assumes you've cloned the <a href="https://github.com/consumer-reports-digital-lab/data-rights-protocol/">data-rights-protocol</a> specification repository and ran <code>git submodule init</code> inside of it.</li>
+<li>This assumes you're working in a terminal which has been <code>cd cert</code>'d from inside of the specification git checkout.</li>
+<li>Follow the Introduction and Setup of the <a href="conformance-tools.html">Tools for the DRP Conformance Test Suite</a> document and ensure you can enter a <code>poetry shell</code>.</li>
+<li>Open <b>three terminals</b>, make sure they're all inside of <code>poetry shell</code>.
+<ul class="org-ul">
+<li>inside the first run <code>swagger</code> to start the Swagger API viewer on <a href="http://localhost:8001/swagger">http://localhost:8001/swagger</a>.</li>
+<li>inside the second run <code>statusserver</code> to start the testing Authorized Agent's Status Callback Server on <a href="http://localhost:8000">http://localhost:8000</a></li>
+<li>the third terminal will be used to submit the data rights requests embedded in this document.</li>
+</ul></li>
+<li>All of the shell script snippets included in this document can be copied in to a terminal, and any expected output is included below the commands, though rendering in GitHub or similar platforms may be confusing. See <a href="#org596e93d">Appendix 1</a> for background on the document format, why this isn't an HTML file.</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org7c47552" class="outline-2">
+<h2 id="org7c47552"><span class="section-number-2">2.</span> Test Plan</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+This thing uses bash, curl, jq, and a bit of python to run conformance validations.
+</p>
+
+<p>
+Remember to be in a <code>poetry shell</code>, remember to run <code>poetry install</code>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-shell">poetry install
+poetry shell
+</pre>
+</div>
+
+<p>
+Spawning shell within <i>home/rrix</i>.cache/pypoetry/virtualenvs/datarightsprotocol-SSQrMXUl-py3.9
+. <i>home/rrix</i>.cache/pypoetry/virtualenvs/datarightsprotocol-SSQrMXUl-py3.9/bin/activate
+echo 'org<sub>babel</sub><sub>sh</sub><sub>eoe</sub>'
+(datarightsprotocol-SSQrMXUl-py3.9)
+</p>
+
+<p>
+These are variables you will want to change when you copy this in to the shell:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-shell"><span id="coderef-1" class="coderef-off"><span style="color: #29838d;">export</span> <span style="color: #cb9aad; font-style: italic;">DRP_TEST_CACHE</span>=/tmp/drp-test/ <span style="color: #b1b1b1;">#</span> (1)</span>
+<span id="coderef-2" class="coderef-off"><span style="color: #29838d;">export</span> <span style="color: #cb9aad; font-style: italic;">JWT_SECRET</span>=my_jwts_are_secure <span style="color: #b1b1b1;">#</span> (2)</span>
+<span id="coderef-3" class="coderef-off"><span style="color: #29838d;">export</span> <span style="color: #cb9aad; font-style: italic;">BUSINESS_DOMAIN</span>=example.com <span style="color: #b1b1b1;">#</span> (3)</span>
+</pre>
+</div>
+
+<p>
+The test suite will store response data and other "interstitial" data in the location specified in <a href="#coderef-1" class="coderef" onmouseover="CodeHighlightOn(this, 'coderef-1');" onmouseout="CodeHighlightOff(this, 'coderef-1');">1</a>, this should be Good Enough on POSIX systems. The secret in <a href="#coderef-2" class="coderef" onmouseover="CodeHighlightOn(this, 'coderef-2');" onmouseout="CodeHighlightOff(this, 'coderef-2');">2</a> is used to sign the JWTs when <code>genjwts</code> is invoked. <a href="#coderef-3" class="coderef" onmouseover="CodeHighlightOn(this, 'coderef-3');" onmouseout="CodeHighlightOff(this, 'coderef-3');">3</a> is used in the Data Rights Discovery Endpoint tests.
+</p>
+</div>
+
+<div id="outline-container-orgb498d94" class="outline-3">
+<h3 id="orgb498d94"><span class="section-number-3">2.1.</span> Data Rights Discovery Endpoint</h3>
+<div class="outline-text-3" id="text-2-1">
+<p>
+Validating behavior of <a href="https://github.com/consumer-reports-digital-lab/data-rights-protocol#201-get-well-knowndata-rightsjson-data-rights-discovery-endpoint">Section 2.01</a> of spec.
+</p>
+</div>
+
+<div id="outline-container-orgd3c6dd1" class="outline-4">
+<h4 id="orgd3c6dd1"><span class="section-number-4">2.1.1.</span> Covered Business's domain SHOULD have a <code>/.well-known/data-rights.json</code></h4>
+<div class="outline-text-4" id="text-2-1-1">
+<p>
+This <code>BUSINESS_DOMAIN</code> in <a href="#coderef-1" class="coderef" onmouseover="CodeHighlightOn(this, 'coderef-1');" onmouseout="CodeHighlightOff(this, 'coderef-1');">1</a> variable is used only in the Discovery Endpoint tests.
+</p>
+
+<p>
+The intent of this test is to ensure that the PIPs which provide a <code>data-rights.json</code> well-known resource for their customers is providing one which exposes the URI.
+</p>
+
+<p>
+[XXX] strike this? - For a general PIP API validation which is not fronting a "real" Covered Business these tests can probably be omitted. full flow versus "partial/point to point"
+</p>
+
+<div class="org-src-container">
+<pre class="src src-shell">curl -s $<span style="color: #cb9aad; font-style: italic;">BUSINESS_DOMAIN</span>/.well-known/data-rights.json <span style="color: #4f894c;">\</span>
+     -o $<span style="color: #cb9aad; font-style: italic;">DRP_TEST_CACHE</span>/data-rights.json <span style="color: #4f894c;">\</span>
+  || <span style="color: #29838d;">echo</span> <span style="color: #4f894c;">"NO GET: data-rights.json"</span>
+
+<span style="color: #29838d;">export</span> <span style="color: #cb9aad; font-style: italic;">DISCOVERY_FOUND</span>=$(<span style="color: #3b6ea8; font-weight: bold;">test -f $DRP_TEST_CACHE/data-rights.json</span>)
+<span style="color: #29838d;">export</span> <span style="color: #cb9aad; font-style: italic;">DISCOVERY_FILE</span>=$<span style="color: #cb9aad; font-style: italic;">DRP_TEST_CACHE</span>/data-rights.json
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org37121ad" class="outline-4">
+<h4 id="org37121ad"><span class="section-number-4">2.1.2.</span> Discovery Endpoint MUST Be Valid JSON</h4>
+<div class="outline-text-4" id="text-2-1-2">
+<div class="org-src-container">
+<pre class="src src-shell">jq . $<span style="color: #cb9aad; font-style: italic;">DISCOVERY_FILE</span>
+</pre>
+</div>
+
+<p>
+{
+  "version": "0.4",
+  "api<sub>base</sub>": "<a href="https://example.com/data-rights">https://example.com/data-rights</a>",
+  "actions": [
+    "sale:opt-out",
+    "sale:opt-in",
+    "access",
+    "deletion"
+  ],
+  "user<sub>relationships</sub>": []
+}
+</p>
+</div>
+</div>
+
+<div id="outline-container-org69e5232" class="outline-4">
+<h4 id="org69e5232"><span class="section-number-4">2.1.3.</span> Discovery Endpoint MUST contain a version field</h4>
+<div class="outline-text-4" id="text-2-1-3">
+<p>
+This Conformance Suite runs against version 0.4 of the protocol:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-shell">[[ <span style="color: #4f894c;">"$(</span><span style="color: #3b6ea8; font-weight: bold;">jq -r .version $DISCOVERY_FILE</span><span style="color: #4f894c;">)"</span> = <span style="color: #4f894c;">"0.4"</span> ]] <span style="color: #4f894c;">\</span>
+  || <span style="color: #29838d;">echo</span> <span style="color: #4f894c;">"NO VERSION: 0.4"</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org3cdea14" class="outline-4">
+<h4 id="org3cdea14"><span class="section-number-4">2.1.4.</span> Discovery Endpoint MUST provide an API base</h4>
+<div class="outline-text-4" id="text-2-1-4">
+<div class="org-src-container">
+<pre class="src src-shell">[[ -n <span style="color: #4f894c;">"$(</span><span style="color: #3b6ea8; font-weight: bold;">jq -r .api_base $DISCOVERY_FILE</span><span style="color: #4f894c;">)"</span> ]] <span style="color: #4f894c;">\</span>
+  || <span style="color: #29838d;">echo</span> <span style="color: #4f894c;">"NO API_BASE"</span>
+<span style="color: #29838d;">export</span> <span style="color: #cb9aad; font-style: italic;">API_BASE</span>=$(<span style="color: #3b6ea8; font-weight: bold;">jq -r .api_base $DISCOVERY_FILE</span>)
+</pre>
+</div>
+
+<p>
+
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgd2728b1" class="outline-4">
+<h4 id="orgd2728b1"><span class="section-number-4">2.1.5.</span> Discovery Endpoint MUST provide a list of actions</h4>
+<div class="outline-text-4" id="text-2-1-5">
+<div class="org-src-container">
+<pre class="src src-shell">[[ <span style="color: #3b6ea8; font-weight: bold;">!</span> <span style="color: #4f894c;">"$(</span><span style="color: #3b6ea8; font-weight: bold;">jq ".actions|length" $DISCOVERY_FILE</span><span style="color: #4f894c;">)"</span> = <span style="color: #4f894c;">"0"</span> ]] <span style="color: #4f894c;">\</span>
+  || <span style="color: #29838d;">echo</span> <span style="color: #4f894c;">"NO ACTIONS"</span>
+<span style="color: #29838d;">export</span> <span style="color: #cb9aad; font-style: italic;">ACTIONS</span>=$(<span style="color: #3b6ea8; font-weight: bold;">jq -r ".actions|@sh" $DISCOVERY_FILE | tr -d \'</span>)
+<span style="color: #29838d;">echo</span> $<span style="color: #cb9aad; font-style: italic;">ACTIONS</span>
+</pre>
+</div>
+
+<p>
+
+</p>
+
+
+<p>
+sale:opt-out sale:opt-in access deletion
+</p>
+</div>
+
+<div id="outline-container-org0ed5246" class="outline-5">
+<h5 id="org0ed5246"><span class="section-number-5">2.1.5.1.</span> <span class="todo NEXT">NEXT</span> validate that these are all defined under <a href="https://github.com/consumer-reports-digital-lab/data-rights-protocol#301-supported-rights-actions">Supported Rights Actions</a>.</h5>
+</div>
+
+<div id="outline-container-org6d9ae2c" class="outline-5">
+<h5 id="org6d9ae2c"><span class="section-number-5">2.1.5.2.</span> <span class="todo NEXT">NEXT</span> validate that these are all matching regexp <code>[0-9a-z:\-_]</code></h5>
+<div class="outline-text-5" id="text-2-1-5-2">
+<p>
+This isn't in the spec but it should be&#x2026;
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org4dbf0cc" class="outline-4">
+<h4 id="org4dbf0cc"><span class="section-number-4">2.1.6.</span> Discovery endpoint MAY contain a <code>user_relationships</code> hint set</h4>
+<div class="outline-text-4" id="text-2-1-6">
+<div class="org-src-container">
+<pre class="src src-shell">[[ <span style="color: #3b6ea8; font-weight: bold;">!</span> <span style="color: #4f894c;">"$(</span><span style="color: #3b6ea8; font-weight: bold;">jq ".user_relationships|length" $DISCOVERY_FILE</span><span style="color: #4f894c;">)"</span> = <span style="color: #4f894c;">"0"</span> ]] <span style="color: #4f894c;">\</span>
+  || <span style="color: #29838d;">echo</span> <span style="color: #4f894c;">"NO USER_RELATIONSHIPS"</span>
+</pre>
+</div>
+
+<p>
+
+</p>
+
+<p>
+NO USER<sub>RELATIONSHIPS</sub>
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgb204205" class="outline-3">
+<h3 id="orgb204205"><span class="section-number-3">2.2.</span> <span class="todo NEXT">NEXT</span> OIDC flows</h3>
+<div class="outline-text-3" id="text-2-2">
+<p>
+Most of the "is this valid OIDC?" will come through the <a href="https://openid.net/certification/">OpenID conformance suite</a>. What we need is a thing that can get a JWT signed by the Covered Business's <code>IDp</code>.
+</p>
+</div>
+
+<div id="outline-container-org2300ef1" class="outline-4">
+<h4 id="org2300ef1"><span class="section-number-4">2.2.1.</span> <span class="todo NEXT">NEXT</span> OIDC flow is under-specified, and we need to come up with a roadmap to onboard</h4>
+</div>
+
+<div id="outline-container-orgf15910c" class="outline-4">
+<h4 id="orgf15910c"><span class="section-number-4">2.2.2.</span> Discovery Endpoint references OIDC AS</h4>
+<div class="outline-text-4" id="text-2-2-2">
+<p>
+&#x2026; auto-discovery of the AS and query it for ID tokens
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgd1e7a2b" class="outline-4">
+<h4 id="orgd1e7a2b"><span class="section-number-4">2.2.3.</span> OIDC Flow generates a JWT</h4>
+<div class="outline-text-4" id="text-2-2-3">
+<p>
+Doing this in the shell is probably infeasible&#x2026; little python client with a chromium embedded in it to do the full OIDC flow?
+</p>
+
+<p>
+it'll be needed for assembling a DRR for OIDC-supporting CBs&#x2026;
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgda0ddb1" class="outline-3">
+<h3 id="orgda0ddb1"><span class="section-number-3">2.3.</span> Data Rights Requests</h3>
+<div class="outline-text-3" id="text-2-3">
+</div>
+
+<div id="outline-container-orgb637dc3" class="outline-4">
+<h4 id="orgb637dc3"><span class="section-number-4">2.3.1.</span> Submitting Data Rights Requests using the <a href="conformance-tools.html">Tools for the DRP Conformance Test Suite</a></h4>
+<div class="outline-text-4" id="text-2-3-1">
+<ul class="org-ul">
+<li>Requests are generated with the <code>genreqs</code> tool and optionally with <code>genjwts</code> to modify the bundled JWT.</li>
+<li>Requests are submitted with the included <code>swagger</code> server available by running <code>swagger</code> inside your poetry shell.</li>
+<li>Each test case will include a command to generate the request, and optionally you'll be able to modify it or the JWT token generation to match your needs.</li>
+</ul>
+
+<p>
+Most of the sections below consist of a <b>Recipe</b> and a table of <b>Behaviors</b> to test. Each behavior will be validated by running the recipe, performing a full Data Rights Request which is expected to end in a certain state.
+</p>
+
+<p>
+The results should be recorded in your tracking tables.
+</p>
+</div>
+
+<div id="outline-container-org243b88b" class="outline-5">
+<h5 id="org243b88b"><span class="section-number-5">2.3.1.1.</span> Test Cases</h5>
+<div class="outline-text-5" id="text-2-3-1-1">
+<p>
+These commands generate Data Rights Requests suitable to be fed in to the swagger tool to run through the Test Matrix to validate API behaviors. The <a href="conformance-tools.html">test tools' documentation</a> describe how these commands' invocations can be modified to change factors of the JWTs and Request objects to suit your needs.
+</p>
+</div>
+
+<ol class="org-ol">
+<li><a id="orgc14c938"></a>TC1: <code>reqs/donotsell.json</code> The PIP can accept a simple do not sell request<br />
+<div class="outline-text-6" id="text-2-3-1-1-1">
+<p>
+<a href="reqs/donotsell.json">This</a> is a simple CCPA Do Not Sell request with a dummy, "unverified" identity <a href="jwts/simple.json">token</a>. These types of requests are generally considered to have lower identity verification requirements [XXX].
+</p>
+
+<div class="org-src-container">
+<pre class="src src-shell">genjwts -t jwts/simple.json | genreqs -t reqs/donotsell.json 
+</pre>
+</div>
+</div>
+</li>
+
+<li><a id="org2824605"></a>TC2: <code>jwts/verified.json</code> The PIP can accept "verified" credentials<br />
+<div class="outline-text-6" id="text-2-3-1-1-2">
+<p>
+This test case validates that the PIP can accept a JWT token which has claims "marked" as verified. (<a href="#org722f34d">But what is "verified" what is meant by "marked"?</a>)
+</p>
+
+<div class="org-src-container">
+<pre class="src src-shell">genjwts -t jwts/verified.json | genreqs -t reqs/donotsell.json
+</pre>
+</div>
+</div>
+</li>
+
+<li><a id="org7b71f1b"></a>TC3: <code>reqs/deletion.json</code> The PIP can accept deletion requests<br />
+<div class="outline-text-6" id="text-2-3-1-1-3">
+<p>
+This will send a CCPA Deletion request with verified credentials attached.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-shell">genjwts -t jwts/verified.json | genreqs -t reqs/deletion.json
+</pre>
+</div>
+</div>
+</li>
+
+<li><a id="org9ef6ef7"></a>TC4: <code>reqs/access.json</code> broad access request without any specific scope<br />
+<div class="outline-text-6" id="text-2-3-1-1-4">
+<div class="org-src-container">
+<pre class="src src-shell">genjwts -t jwts/verified.json | genreqs -t reqs/access.json
+</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-orgb66b317" class="outline-4">
+<h4 id="orgb66b317"><span class="section-number-4">2.3.2.</span> Testing Valid Request flows</h4>
+<div class="outline-text-4" id="text-2-3-2">
+<p>
+These requests should all complete in an affirmative end-state to validate the most basic behavior of the PIP.
+</p>
+</div>
+
+<div id="outline-container-orgfa15bc9" class="outline-5">
+<h5 id="orgfa15bc9"><span class="section-number-5">2.3.2.1.</span> Recipe</h5>
+<div class="outline-text-5" id="text-2-3-2-1">
+<p>
+For each <b>Behavior</b> above:
+</p>
+<ul class="org-ul">
+<li>Generate the request from the referenced <b>Test Case</b>, and submit it in the Swagger tool.
+<ul class="org-ul">
+<li>Specified <b>Overrides</b> should be added as arguments to either of the <code>genjwts</code> or <code>genreqs</code> commands.</li>
+</ul></li>
+<li>Observe:
+<ul class="org-ul">
+<li>A 200 http status response</li>
+<li>The response body is an <a href="https://github.com/consumer-reports-digital-lab/data-rights-protocol#303-schema-status-of-a-data-subject-exercise-request">Exercise Status</a> in <code>open</code> status.</li>
+</ul></li>
+<li>record the request ID in to the tracking sheet</li>
+<li>Move the request from <code>open</code> to <code>in_progress</code> to <code>fulfilled</code></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org86c9172" class="outline-5">
+<h5 id="org86c9172"><span class="section-number-5">2.3.2.2.</span> Behaviors</h5>
+<div class="outline-text-5" id="text-2-3-2-2">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Behavior</th>
+<th scope="col" class="org-left">Test Case</th>
+<th scope="col" class="org-left">Overrides</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">The PIP can accept a simple do not sell request</td>
+<td class="org-left">TC1</td>
+<td class="org-left">❌</td>
+</tr>
+
+<tr>
+<td class="org-left">The PIP can accept a request with verified credentials</td>
+<td class="org-left">TC2</td>
+<td class="org-left">❌</td>
+</tr>
+
+<tr>
+<td class="org-left">The PIP can accept a simple deletion request</td>
+<td class="org-left">TC3</td>
+<td class="org-left">❌</td>
+</tr>
+
+<tr>
+<td class="org-left">The PIP can accept a deletion request with verified credentials</td>
+<td class="org-left">TC3</td>
+<td class="org-left">jwt: <code>-v email</code></td>
+</tr>
+
+<tr>
+<td class="org-left">The PIP can accept a deletion request with verified credentials</td>
+<td class="org-left">TC3</td>
+<td class="org-left">jwt: <code>-v phone_number -v email</code></td>
+</tr>
+
+<tr>
+<td class="org-left">&#x2026;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgc3b9620" class="outline-4">
+<h4 id="orgc3b9620"><span class="section-number-4">2.3.3.</span> <span class="todo NEXT">NEXT</span> Agent Revocation</h4>
+<div class="outline-text-4" id="text-2-3-3">
+<p>
+test cases:
+</p>
+<ul class="org-ul">
+<li>revoke immediately</li>
+<li>revoke in need<sub>user</sub><sub>verification</sub> stage</li>
+<li>revoke while being processed <code>in_progress</code> by CB backend</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org6c2b212" class="outline-4">
+<h4 id="org6c2b212"><span class="section-number-4">2.3.4.</span> <span class="todo NEXT">NEXT</span> Status Callback validation</h4>
+</div>
+<div id="outline-container-orgb39830e" class="outline-4">
+<h4 id="orgb39830e"><span class="section-number-4">2.3.5.</span> <span class="todo NEXT">NEXT</span> Access Requests</h4>
+</div>
+<div id="outline-container-orga70e6c8" class="outline-4">
+<h4 id="orga70e6c8"><span class="section-number-4">2.3.6.</span> <span class="todo INPROGRESS">INPROGRESS</span> Test for all Final States</h4>
+<div class="outline-text-4" id="text-2-3-6">
+</div>
+
+<div id="outline-container-orge60c067" class="outline-5">
+<h5 id="orge60c067"><span class="section-number-5">2.3.6.1.</span> Recipe</h5>
+</div>
+<div id="outline-container-org6bc7cbf" class="outline-5">
+<h5 id="org6bc7cbf"><span class="section-number-5">2.3.6.2.</span> Behaviors</h5>
+<div class="outline-text-5" id="text-2-3-6-2">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Behavior</th>
+<th scope="col" class="org-left">Test Case</th>
+<th scope="col" class="org-left">Overrides</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">Expect <code>claim_not_covered</code> for GDPR request for US phone number identity</td>
+<td class="org-left">TC3</td>
+<td class="org-left"><code>-o regime=gdpr</code></td>
+</tr>
+
+<tr>
+<td class="org-left">Expect <code>too_many_requests</code> after submitting repeated access requests</td>
+<td class="org-left">TC4</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">Valid-but-garbage token should end in <code>no_match</code></td>
+<td class="org-left">TC1 TC3 TC4</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">&#x2026;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org1fca8c2" class="outline-4">
+<h4 id="org1fca8c2"><span class="section-number-4">2.3.7.</span> <span class="todo NEXT">NEXT</span> Need User Verification testing</h4>
+<div class="outline-text-4" id="text-2-3-7">
+<p>
+ughghghghgh
+</p>
+
+<p>
+This will use a web browser, i guess&#x2026;? This is where designing these test cases is going to suck the most.
+</p>
+
+<p>
+The redirect URL is another thing for the little Heroku app? it's a "nice to have", mostly, though.
+</p>
+
+<ul class="org-ul">
+<li>Load <code>user_verification_url</code> in browser with some URL parameters attached
+<ul class="org-ul">
+<li><code>request_id</code> associated with the test case</li>
+<li><code>identity</code> param w/ the JWT associated with the test case</li>
+<li><code>redirect_to</code> must be set to "something", not sure what&#x2026;</li>
+</ul></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org2ed4b3b" class="outline-2">
+<h2 id="org2ed4b3b"><span class="section-number-2">3.</span> Appendices</h2>
+<div class="outline-text-2" id="text-3">
+</div>
+<div id="outline-container-org596e93d" class="outline-3">
+<h3 id="org596e93d"><span class="section-number-3">3.1.</span> 1: But what is this org-mode document, why is this not a Markdown or HTML file?</h3>
+<div class="outline-text-3" id="text-3-1">
+<p>
+The author of these documents thinks and develops software using a set of tools called <a href="https://www.gnu.org/software/emacs/">Emacs</a> <a href="https://orgmode.org">Org Mode</a>. It's an outlining and project planning tool with everything and the kitchen sink thrown in. When fully embraced, Emacs is a text and data editor which can be customized and automated to an incredible degree, and org-mode contains features and widely-used extensions which provide a similar level of meta-programming ability to documentation itself. It's also a quite convenient markup format to express things with more metadata and semantic structure than Markdown is capable of providing.
+</p>
+
+<p>
+For all intents and purposes, however, this document should be usable in an HTML or PDF format as a static reference, and that is the intended deliverable format of it.
+</p>
+
+<p>
+These documents use features that are basically built in, and an installation of anything newer than GNU Emacs 28 is probably going to work with minimal fussiness.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-shell">emacs -l ob-shell pip-conformance-tests.org --eval <span style="color: #4f894c;">'(display-buffer (get-buffer-create "*drp-conformance*"))'</span>
+</pre>
+</div>
+
+<p>
+If you execute this command and a GUI appears with this document, and an empty pane called <code>*drp-conformance*</code> at the bottom, then you can proceed to execute the commands <b>inside the document</b> by clicking in to the source blocks and pressing <code>Control-c</code> twice. The output will appear in the bottom pane, and the output will also be stored in the document.
+</p>
+
+<p>
+While it's largely unreasonable to expect everyone to use a particular text editor, especially one with such anachronistic tendencies, it's perhaps interesting to think of this document itself as the first version of the DRP test-suite automation.
+</p>
+
+<p>
+Org Mode can be exported to HTML and <a href="https://orgmode.org/worg/org-tutorials/org-publish-html-tutorial.html">published</a>:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span style="color: #3b6ea8;">let*</span> ((base-dir (file-name-directory (buffer-file-name))) <span style="color: #b1b1b1;">; </span><span style="color: #b1b1b1;">this file's directory</span>
+       (pub-dir (expand-file-name <span style="color: #4f894c;">"html"</span> base-dir))        <span style="color: #b1b1b1;">; </span><span style="color: #b1b1b1;">the subdirectory "html" of this directory</span>
+       (org-export-babel-evaluate nil))                    <span style="color: #b1b1b1;">; </span><span style="color: #b1b1b1;">no sense evaluating code on export</span>
+  <span style="color: #b1b1b1;">;; </span><span style="color: #b1b1b1;">this seems more legible than using a magic ` quote instead of building the project definition procedurally...</span>
+  (org-publish
+   (append '(<span style="color: #4f894c;">"drp-cert"</span>
+             <span style="color: #29838d;">:base-extension</span> <span style="color: #4f894c;">"org</span><span style="color: #3b6ea8; font-weight: bold;">\\</span><span style="color: #3b6ea8; font-weight: bold;">|</span><span style="color: #4f894c;">md"</span>
+             <span style="color: #29838d;">:recursive</span> t
+             <span style="color: #29838d;">:headline-levels</span> 4
+             <span style="color: #29838d;">:publishing-function</span> org-html-publish-to-html)
+           (list <span style="color: #29838d;">:publishing-directory</span> pub-dir)
+           (list <span style="color: #29838d;">:base-directory</span> base-dir))))
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org722f34d" class="outline-3">
+<h3 id="org722f34d"><span class="section-number-3">3.2.</span> 2: But what is "verified" what is meant by "marked"?</h3>
+<div class="outline-text-3" id="text-3-2">
+<p>
+The claims in the identity tokens are basically based on <a href="https://schema.org/Person">schema.org/Person</a> attributes, but specified in <b>OIDC Core 1.0</b>, <a href="https://openid.net/specs/openid-connect-core-1_0.html#rfc.section.5.1">Section 5.1</a> (Standard Claims). Consider <code>phone_number</code> and <code>phone_number_verified</code>:
+</p>
+
+<blockquote>
+<p>
+True if the End-User's phone number has been verified; otherwise false. When this Claim Value is true, this means that the OP took affirmative steps to ensure that this phone number was controlled by the End-User at the time the verification was performed. The means by which a phone number is verified is context-specific, and dependent upon the trust framework or contractual agreements within which the parties are operating. When true, the phone<sub>number</sub> Claim MUST be in E.164 format and any extensions MUST be represented in RFC 3966 format. 
+</p>
+</blockquote>
+
+<p>
+And thus spoke, the question is our "what is our trust framework or contractual agreements?". This is work for the <a href="../governance.md">governance documentation</a> to cover.
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: Consumer Reports Digital Lab</p>
+<p class="date">Created: 2022-03-21 Mon 10:39</p>
+<p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

@@ -303,14 +303,30 @@ For all intents and purposes, however, this document should be usable in an HTML
 
 These documents use features that are basically built in, and an installation of anything newer than GNU Emacs 28 is probably going to work with minimal fussiness.
 
-#+begin_src shell
-emacs -l ob-shell pip-conformance-tests.org --eval '(display-buffer (get-buffer-create "*drp-conformance*"))'=
+#+begin_src shell :exports code
+emacs -l ob-shell pip-conformance-tests.org --eval '(display-buffer (get-buffer-create "*drp-conformance*"))'
 #+end_src
 
 If you execute this command and a GUI appears with this document, and an empty pane called =*drp-conformance*= at the bottom, then you can proceed to execute the commands *inside the document* by clicking in to the source blocks and pressing =Control-c= twice. The output will appear in the bottom pane, and the output will also be stored in the document.
 
 While it's largely unreasonable to expect everyone to use a particular text editor, especially one with such anachronistic tendencies, it's perhaps interesting to think of this document itself as the first version of the DRP test-suite automation.
 
+Org Mode can be exported to HTML and [[https://orgmode.org/worg/org-tutorials/org-publish-html-tutorial.html][published]]:
+
+#+begin_src emacs-lisp :results none
+(let* ((base-dir (file-name-directory (buffer-file-name))) ; this file's directory
+       (pub-dir (expand-file-name "html" base-dir))        ; the subdirectory "html" of this directory
+       (org-export-babel-evaluate nil))                    ; no sense evaluating code on export
+  ;; this seems more legible than using a magic ` quote instead of building the project definition procedurally...
+  (org-publish
+   (append '("drp-cert"
+             :base-extension "org\\|md"
+             :recursive t
+             :headline-levels 4
+             :publishing-function org-html-publish-to-html)
+           (list :publishing-directory pub-dir)
+           (list :base-directory base-dir))))
+#+end_src
 
 ** 2: But what is "verified" what is meant by "marked"?
 :PROPERTIES:
