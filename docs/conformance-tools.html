@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2022-03-21 Mon 10:43 -->
+<!-- 2022-03-21 Mon 10:45 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Tools for the DRP Conformance Test Suite</title>
@@ -156,7 +156,7 @@ If you don't have a Linux environment available I <b>strongly recommend</b> sett
 </div>
 
 <p>
-and invoking it with <a href="docker build . -t drp/cert &amp;&amp; docker run -it -p 8000:8000 -p 8001:8001 -v $PWD:/data drp/cert &amp;">docker build . -t drp/cert &amp;&amp; docker run -it -p 8000:8000 -p 8001:8001 -v $PWD:/data drp/cert</a>. Invoking it in this fashion will require you to run <code>poetry install</code> each time you open the shell, but the dependencies will already be downloaded and cached.
+and invoking it with <a href="docker build . -t drp/cert &amp;&amp; docker run -it -p 8000:8000 -p 8001:8001 -v $PWD:/data drp/cert &amp;">docker build . -t drp/cert &amp;&amp; docker run -it -p 8000:8000 -p 8001:8001 -v $PWD:/data drp/cert</a>. Invoking it in this fashion will require you to run <code>poetry install</code> each time you open the shell. The dependencies will already be downloaded and cached, but the Python virtual environment house of cards needs to be assembled inside the container at runtime so that there aren't weird bugs.
 </p>
 </div>
 
@@ -564,7 +564,7 @@ Unfortunately it's not so simple to add a command line flag because of how the F
 </div></div>
 <div id="postamble" class="status">
 <p class="author">Author: Ryan Rix</p>
-<p class="date">Created: 2022-03-21 Mon 10:43</p>
+<p class="date">Created: 2022-03-21 Mon 10:45</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

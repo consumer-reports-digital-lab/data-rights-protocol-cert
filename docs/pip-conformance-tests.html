@@ -3,20 +3,195 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2022-03-21 Mon 10:43 -->
+<!-- 2022-03-21 Mon 10:53 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>DRP PIP Conformance Test Suite</title>
 <meta name="author" content="Consumer Reports Digital Lab" />
 <meta name="generator" content="Org Mode" />
-<style type="text/css">
-<!--/*--><![CDATA[/*><!--*/
-html {
-    margin-left: auto;
-    margin-right: auto;
-    max-width: 768px;
-}
-/*]]>*/-->
+<style>
+  #content { max-width: 60em; margin: auto; }
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #e6e6e6;
+    border-radius: 3px;
+    background-color: #f2f2f2;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: auto;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    top: -8px;
+    right: 12px;
+    padding: 3px;
+    color: #555;
+    background-color: #f2f2f299;
+  }
+  pre.src:hover:before { display: inline; margin-top: 14px;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-authinfo::before { content: 'Authinfo'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
 </style>
 </head>
 <body>
@@ -37,16 +212,16 @@ html {
 <li><a href="#org3cdea14">2.1.4. Discovery Endpoint MUST provide an API base</a></li>
 <li><a href="#orgd2728b1">2.1.5. Discovery Endpoint MUST provide a list of actions</a>
 <ul>
-<li><a href="#org0ed5246">2.1.5.1. <span class="todo NEXT">NEXT</span> validate that these are all defined under Supported Rights Actions.</a></li>
-<li><a href="#org6d9ae2c">2.1.5.2. <span class="todo NEXT">NEXT</span> validate that these are all matching regexp <code>[0-9a-z:\-_]</code></a></li>
+<li><a href="#org2d8c6fc">2.1.5.1. NEXT validate that these are all defined under Supported Rights Actions.</a></li>
+<li><a href="#orgcace4db">2.1.5.2. NEXT validate that these are all matching regexp <code>[0-9a-z:\-_]</code></a></li>
 </ul>
 </li>
 <li><a href="#org4dbf0cc">2.1.6. Discovery endpoint MAY contain a <code>user_relationships</code> hint set</a></li>
 </ul>
 </li>
-<li><a href="#orgb204205">2.2. <span class="todo NEXT">NEXT</span> OIDC flows</a>
+<li><a href="#org36973e4">2.2. NEXT OIDC flows</a>
 <ul>
-<li><a href="#org2300ef1">2.2.1. <span class="todo NEXT">NEXT</span> OIDC flow is under-specified, and we need to come up with a roadmap to onboard</a></li>
+<li><a href="#org316994b">2.2.1. NEXT OIDC flow is under-specified, and we need to come up with a roadmap to onboard</a></li>
 <li><a href="#orgf15910c">2.2.2. Discovery Endpoint references OIDC AS</a></li>
 <li><a href="#orgd1e7a2b">2.2.3. OIDC Flow generates a JWT</a></li>
 </ul>
@@ -60,20 +235,20 @@ html {
 </li>
 <li><a href="#orgb66b317">2.3.2. Testing Valid Request flows</a>
 <ul>
-<li><a href="#orge60c067">2.3.2.1. Recipe</a></li>
-<li><a href="#org6bc7cbf">2.3.2.2. Behaviors</a></li>
+<li><a href="#org76d4598">2.3.2.1. Recipe</a></li>
+<li><a href="#orgf9fa982">2.3.2.2. Behaviors</a></li>
 </ul>
 </li>
-<li><a href="#orgc3b9620">2.3.3. <span class="todo NEXT">NEXT</span> Agent Revocation</a></li>
-<li><a href="#org6c2b212">2.3.4. <span class="todo NEXT">NEXT</span> Status Callback validation</a></li>
-<li><a href="#orgb39830e">2.3.5. <span class="todo NEXT">NEXT</span> Access Requests</a></li>
-<li><a href="#orga70e6c8">2.3.6. <span class="todo INPROGRESS">INPROGRESS</span> Test for all Final States</a>
+<li><a href="#orga72e73b">2.3.3. NEXT Agent Revocation</a></li>
+<li><a href="#org2448398">2.3.4. NEXT Status Callback validation</a></li>
+<li><a href="#org879f583">2.3.5. NEXT Access Requests</a></li>
+<li><a href="#org8af5b38">2.3.6. INPROGRESS Test for all Final States</a>
 <ul>
-<li><a href="#org76d4598">2.3.6.1. Recipe</a></li>
-<li><a href="#orgf9fa982">2.3.6.2. Behaviors</a></li>
+<li><a href="#orge217258">2.3.6.1. Recipe</a></li>
+<li><a href="#orge7de4c8">2.3.6.2. Behaviors</a></li>
 </ul>
 </li>
-<li><a href="#org1fca8c2">2.3.7. <span class="todo NEXT">NEXT</span> Need User Verification testing</a></li>
+<li><a href="#org321f146">2.3.7. NEXT Need User Verification testing</a></li>
 </ul>
 </li>
 </ul>
@@ -109,7 +284,7 @@ This work product is licensed under the <a href="./LICENSE.md">Apache Software L
 <li>inside the second run <code>statusserver</code> to start the testing Authorized Agent's Status Callback Server on <a href="http://localhost:8000">http://localhost:8000</a></li>
 <li>the third terminal will be used to submit the data rights requests embedded in this document.</li>
 </ul></li>
-<li>All of the shell script snippets included in this document can be copied in to a terminal, and any expected output is included below the commands, though rendering in GitHub or similar platforms may be confusing. See <a href="#org596e93d">Appendix 1</a> for background on the document format, why this isn't an HTML file.</li>
+<li>All of the shell script snippets included in this document can be copied in to a terminal, and any expected output is included below the commands, though rendering in GitHub or similar platforms may be confusing.</li>
 </ul>
 </div>
 </div>
@@ -143,9 +318,9 @@ These are variables you will want to change when you copy this in to the shell:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-shell"><span id="coderef-1" class="coderef-off"><span style="color: #29838d;">export</span> <span style="color: #cb9aad; font-style: italic;">DRP_TEST_CACHE</span>=/tmp/drp-test/ <span style="color: #b1b1b1;">#</span> (1)</span>
-<span id="coderef-2" class="coderef-off"><span style="color: #29838d;">export</span> <span style="color: #cb9aad; font-style: italic;">JWT_SECRET</span>=my_jwts_are_secure <span style="color: #b1b1b1;">#</span> (2)</span>
-<span id="coderef-3" class="coderef-off"><span style="color: #29838d;">export</span> <span style="color: #cb9aad; font-style: italic;">BUSINESS_DOMAIN</span>=example.com   <span style="color: #b1b1b1;">#</span> (3)</span>
+<pre class="src src-shell"><span id="coderef-1" class="coderef-off"><span style="font-weight: bold;">export</span> <span style="font-weight: bold; font-style: italic;">DRP_TEST_CACHE</span>=/tmp/drp-test/ <span style="font-weight: bold; font-style: italic;">#</span> (1)</span>
+<span id="coderef-2" class="coderef-off"><span style="font-weight: bold;">export</span> <span style="font-weight: bold; font-style: italic;">JWT_SECRET</span>=my_jwts_are_secure <span style="font-weight: bold; font-style: italic;">#</span> (2)</span>
+<span id="coderef-3" class="coderef-off"><span style="font-weight: bold;">export</span> <span style="font-weight: bold; font-style: italic;">BUSINESS_DOMAIN</span>=example.com   <span style="font-weight: bold; font-style: italic;">#</span> (3)</span>
 </pre>
 </div>
 
@@ -178,12 +353,12 @@ The intent of this test is to ensure that the PIPs which provide a <code>data-ri
 </p>
 
 <div class="org-src-container">
-<pre class="src src-shell">curl -s $<span style="color: #cb9aad; font-style: italic;">BUSINESS_DOMAIN</span>/.well-known/data-rights.json <span style="color: #4f894c;">\</span>
-     -o $<span style="color: #cb9aad; font-style: italic;">DRP_TEST_CACHE</span>/data-rights.json <span style="color: #4f894c;">\</span>
-  || <span style="color: #29838d;">echo</span> <span style="color: #4f894c;">"NO GET: data-rights.json"</span>
+<pre class="src src-shell">curl -s $<span style="font-weight: bold; font-style: italic;">BUSINESS_DOMAIN</span>/.well-known/data-rights.json <span style="font-style: italic;">\</span>
+     -o $<span style="font-weight: bold; font-style: italic;">DRP_TEST_CACHE</span>/data-rights.json <span style="font-style: italic;">\</span>
+  || <span style="font-weight: bold;">echo</span> <span style="font-style: italic;">"NO GET: data-rights.json"</span>
 
-<span style="color: #29838d;">export</span> <span style="color: #cb9aad; font-style: italic;">DISCOVERY_FOUND</span>=$(<span style="color: #3b6ea8; font-weight: bold;">test -f $DRP_TEST_CACHE/data-rights.json</span>)
-<span style="color: #29838d;">export</span> <span style="color: #cb9aad; font-style: italic;">DISCOVERY_FILE</span>=$<span style="color: #cb9aad; font-style: italic;">DRP_TEST_CACHE</span>/data-rights.json
+<span style="font-weight: bold;">export</span> <span style="font-weight: bold; font-style: italic;">DISCOVERY_FOUND</span>=$(<span style="font-weight: bold;">test -f $DRP_TEST_CACHE/data-rights.json</span>)
+<span style="font-weight: bold;">export</span> <span style="font-weight: bold; font-style: italic;">DISCOVERY_FILE</span>=$<span style="font-weight: bold; font-style: italic;">DRP_TEST_CACHE</span>/data-rights.json
 </pre>
 </div>
 </div>
@@ -193,7 +368,7 @@ The intent of this test is to ensure that the PIPs which provide a <code>data-ri
 <h4 id="org37121ad"><span class="section-number-4">2.1.2.</span> Discovery Endpoint MUST Be Valid JSON</h4>
 <div class="outline-text-4" id="text-2-1-2">
 <div class="org-src-container">
-<pre class="src src-shell">jq . $<span style="color: #cb9aad; font-style: italic;">DISCOVERY_FILE</span>
+<pre class="src src-shell">jq . $<span style="font-weight: bold; font-style: italic;">DISCOVERY_FILE</span>
 </pre>
 </div>
 
@@ -221,8 +396,8 @@ This Conformance Suite runs against version 0.4 of the protocol:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-shell">[[ <span style="color: #4f894c;">"$(</span><span style="color: #3b6ea8; font-weight: bold;">jq -r .version $DISCOVERY_FILE</span><span style="color: #4f894c;">)"</span> = <span style="color: #4f894c;">"0.4"</span> ]] <span style="color: #4f894c;">\</span>
-  || <span style="color: #29838d;">echo</span> <span style="color: #4f894c;">"NO VERSION: 0.4"</span>
+<pre class="src src-shell">[[ <span style="font-style: italic;">"$(</span><span style="font-weight: bold;">jq -r .version $DISCOVERY_FILE</span><span style="font-style: italic;">)"</span> = <span style="font-style: italic;">"0.4"</span> ]] <span style="font-style: italic;">\</span>
+  || <span style="font-weight: bold;">echo</span> <span style="font-style: italic;">"NO VERSION: 0.4"</span>
 </pre>
 </div>
 </div>
@@ -232,9 +407,9 @@ This Conformance Suite runs against version 0.4 of the protocol:
 <h4 id="org3cdea14"><span class="section-number-4">2.1.4.</span> Discovery Endpoint MUST provide an API base</h4>
 <div class="outline-text-4" id="text-2-1-4">
 <div class="org-src-container">
-<pre class="src src-shell">[[ -n <span style="color: #4f894c;">"$(</span><span style="color: #3b6ea8; font-weight: bold;">jq -r .api_base $DISCOVERY_FILE</span><span style="color: #4f894c;">)"</span> ]] <span style="color: #4f894c;">\</span>
-  || <span style="color: #29838d;">echo</span> <span style="color: #4f894c;">"NO API_BASE"</span>
-<span style="color: #29838d;">export</span> <span style="color: #cb9aad; font-style: italic;">API_BASE</span>=$(<span style="color: #3b6ea8; font-weight: bold;">jq -r .api_base $DISCOVERY_FILE</span>)
+<pre class="src src-shell">[[ -n <span style="font-style: italic;">"$(</span><span style="font-weight: bold;">jq -r .api_base $DISCOVERY_FILE</span><span style="font-style: italic;">)"</span> ]] <span style="font-style: italic;">\</span>
+  || <span style="font-weight: bold;">echo</span> <span style="font-style: italic;">"NO API_BASE"</span>
+<span style="font-weight: bold;">export</span> <span style="font-weight: bold; font-style: italic;">API_BASE</span>=$(<span style="font-weight: bold;">jq -r .api_base $DISCOVERY_FILE</span>)
 </pre>
 </div>
 
@@ -248,10 +423,10 @@ This Conformance Suite runs against version 0.4 of the protocol:
 <h4 id="orgd2728b1"><span class="section-number-4">2.1.5.</span> Discovery Endpoint MUST provide a list of actions</h4>
 <div class="outline-text-4" id="text-2-1-5">
 <div class="org-src-container">
-<pre class="src src-shell">[[ <span style="color: #3b6ea8; font-weight: bold;">!</span> <span style="color: #4f894c;">"$(</span><span style="color: #3b6ea8; font-weight: bold;">jq ".actions|length" $DISCOVERY_FILE</span><span style="color: #4f894c;">)"</span> = <span style="color: #4f894c;">"0"</span> ]] <span style="color: #4f894c;">\</span>
-  || <span style="color: #29838d;">echo</span> <span style="color: #4f894c;">"NO ACTIONS"</span>
-<span style="color: #29838d;">export</span> <span style="color: #cb9aad; font-style: italic;">ACTIONS</span>=$(<span style="color: #3b6ea8; font-weight: bold;">jq -r ".actions|@sh" $DISCOVERY_FILE | tr -d \'</span>)
-<span style="color: #29838d;">echo</span> $<span style="color: #cb9aad; font-style: italic;">ACTIONS</span>
+<pre class="src src-shell">[[ ! <span style="font-style: italic;">"$(</span><span style="font-weight: bold;">jq ".actions|length" $DISCOVERY_FILE</span><span style="font-style: italic;">)"</span> = <span style="font-style: italic;">"0"</span> ]] <span style="font-style: italic;">\</span>
+  || <span style="font-weight: bold;">echo</span> <span style="font-style: italic;">"NO ACTIONS"</span>
+<span style="font-weight: bold;">export</span> <span style="font-weight: bold; font-style: italic;">ACTIONS</span>=$(<span style="font-weight: bold;">jq -r ".actions|@sh" $DISCOVERY_FILE | tr -d \'</span>)
+<span style="font-weight: bold;">echo</span> $<span style="font-weight: bold; font-style: italic;">ACTIONS</span>
 </pre>
 </div>
 
@@ -265,12 +440,12 @@ sale:opt-out sale:opt-in access deletion
 </p>
 </div>
 
-<div id="outline-container-org0ed5246" class="outline-5">
-<h5 id="org0ed5246"><span class="section-number-5">2.1.5.1.</span> <span class="todo NEXT">NEXT</span> validate that these are all defined under <a href="https://github.com/consumer-reports-digital-lab/data-rights-protocol#301-supported-rights-actions">Supported Rights Actions</a>.</h5>
+<div id="outline-container-org2d8c6fc" class="outline-5">
+<h5 id="org2d8c6fc"><span class="section-number-5">2.1.5.1.</span> NEXT validate that these are all defined under <a href="https://github.com/consumer-reports-digital-lab/data-rights-protocol#301-supported-rights-actions">Supported Rights Actions</a>.</h5>
 </div>
 
-<div id="outline-container-org6d9ae2c" class="outline-5">
-<h5 id="org6d9ae2c"><span class="section-number-5">2.1.5.2.</span> <span class="todo NEXT">NEXT</span> validate that these are all matching regexp <code>[0-9a-z:\-_]</code></h5>
+<div id="outline-container-orgcace4db" class="outline-5">
+<h5 id="orgcace4db"><span class="section-number-5">2.1.5.2.</span> NEXT validate that these are all matching regexp <code>[0-9a-z:\-_]</code></h5>
 <div class="outline-text-5" id="text-2-1-5-2">
 <p>
 This isn't in the spec but it should be&#x2026;
@@ -283,8 +458,8 @@ This isn't in the spec but it should be&#x2026;
 <h4 id="org4dbf0cc"><span class="section-number-4">2.1.6.</span> Discovery endpoint MAY contain a <code>user_relationships</code> hint set</h4>
 <div class="outline-text-4" id="text-2-1-6">
 <div class="org-src-container">
-<pre class="src src-shell">[[ <span style="color: #3b6ea8; font-weight: bold;">!</span> <span style="color: #4f894c;">"$(</span><span style="color: #3b6ea8; font-weight: bold;">jq ".user_relationships|length" $DISCOVERY_FILE</span><span style="color: #4f894c;">)"</span> = <span style="color: #4f894c;">"0"</span> ]] <span style="color: #4f894c;">\</span>
-  || <span style="color: #29838d;">echo</span> <span style="color: #4f894c;">"NO USER_RELATIONSHIPS"</span>
+<pre class="src src-shell">[[ ! <span style="font-style: italic;">"$(</span><span style="font-weight: bold;">jq ".user_relationships|length" $DISCOVERY_FILE</span><span style="font-style: italic;">)"</span> = <span style="font-style: italic;">"0"</span> ]] <span style="font-style: italic;">\</span>
+  || <span style="font-weight: bold;">echo</span> <span style="font-style: italic;">"NO USER_RELATIONSHIPS"</span>
 </pre>
 </div>
 
@@ -299,16 +474,16 @@ NO USER<sub>RELATIONSHIPS</sub>
 </div>
 </div>
 
-<div id="outline-container-orgb204205" class="outline-3">
-<h3 id="orgb204205"><span class="section-number-3">2.2.</span> <span class="todo NEXT">NEXT</span> OIDC flows</h3>
+<div id="outline-container-org36973e4" class="outline-3">
+<h3 id="org36973e4"><span class="section-number-3">2.2.</span> NEXT OIDC flows</h3>
 <div class="outline-text-3" id="text-2-2">
 <p>
 Most of the "is this valid OIDC?" will come through the <a href="https://openid.net/certification/">OpenID conformance suite</a>. What we need is a thing that can get a JWT signed by the Covered Business's <code>IDp</code>.
 </p>
 </div>
 
-<div id="outline-container-org2300ef1" class="outline-4">
-<h4 id="org2300ef1"><span class="section-number-4">2.2.1.</span> <span class="todo NEXT">NEXT</span> OIDC flow is under-specified, and we need to come up with a roadmap to onboard</h4>
+<div id="outline-container-org316994b" class="outline-4">
+<h4 id="org316994b"><span class="section-number-4">2.2.1.</span> NEXT OIDC flow is under-specified, and we need to come up with a roadmap to onboard</h4>
 </div>
 
 <div id="outline-container-orgf15910c" class="outline-4">
@@ -382,7 +557,7 @@ These commands generate Data Rights Requests suitable to be fed in to the swagge
 <li><a id="org2824605"></a>TC2: <code>jwts/verified.json</code> The PIP can accept "verified" credentials<br />
 <div class="outline-text-6" id="text-2-3-1-1-2">
 <p>
-This test case validates that the PIP can accept a JWT token which has claims "marked" as verified. (<a href="#org722f34d">But what is "verified" what is meant by "marked"?</a>)
+This test case validates that the PIP can accept a JWT token which has claims "marked" as verified. (See Appendix 2 for discussion)
 </p>
 
 <div class="org-src-container">
@@ -425,8 +600,8 @@ These requests should all complete in an affirmative end-state to validate the m
 </p>
 </div>
 
-<div id="outline-container-orge60c067" class="outline-5">
-<h5 id="orge60c067"><span class="section-number-5">2.3.2.1.</span> Recipe</h5>
+<div id="outline-container-org76d4598" class="outline-5">
+<h5 id="org76d4598"><span class="section-number-5">2.3.2.1.</span> Recipe</h5>
 <div class="outline-text-5" id="text-2-3-2-1">
 <p>
 For each <b>Behavior</b> above:
@@ -447,8 +622,8 @@ For each <b>Behavior</b> above:
 </div>
 </div>
 
-<div id="outline-container-org6bc7cbf" class="outline-5">
-<h5 id="org6bc7cbf"><span class="section-number-5">2.3.2.2.</span> Behaviors</h5>
+<div id="outline-container-orgf9fa982" class="outline-5">
+<h5 id="orgf9fa982"><span class="section-number-5">2.3.2.2.</span> Behaviors</h5>
 <div class="outline-text-5" id="text-2-3-2-2">
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -509,8 +684,8 @@ For each <b>Behavior</b> above:
 </div>
 </div>
 
-<div id="outline-container-orgc3b9620" class="outline-4">
-<h4 id="orgc3b9620"><span class="section-number-4">2.3.3.</span> <span class="todo NEXT">NEXT</span> Agent Revocation</h4>
+<div id="outline-container-orga72e73b" class="outline-4">
+<h4 id="orga72e73b"><span class="section-number-4">2.3.3.</span> NEXT Agent Revocation</h4>
 <div class="outline-text-4" id="text-2-3-3">
 <p>
 test cases:
@@ -523,22 +698,22 @@ test cases:
 </div>
 </div>
 
-<div id="outline-container-org6c2b212" class="outline-4">
-<h4 id="org6c2b212"><span class="section-number-4">2.3.4.</span> <span class="todo NEXT">NEXT</span> Status Callback validation</h4>
+<div id="outline-container-org2448398" class="outline-4">
+<h4 id="org2448398"><span class="section-number-4">2.3.4.</span> NEXT Status Callback validation</h4>
 </div>
-<div id="outline-container-orgb39830e" class="outline-4">
-<h4 id="orgb39830e"><span class="section-number-4">2.3.5.</span> <span class="todo NEXT">NEXT</span> Access Requests</h4>
+<div id="outline-container-org879f583" class="outline-4">
+<h4 id="org879f583"><span class="section-number-4">2.3.5.</span> NEXT Access Requests</h4>
 </div>
-<div id="outline-container-orga70e6c8" class="outline-4">
-<h4 id="orga70e6c8"><span class="section-number-4">2.3.6.</span> <span class="todo INPROGRESS">INPROGRESS</span> Test for all Final States</h4>
+<div id="outline-container-org8af5b38" class="outline-4">
+<h4 id="org8af5b38"><span class="section-number-4">2.3.6.</span> INPROGRESS Test for all Final States</h4>
 <div class="outline-text-4" id="text-2-3-6">
 </div>
 
-<div id="outline-container-org76d4598" class="outline-5">
-<h5 id="org76d4598"><span class="section-number-5">2.3.6.1.</span> Recipe</h5>
+<div id="outline-container-orge217258" class="outline-5">
+<h5 id="orge217258"><span class="section-number-5">2.3.6.1.</span> Recipe</h5>
 </div>
-<div id="outline-container-orgf9fa982" class="outline-5">
-<h5 id="orgf9fa982"><span class="section-number-5">2.3.6.2.</span> Behaviors</h5>
+<div id="outline-container-orge7de4c8" class="outline-5">
+<h5 id="orge7de4c8"><span class="section-number-5">2.3.6.2.</span> Behaviors</h5>
 <div class="outline-text-5" id="text-2-3-6-2">
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -587,8 +762,8 @@ test cases:
 </div>
 </div>
 
-<div id="outline-container-org1fca8c2" class="outline-4">
-<h4 id="org1fca8c2"><span class="section-number-4">2.3.7.</span> <span class="todo NEXT">NEXT</span> Need User Verification testing</h4>
+<div id="outline-container-org321f146" class="outline-4">
+<h4 id="org321f146"><span class="section-number-4">2.3.7.</span> NEXT Need User Verification testing</h4>
 <div class="outline-text-4" id="text-2-3-7">
 <p>
 ughghghghgh
@@ -635,7 +810,7 @@ These documents use features that are basically built in, and an installation of
 </p>
 
 <div class="org-src-container">
-<pre class="src src-shell">emacs -l ob-shell pip-conformance-tests.org --eval <span style="color: #4f894c;">'(display-buffer (get-buffer-create "*drp-conformance*"))'</span>
+<pre class="src src-shell">emacs -l ob-shell pip-conformance-tests.org --eval <span style="font-style: italic;">'(display-buffer (get-buffer-create "*drp-conformance*"))'</span>
 </pre>
 </div>
 
@@ -648,22 +823,34 @@ While it's largely unreasonable to expect everyone to use a particular text edit
 </p>
 
 <p>
-Org Mode can be exported to HTML and <a href="https://orgmode.org/worg/org-tutorials/org-publish-html-tutorial.html">published</a>:
+Org Mode can be exported to HTML and <a href="https://orgmode.org/worg/org-tutorials/org-publish-html-tutorial.html">published</a>.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp">(<span style="color: #3b6ea8;">let*</span> ((base-dir (file-name-directory (buffer-file-name))) <span style="color: #b1b1b1;">; </span><span style="color: #b1b1b1;">this file's directory</span>
-       (pub-dir (expand-file-name <span style="color: #4f894c;">"docs"</span> base-dir))        <span style="color: #b1b1b1;">; </span><span style="color: #b1b1b1;">the subdirectory "docs" of this directory for ghpages..</span>
-       (org-export-babel-evaluate nil))                    <span style="color: #b1b1b1;">; </span><span style="color: #b1b1b1;">no sense evaluating code on export</span>
-  <span style="color: #b1b1b1;">;; </span><span style="color: #b1b1b1;">this seems more legible than using a magic ` quote instead of building the project definition procedurally...</span>
-  (org-publish
-   (append '(<span style="color: #4f894c;">"drp-cert"</span>
-             <span style="color: #29838d;">:base-extension</span> <span style="color: #4f894c;">"org</span><span style="color: #3b6ea8; font-weight: bold;">\\</span><span style="color: #3b6ea8; font-weight: bold;">|</span><span style="color: #4f894c;">md"</span>
-             <span style="color: #29838d;">:recursive</span> t
-             <span style="color: #29838d;">:headline-levels</span> 4
-             <span style="color: #29838d;">:publishing-function</span> org-html-publish-to-html)
-           (list <span style="color: #29838d;">:publishing-directory</span> pub-dir)
-           (list <span style="color: #29838d;">:base-directory</span> base-dir))))
+<pre class="src src-emacs-lisp">(<span style="font-weight: bold;">defun</span> <span style="font-weight: bold;">publish-drp-test-suite</span> ()
+  (<span style="font-weight: bold;">interactive</span>)
+  (<span style="font-weight: bold;">let*</span> ((base-dir (file-name-directory (buffer-file-name))) <span style="font-weight: bold; font-style: italic;">; </span><span style="font-weight: bold; font-style: italic;">this file's directory</span>
+         (pub-dir (expand-file-name <span style="font-style: italic;">"docs"</span> base-dir))        <span style="font-weight: bold; font-style: italic;">; </span><span style="font-weight: bold; font-style: italic;">the subdirectory "docs" of this directory for ghpages..</span>
+         (org-export-babel-evaluate nil))                    <span style="font-weight: bold; font-style: italic;">; </span><span style="font-weight: bold; font-style: italic;">no sense evaluating code on export</span>
+    <span style="font-weight: bold; font-style: italic;">;; </span><span style="font-weight: bold; font-style: italic;">this seems more legible than using a magic ` quote instead of building the project definition procedurally...</span>
+    (org-publish
+     (append '(<span style="font-style: italic;">"drp-cert"</span>
+               <span style="font-weight: bold;">:base-extension</span> <span style="font-style: italic;">"org</span><span style="font-weight: bold; font-style: italic;">\\</span><span style="font-weight: bold; font-style: italic;">|</span><span style="font-style: italic;">md"</span>
+               <span style="font-weight: bold;">:recursive</span> t
+               <span style="font-weight: bold;">:headline-levels</span> 4
+               <span style="font-weight: bold;">:publishing-function</span> org-html-publish-to-html)
+             (list <span style="font-weight: bold;">:publishing-directory</span> pub-dir)
+             (list <span style="font-weight: bold;">:base-directory</span> base-dir)))))
+(<span style="font-weight: bold;">provide</span> '<span style="font-weight: bold; text-decoration: underline;">drp-publish</span>)
+</pre>
+</div>
+
+<p>
+This <code>drp-publish.el</code> file can be executed in a terminal like:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-shell">emacs --batch -L . -l ob-shell -l drp-publish --file pip-conformance-tests.org  -f publish-drp-test-suite
 </pre>
 </div>
 </div>
@@ -691,7 +878,7 @@ And thus spoke, the question is our "what is our trust framework or contractual 
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Consumer Reports Digital Lab</p>
-<p class="date">Created: 2022-03-21 Mon 10:43</p>
+<p class="date">Created: 2022-03-21 Mon 10:53</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

@@ -53,7 +53,7 @@ EXPOSE 8001
 CMD "/usr/bin/bash" "-c" "poetry shell"
 #+end_src
 
-and invoking it with [[shell:docker build . -t drp/cert && docker run -it -p 8000:8000 -p 8001:8001 -v $PWD:/data drp/cert &][docker build . -t drp/cert && docker run -it -p 8000:8000 -p 8001:8001 -v $PWD:/data drp/cert]]. Invoking it in this fashion will require you to run =poetry install= each time you open the shell, but the dependencies will already be downloaded and cached.
+and invoking it with [[shell:docker build . -t drp/cert && docker run -it -p 8000:8000 -p 8001:8001 -v $PWD:/data drp/cert &][docker build . -t drp/cert && docker run -it -p 8000:8000 -p 8001:8001 -v $PWD:/data drp/cert]]. Invoking it in this fashion will require you to run =poetry install= each time you open the shell. The dependencies will already be downloaded and cached, but the Python virtual environment house of cards needs to be assembled inside the container at runtime so that there aren't weird bugs.
 
 **** NEXT Provide a =docker-compose.yml= to compose the swagger, status server, shell together
 
