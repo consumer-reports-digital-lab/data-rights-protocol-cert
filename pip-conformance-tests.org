@@ -4,23 +4,23 @@
 #+title: DRP PIP Conformance Test Suite
 #+filetags: :Project:Work:ConsumerReports:Development:Writing:
 #+ARCOLOGY_KEY: doc/drp/conformance
-#+OPTIONS: toc:nil num:nil
+#+AUTHOR: Consumer Reports Digital Lab
 
-This is the working space for the [[id:1dbcc039-89bd-4177-b6e3-c818486d8060][Data Rights Protocol]] conformance test suite. Right now I'm developing it as an [[id:cce/literate_programming][Literate Programming]] document which feeds short snippets of code in to a BASH shell behind the scenes.
+This is the working space for the [[http://datarightsprotocol.org/][Data Rights Protocol]] conformance test suite. Right now I'm developing it as an [[https://orgmode.org/worg/org-contrib/babel/intro.html][Literate Programming]] document which feeds short snippets of code in to a BASH shell behind the scenes.
 
-This work product is owned by the [[id:b1633d78-a920-40b7-8f71-9a7caa63cf5a][Consumer Reports Digital Lab]] until transferred in to a [[id:1dbcc039-89bd-4177-b6e3-c818486d8060][DRP]] governance organization.
+This work product is licensed under the [[file:./LICENSE.md][Apache Software License v2]] and owned by the [[https://digital-lab.consumerreports.org/][Consumer Reports Digital Lab]] until transferred in to a [[http://datarightsprotocol.org/][DRP]] governance organization.
 
 * Introduction and Set Up
 
-- This assumes a UNIX-like environment. Developed on linux, mostly assumed to be compatible with macOS and WSL2, I will work with folks to debug issues.
+- This assumes a UNIX-like environment. Developed on linux, mostly assumed to be compatible with macOS and [[https://docs.microsoft.com/en-us/windows/wsl/about][WSL2]], I will work with folks to debug issues.
 - This assumes you've cloned the [[https://github.com/consumer-reports-digital-lab/data-rights-protocol/][data-rights-protocol]] specification repository and ran =git submodule init= inside of it.
 - This assumes you're working in a terminal which has been =cd cert='d from inside of the specification git checkout.
 - Follow the Introduction and Setup of the [[file:conformance-tools.org][Tools for the DRP Conformance Test Suite]] document and ensure you can enter a =poetry shell=.
 - Open *three terminals*, make sure they're all inside of =poetry shell=.
-  - inside the first run =swagger= to start the Swagger API viewer on =localhost:8000=.
-  - inside the second run =statusserver= to start the testing Authorized Agent's Status Callback Server
+  - inside the first run =swagger= to start the Swagger API viewer on [[http://localhost:8001/swagger]].
+  - inside the second run =statusserver= to start the testing Authorized Agent's Status Callback Server on [[http://localhost:8000]]
   - the third terminal will be used to submit the data rights requests embedded in this document.
-- All of the shell script snippets included in this document can be copied in to a terminal, and any expected output is included below the commands, though rendering in GitHub or similar platforms may be confusing. [[id:20220305T172433.835616][But what is this document format, why is this not a Markdown or HTML file?]]
+- All of the shell script snippets included in this document can be copied in to a terminal, and any expected output is included below the commands, though rendering in GitHub or similar platforms may be confusing. See [[id:20220305T172433.835616][Appendix 1]] for background on the document format, why this isn't an HTML file.
 
 * Test Plan
 :PROPERTIES:
@@ -49,15 +49,15 @@ echo 'org_babel_sh_eoe'
 (datarightsprotocol-SSQrMXUl-py3.9)
 :end:
 
-You'll want to change these maybe:
+These are variables you will want to change when you copy this in to the shell:
 
 #+begin_src shell :results none -r
-export BUSINESS_DOMAIN=example.com # (ref:1)
-export DRP_TEST_CACHE=/tmp/drp-test/ # (ref:2)
-export JWT_SECRET=my_jwts_are_secure # (ref:3)
+export DRP_TEST_CACHE=/tmp/drp-test/ # (ref:1)
+export JWT_SECRET=my_jwts_are_secure # (ref:2)
+export BUSINESS_DOMAIN=example.com   # (ref:3)
 #+end_src
 
-The test suite will store response data and other "interstitial" data in the location specified in [[(2)]], this should be Good Enough on POSIX systems. The secret in [[(3)]] is used to sign the JWTs when =genjwts= is invoked. [[(1)]] is used in the Data Rights Discovery Endpoint tests.
+The test suite will store response data and other "interstitial" data in the location specified in [[(1)]], this should be Good Enough on POSIX systems. The secret in [[(2)]] is used to sign the JWTs when =genjwts= is invoked. [[(3)]] is used in the Data Rights Discovery Endpoint tests.
 
 ** Data Rights Discovery Endpoint
 
@@ -67,7 +67,9 @@ Validating behavior of [[https://github.com/consumer-reports-digital-lab/data-ri
 
 This =BUSINESS_DOMAIN= in [[(1)]] variable is used only in the Discovery Endpoint tests.
 
-The intent of this test is to ensure that the PIPs which provide a =data-rights.json= well-known resource for their customers is providing one which exposes the URI. For a general PIP API validation which is not fronting a "real" Covered Business these tests can probably be omitted.
+The intent of this test is to ensure that the PIPs which provide a =data-rights.json= well-known resource for their customers is providing one which exposes the URI.
+
+[XXX] strike this? - For a general PIP API validation which is not fronting a "real" Covered Business these tests can probably be omitted. full flow versus "partial/point to point"
 
 #+begin_src shell
 curl -s $BUSINESS_DOMAIN/.well-known/data-rights.json \
@@ -162,9 +164,14 @@ NO USER_RELATIONSHIPS
 
 ** NEXT OIDC flows
 
-Most of the "is this valid OIDC?" will come through the openid conformance suite. What we need is a thing that can get a JWT signed by the Covered Business's =IDp=.
+Most of the "is this valid OIDC?" will come through the [[https://openid.net/certification/][OpenID conformance suite]]. What we need is a thing that can get a JWT signed by the Covered Business's =IDp=.
+
+*** NEXT OIDC flow is under-specified, and we need to come up with a roadmap to onboard
 
 *** Discovery Endpoint references OIDC AS
+
+... auto-discovery of the AS and query it for ID tokens
+
 *** OIDC Flow generates a JWT
 
 Doing this in the shell is probably infeasible... little python client with a chromium embedded in it to do the full OIDC flow?
@@ -176,7 +183,7 @@ it'll be needed for assembling a DRR for OIDC-supporting CBs...
 :ID:       20220110T161657.246138
 :END:
 
-*** Submitting Data Rights Requests using the [[id:20220124T185712.222187][Tools for the DRP Conformance Test Suite]]
+*** Submitting Data Rights Requests using the [[file:conformance-tools.org][Tools for the DRP Conformance Test Suite]]
 
 - Requests are generated with the =genreqs= tool and optionally with =genjwts= to modify the bundled JWT.
 - Requests are submitted with the included =swagger= server available by running =swagger= inside your poetry shell.
