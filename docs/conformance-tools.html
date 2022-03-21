@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2022-03-21 Mon 10:33 -->
+<!-- 2022-03-21 Mon 10:43 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Tools for the DRP Conformance Test Suite</title>
@@ -140,18 +140,18 @@ If you don't have a Linux environment available I <b>strongly recommend</b> sett
 </p>
 
 <div class="org-src-container">
-<pre class="src src-dockerfile"><span style="color: #ff4e00;">FROM</span> <span style="color: #7cb518; font-weight: bold;">fedora</span>
-<span style="color: #ff4e00;">VOLUME</span> /data <span style="color: #707a6a; font-style: italic;"># </span><span style="color: #707a6a; font-style: italic;">mount this directory here.</span>
-<span style="color: #ff4e00;">RUN</span> dnf install -y poetry jq curl bash
-<span style="color: #707a6a; font-style: italic;"># </span><span style="color: #707a6a; font-style: italic;">pre-fetch deps</span>
-<span style="color: #ff4e00;">COPY</span> pyproject.toml /pyproject.toml 
-<span style="color: #ff4e00;">RUN</span> poetry install
-<span style="color: #ff4e00;">WORKDIR</span> /data
-<span style="color: #ff4e00;">ENV</span> <span style="color: #7cb518; font-style: italic;">SHELL</span>=bash
-<span style="color: #ff4e00;">ENV</span> <span style="color: #7cb518; font-style: italic;">PS1</span>=<span style="color: #c5ac6b;">"[drp-cert]# "</span>
-<span style="color: #ff4e00;">EXPOSE</span> 8000
-<span style="color: #ff4e00;">EXPOSE</span> 8001
-<span style="color: #ff4e00;">CMD</span> <span style="color: #c5ac6b;">"/usr/bin/bash"</span> <span style="color: #c5ac6b;">"-c"</span> <span style="color: #c5ac6b;">"poetry shell"</span>
+<pre class="src src-dockerfile"><span style="color: #3b6ea8;">FROM</span> <span style="color: #9a7500; font-weight: bold;">fedora</span>
+<span style="color: #3b6ea8;">VOLUME</span> /data <span style="color: #b1b1b1;"># </span><span style="color: #b1b1b1;">mount this directory here.</span>
+<span style="color: #3b6ea8;">RUN</span> dnf install -y poetry jq curl bash
+<span style="color: #b1b1b1;"># </span><span style="color: #b1b1b1;">pre-fetch deps</span>
+<span style="color: #3b6ea8;">COPY</span> pyproject.toml /pyproject.toml 
+<span style="color: #3b6ea8;">RUN</span> poetry install
+<span style="color: #3b6ea8;">WORKDIR</span> /data
+<span style="color: #3b6ea8;">ENV</span> <span style="color: #cb9aad; font-style: italic;">SHELL</span>=bash
+<span style="color: #3b6ea8;">ENV</span> <span style="color: #cb9aad; font-style: italic;">PS1</span>=<span style="color: #4f894c;">"[drp-cert]# "</span>
+<span style="color: #3b6ea8;">EXPOSE</span> 8000
+<span style="color: #3b6ea8;">EXPOSE</span> 8001
+<span style="color: #3b6ea8;">CMD</span> <span style="color: #4f894c;">"/usr/bin/bash"</span> <span style="color: #4f894c;">"-c"</span> <span style="color: #4f894c;">"poetry shell"</span>
 </pre>
 </div>
 
@@ -265,7 +265,7 @@ claims can be overridden by passing any <code>--override</code> options:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-shell">genjwts -t jwts/simple.json -o <span style="color: #7cb518; font-style: italic;">name</span>=<span style="color: #c5ac6b;">"ryan rix"</span> -o <span style="color: #7cb518; font-style: italic;">email</span>=<span style="color: #c5ac6b;">"drp@rix.si"</span> 
+<pre class="src src-shell">genjwts -t jwts/simple.json -o <span style="color: #cb9aad; font-style: italic;">name</span>=<span style="color: #4f894c;">"ryan rix"</span> -o <span style="color: #cb9aad; font-style: italic;">email</span>=<span style="color: #4f894c;">"drp@rix.si"</span> 
 </pre>
 </div>
 
@@ -309,9 +309,9 @@ This thing basically only supports <code>HS256</code> signature-only JWTs in its
 </p>
 
 <div class="org-src-container">
-<pre class="src src-shell"><span style="color: #ffbf00;">export</span> <span style="color: #7cb518; font-style: italic;">JWT_SECRET</span>=<span style="color: #c5ac6b;">''</span>; <span style="color: #ffbf00;">echo</span> secret is $<span style="color: #7cb518; font-style: italic;">JWT_SECRET</span> <span style="color: #707a6a; font-style: italic;"># </span><span style="color: #707a6a; font-style: italic;">default embedded in the code!</span>
+<pre class="src src-shell"><span style="color: #29838d;">export</span> <span style="color: #cb9aad; font-style: italic;">JWT_SECRET</span>=<span style="color: #4f894c;">''</span>; <span style="color: #29838d;">echo</span> secret is $<span style="color: #cb9aad; font-style: italic;">JWT_SECRET</span> <span style="color: #b1b1b1;"># </span><span style="color: #b1b1b1;">default embedded in the code!</span>
 genjwts -t jwts/simple.json 2&gt;/dev/null
-<span style="color: #ffbf00;">export</span> <span style="color: #7cb518; font-style: italic;">JWT_SECRET</span>=<span style="color: #c5ac6b;">'thisisdifferent!'</span>; <span style="color: #ffbf00;">echo</span> secret is $<span style="color: #7cb518; font-style: italic;">JWT_SECRET</span>
+<span style="color: #29838d;">export</span> <span style="color: #cb9aad; font-style: italic;">JWT_SECRET</span>=<span style="color: #4f894c;">'thisisdifferent!'</span>; <span style="color: #29838d;">echo</span> secret is $<span style="color: #cb9aad; font-style: italic;">JWT_SECRET</span>
 genjwts -t jwts/simple.json 2&gt;/dev/null
 </pre>
 </div>
@@ -411,7 +411,7 @@ Overrides can be set in the <code>genreqs</code> script:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-shell">genreqs -j jwts/simple.json -t reqs/donotsell.json -o <span style="color: #7cb518; font-style: italic;">regime</span>=voluntary 2&gt;/dev/null
+<pre class="src src-shell">genreqs -j jwts/simple.json -t reqs/donotsell.json -o <span style="color: #cb9aad; font-style: italic;">regime</span>=voluntary 2&gt;/dev/null
 </pre>
 </div>
 
@@ -564,7 +564,7 @@ Unfortunately it's not so simple to add a command line flag because of how the F
 </div></div>
 <div id="postamble" class="status">
 <p class="author">Author: Ryan Rix</p>
-<p class="date">Created: 2022-03-21 Mon 10:33</p>
+<p class="date">Created: 2022-03-21 Mon 10:43</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

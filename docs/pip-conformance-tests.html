@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2022-03-21 Mon 10:39 -->
+<!-- 2022-03-21 Mon 10:43 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>DRP PIP Conformance Test Suite</title>
@@ -60,8 +60,8 @@ html {
 </li>
 <li><a href="#orgb66b317">2.3.2. Testing Valid Request flows</a>
 <ul>
-<li><a href="#orgfa15bc9">2.3.2.1. Recipe</a></li>
-<li><a href="#org86c9172">2.3.2.2. Behaviors</a></li>
+<li><a href="#orge60c067">2.3.2.1. Recipe</a></li>
+<li><a href="#org6bc7cbf">2.3.2.2. Behaviors</a></li>
 </ul>
 </li>
 <li><a href="#orgc3b9620">2.3.3. <span class="todo NEXT">NEXT</span> Agent Revocation</a></li>
@@ -69,8 +69,8 @@ html {
 <li><a href="#orgb39830e">2.3.5. <span class="todo NEXT">NEXT</span> Access Requests</a></li>
 <li><a href="#orga70e6c8">2.3.6. <span class="todo INPROGRESS">INPROGRESS</span> Test for all Final States</a>
 <ul>
-<li><a href="#orge60c067">2.3.6.1. Recipe</a></li>
-<li><a href="#org6bc7cbf">2.3.6.2. Behaviors</a></li>
+<li><a href="#org76d4598">2.3.6.1. Recipe</a></li>
+<li><a href="#orgf9fa982">2.3.6.2. Behaviors</a></li>
 </ul>
 </li>
 <li><a href="#org1fca8c2">2.3.7. <span class="todo NEXT">NEXT</span> Need User Verification testing</a></li>
@@ -145,7 +145,7 @@ These are variables you will want to change when you copy this in to the shell:
 <div class="org-src-container">
 <pre class="src src-shell"><span id="coderef-1" class="coderef-off"><span style="color: #29838d;">export</span> <span style="color: #cb9aad; font-style: italic;">DRP_TEST_CACHE</span>=/tmp/drp-test/ <span style="color: #b1b1b1;">#</span> (1)</span>
 <span id="coderef-2" class="coderef-off"><span style="color: #29838d;">export</span> <span style="color: #cb9aad; font-style: italic;">JWT_SECRET</span>=my_jwts_are_secure <span style="color: #b1b1b1;">#</span> (2)</span>
-<span id="coderef-3" class="coderef-off"><span style="color: #29838d;">export</span> <span style="color: #cb9aad; font-style: italic;">BUSINESS_DOMAIN</span>=example.com <span style="color: #b1b1b1;">#</span> (3)</span>
+<span id="coderef-3" class="coderef-off"><span style="color: #29838d;">export</span> <span style="color: #cb9aad; font-style: italic;">BUSINESS_DOMAIN</span>=example.com   <span style="color: #b1b1b1;">#</span> (3)</span>
 </pre>
 </div>
 
@@ -425,8 +425,8 @@ These requests should all complete in an affirmative end-state to validate the m
 </p>
 </div>
 
-<div id="outline-container-orgfa15bc9" class="outline-5">
-<h5 id="orgfa15bc9"><span class="section-number-5">2.3.2.1.</span> Recipe</h5>
+<div id="outline-container-orge60c067" class="outline-5">
+<h5 id="orge60c067"><span class="section-number-5">2.3.2.1.</span> Recipe</h5>
 <div class="outline-text-5" id="text-2-3-2-1">
 <p>
 For each <b>Behavior</b> above:
@@ -447,8 +447,8 @@ For each <b>Behavior</b> above:
 </div>
 </div>
 
-<div id="outline-container-org86c9172" class="outline-5">
-<h5 id="org86c9172"><span class="section-number-5">2.3.2.2.</span> Behaviors</h5>
+<div id="outline-container-org6bc7cbf" class="outline-5">
+<h5 id="org6bc7cbf"><span class="section-number-5">2.3.2.2.</span> Behaviors</h5>
 <div class="outline-text-5" id="text-2-3-2-2">
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -534,11 +534,11 @@ test cases:
 <div class="outline-text-4" id="text-2-3-6">
 </div>
 
-<div id="outline-container-orge60c067" class="outline-5">
-<h5 id="orge60c067"><span class="section-number-5">2.3.6.1.</span> Recipe</h5>
+<div id="outline-container-org76d4598" class="outline-5">
+<h5 id="org76d4598"><span class="section-number-5">2.3.6.1.</span> Recipe</h5>
 </div>
-<div id="outline-container-org6bc7cbf" class="outline-5">
-<h5 id="org6bc7cbf"><span class="section-number-5">2.3.6.2.</span> Behaviors</h5>
+<div id="outline-container-orgf9fa982" class="outline-5">
+<h5 id="orgf9fa982"><span class="section-number-5">2.3.6.2.</span> Behaviors</h5>
 <div class="outline-text-5" id="text-2-3-6-2">
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -653,7 +653,7 @@ Org Mode can be exported to HTML and <a href="https://orgmode.org/worg/org-tutor
 
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span style="color: #3b6ea8;">let*</span> ((base-dir (file-name-directory (buffer-file-name))) <span style="color: #b1b1b1;">; </span><span style="color: #b1b1b1;">this file's directory</span>
-       (pub-dir (expand-file-name <span style="color: #4f894c;">"html"</span> base-dir))        <span style="color: #b1b1b1;">; </span><span style="color: #b1b1b1;">the subdirectory "html" of this directory</span>
+       (pub-dir (expand-file-name <span style="color: #4f894c;">"docs"</span> base-dir))        <span style="color: #b1b1b1;">; </span><span style="color: #b1b1b1;">the subdirectory "docs" of this directory for ghpages..</span>
        (org-export-babel-evaluate nil))                    <span style="color: #b1b1b1;">; </span><span style="color: #b1b1b1;">no sense evaluating code on export</span>
   <span style="color: #b1b1b1;">;; </span><span style="color: #b1b1b1;">this seems more legible than using a magic ` quote instead of building the project definition procedurally...</span>
   (org-publish
@@ -691,7 +691,7 @@ And thus spoke, the question is our "what is our trust framework or contractual 
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Consumer Reports Digital Lab</p>
-<p class="date">Created: 2022-03-21 Mon 10:39</p>
+<p class="date">Created: 2022-03-21 Mon 10:43</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

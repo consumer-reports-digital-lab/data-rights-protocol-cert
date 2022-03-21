@@ -315,7 +315,7 @@ Org Mode can be exported to HTML and [[https://orgmode.org/worg/org-tutorials/or
 
 #+begin_src emacs-lisp :results none
 (let* ((base-dir (file-name-directory (buffer-file-name))) ; this file's directory
-       (pub-dir (expand-file-name "html" base-dir))        ; the subdirectory "html" of this directory
+       (pub-dir (expand-file-name "docs" base-dir))        ; the subdirectory "docs" of this directory for ghpages..
        (org-export-babel-evaluate nil))                    ; no sense evaluating code on export
   ;; this seems more legible than using a magic ` quote instead of building the project definition procedurally...
   (org-publish
