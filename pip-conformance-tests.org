@@ -192,7 +192,7 @@ it'll be needed for assembling a DRR for OIDC-supporting CBs...
 
 Most of the sections below consist of a *Recipe* and a table of *Behaviors* to test. Each behavior will be validated by running the recipe, performing a full Data Rights Request which is expected to end in a certain state.
 
-The results should be recorded in your tracking tables.
+Record results of the recipes in the tracking sheet
 
 **** Test Cases
 

@@ -12,23 +12,25 @@ this document is highly speculative and has ~0 real work put in to it. The outli
 
 * What does an AA need to be tested for
 
+- The AA can enumerate a [undefined] Participant Directory to discover Covered Businesses
 - The AA can discover API endpoints using data-rights.json
-- The AA supports submitting requests under which regimes? // Who determines permitted regimes?
-  - Consumer is the authority on regime
-  - AA is the delegated authority on regime
-  - AA chooses the regimes they honor
-  - CB must honor all regimes
+- The AA supports submitting requests under which regimes?
+  - The AA supports submitting requests under California CCPA regime
+  - The AA supports submitting requests under voluntary regime
 - Does the AA submit well-formed requests for those rights?
+  - this is the crux of the whole darn thing -- validate the requests to a schema/specification?
 - Is the AA's identity JWT signed with an attestable key?
-- Does the AA support the =needs_user_verification= flow semantics?
+- Does the AA support the =needs_user_verification= flow?
 - Does the AA support the asynchronous callback mechanism?
-- Does the AA adhere to reasonable rate-limiting for =status= queries?
+- Does the AA adhere to reasonable [to be defined at a later date] rate-limiting for =status= queries?
 
 * How do you test an authorized agent?
 
-- A data-rights.json that points to the PIP implementation
 - A "reference" PIP implementation accepts requests from the AA
-- This PIP implementation has a simple dashboard or API to move requests through the state transitions, query any "internal" state
+- A data-rights.json that points to the PIP implementation
+- This PIP implementation has a simple dashboard or API to move requests through the state transitions, query any "internal" state for test cases to validate against
+- Similarly to the [[file:./pip-conformance-tests.org][PIP Conformance Test Suite]] a set of Test Cases and Behaviors to validate
+- A document to record results of the Behaviors for certification
 
 * How does the Covered Business Accept/Interact with the AA? (governance/onboarding, etc of new AAs)
 
