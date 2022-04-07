@@ -13,13 +13,13 @@ def test_DRR_init():
             aud=jwt_audience,
             name='dazza',
             email='dazza@civics.com',
-            verified_email=True
+            email_verified=True
         )
     )
 
     assert type(drr.json()) == str, "json returns a str"
     assert drr.identity.dict().get("iss") == "ryan", "issuer in identity payload"
-    assert drr.identity.dict().get("email_verified") == "dazza@civics.com", "verified cred in identity payload"
+    assert drr.identity.dict().get("email_verified") == True, "verified cred in identity payload"
 
     reloaded = json.loads(drr.json())
 
@@ -37,5 +37,5 @@ def test_DRR_init():
     )
 
     assert decoded["iss"] == "ryan", "decoded jwt contains fields"
-    assert decoded["email_verified"] == "dazza@civics.com", "decoded jwt contains verified fields"
+    assert decoded["email_verified"] == True, "decoded jwt contains verified fields"
 
