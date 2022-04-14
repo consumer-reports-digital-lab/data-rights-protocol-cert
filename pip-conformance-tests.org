@@ -258,7 +258,7 @@ For each *Behavior* above:
 
 test cases:
 - revoke immediately
-- revoke in need_user_verification stage
+- revoke in =need_user_verification= stage
 - revoke while being processed =in_progress= by CB backend
   
 *** NEXT Status Callback validation
@@ -326,3 +326,4 @@ True if the End-User's phone number has been verified; otherwise false. When thi
 #+end_quote
 
 And thus spoke, the question is our "what is our trust framework or contractual agreements?". This is work for the [[file:../governance.md][governance documentation]] to cover.
+
