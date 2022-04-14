@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2022-03-21 Mon 11:12 -->
+<!-- 2022-04-14 Thu 11:18 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Tools for the DRP Conformance Test Suite</title>
@@ -47,58 +47,58 @@ html {
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org939993c">1. Introduction and Setup</a>
+<li><a href="#org57a48c1">1. Introduction and Setup</a>
 <ul>
-<li><a href="#org6b0d6f2">1.1. Alternatives</a>
+<li><a href="#org19eda31">1.1. Alternatives</a>
 <ul>
-<li><a href="#orgdb9b7f9">1.1.1. Nix Dev Shell</a></li>
-<li><a href="#org679d9c7">1.1.2. Fallback Dockerfile dev environment</a>
+<li><a href="#orgd2b5d53">1.1.1. Nix Dev Shell</a></li>
+<li><a href="#org1305e54">1.1.2. Fallback Dockerfile dev environment</a>
 <ul>
-<li><a href="#orgc48f890">1.1.2.1. <span class="todo NEXT">NEXT</span> Provide a <code>docker-compose.yml</code> to compose the swagger, status server, shell together</a></li>
+<li><a href="#orga1bd74f">1.1.2.1. <span class="todo NEXT">NEXT</span> Provide a <code>docker-compose.yml</code> to compose the swagger, status server, shell together</a></li>
 </ul>
 </li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#org627dd4e">2. Utilities Provided by your System</a></li>
-<li><a href="#org173a87e">3. <code>genjwts</code>: JWT generation script</a>
+<li><a href="#org2c8e7e1">2. Utilities Provided by your System</a></li>
+<li><a href="#org1bbde82">3. <code>genjwts</code>: JWT generation script</a>
 <ul>
-<li><a href="#orgd8d5337">3.1. What about the secrets?</a>
+<li><a href="#org48162b6">3.1. What about the secrets?</a>
 <ul>
-<li><a href="#org4a277d7">3.1.1. <span class="todo NEXT">NEXT</span> develop an interface for configuring the JWT security algorithms</a></li>
+<li><a href="#orgad861e5">3.1.1. <span class="todo NEXT">NEXT</span> develop an interface for configuring the JWT security algorithms</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#orgdaedb87">4. <code>genreqs</code>: Rights Request generation script</a></li>
-<li><a href="#orgcda8e2b">5. <span class="todo INPROGRESS">INPROGRESS</span> Test Suite's Request collection</a></li>
-<li><a href="#org9c7242c">6. <code>openapi.yaml</code> and a Swagger server to submit to the PIP</a></li>
-<li><a href="#org6fb849c">7. <code>statusserver</code> Status Callback Server</a>
+<li><a href="#org6893db1">4. <code>genreqs</code>: Rights Request generation script</a></li>
+<li><a href="#orgdadd728">5. <span class="todo INPROGRESS">INPROGRESS</span> Test Suite's Request collection</a></li>
+<li><a href="#org0757a71">6. <code>openapi.yaml</code> and a Swagger server to submit to the PIP</a></li>
+<li><a href="#org8324fa3">7. <code>statusserver</code> Status Callback Server</a>
 <ul>
 <li>
 <ul>
-<li><a href="#orgcd21a00">7.0.1. <span class="todo NEXT">NEXT</span> provide better guidance on tunneling setup</a></li>
+<li><a href="#org648319a">7.0.1. <span class="todo NEXT">NEXT</span> provide better guidance on tunneling setup</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#org50e64e3">8. <span class="todo INPROGRESS">INPROGRESS</span> The Test Plan document</a></li>
-<li><a href="#orgaf490ff">9. <span class="todo NEXT">NEXT</span> A spreadsheet to track and record Test Plan results</a></li>
-<li><a href="#org0141b91">10. Simple Tools for working with the Org Mode documents</a>
+<li><a href="#orgc09f329">8. <span class="todo INPROGRESS">INPROGRESS</span> The Test Plan document</a></li>
+<li><a href="#org115b211">9. <span class="todo NEXT">NEXT</span> A spreadsheet to track and record Test Plan results</a></li>
+<li><a href="#org0ab3096">10. Simple Tools for working with the Org Mode documents</a>
 <ul>
-<li><a href="#org1910393">10.1. Org Mode can be exported to HTML and published:</a></li>
+<li><a href="#org4f6e9c6">10.1. Org Mode can be exported to HTML and published:</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org939993c" class="outline-2">
-<h2 id="org939993c"><span class="section-number-2">1.</span> Introduction and Setup</h2>
+<div id="outline-container-org57a48c1" class="outline-2">
+<h2 id="org57a48c1"><span class="section-number-2">1.</span> Introduction and Setup</h2>
 <div class="outline-text-2" id="text-1">
 <p>
-These are simple utilities and test fixtures used to drive the <a href="../../../Code/data-rights-protocol/cert/pip-conformance-tests.html#ID-20211116T134053.585822">DRP Conformance Test Suite</a>.
+These are simple utilities and test fixtures used to drive the <a href="pip-conformance-tests.html#ID-20211116T134053.585822">DRP Conformance Test Suite</a>.
 </p>
 
 <p>
@@ -124,12 +124,12 @@ echo 'org<sub>babel</sub><sub>sh</sub><sub>eoe</sub>'
 </p>
 </div>
 
-<div id="outline-container-org6b0d6f2" class="outline-3">
-<h3 id="org6b0d6f2"><span class="section-number-3">1.1.</span> Alternatives</h3>
+<div id="outline-container-org19eda31" class="outline-3">
+<h3 id="org19eda31"><span class="section-number-3">1.1.</span> Alternatives</h3>
 <div class="outline-text-3" id="text-1-1">
 </div>
-<div id="outline-container-orgdb9b7f9" class="outline-4">
-<h4 id="orgdb9b7f9"><span class="section-number-4">1.1.1.</span> Nix Dev Shell</h4>
+<div id="outline-container-orgd2b5d53" class="outline-4">
+<h4 id="orgd2b5d53"><span class="section-number-4">1.1.1.</span> Nix Dev Shell</h4>
 <div class="outline-text-4" id="text-1-1-1">
 <p>
 The developer of this suite uses a specialized Linux distribution called NixOS. Folks who use it or the <a href="https://nixos.org/">Nix Packaging Manager</a> it's built on can use the <code>shell.nix</code> provided to create a hermetic environment for the toolkit which can be instantiated via <a href="https://nixos.wiki/wiki/Development_environment_with_nix-shell">Nix Shell</a> command <code>nix-shell</code>.
@@ -137,26 +137,26 @@ The developer of this suite uses a specialized Linux distribution called NixOS. 
 </div>
 </div>
 
-<div id="outline-container-org679d9c7" class="outline-4">
-<h4 id="org679d9c7"><span class="section-number-4">1.1.2.</span> Fallback Dockerfile dev environment</h4>
+<div id="outline-container-org1305e54" class="outline-4">
+<h4 id="org1305e54"><span class="section-number-4">1.1.2.</span> Fallback Dockerfile dev environment</h4>
 <div class="outline-text-4" id="text-1-1-2">
 <p>
 If you don't have a Linux environment available I <b>strongly recommend</b> setting one up or at least using Docker to get to a Linux environment with something like:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-dockerfile"><span style="color: #3b6ea8;">FROM</span> <span style="color: #9a7500; font-weight: bold;">fedora</span>
-<span style="color: #3b6ea8;">VOLUME</span> /data <span style="color: #b1b1b1;"># </span><span style="color: #b1b1b1;">mount this directory here.</span>
-<span style="color: #3b6ea8;">RUN</span> dnf install -y poetry jq curl bash
-<span style="color: #b1b1b1;"># </span><span style="color: #b1b1b1;">pre-fetch deps</span>
-<span style="color: #3b6ea8;">COPY</span> pyproject.toml /pyproject.toml 
-<span style="color: #3b6ea8;">RUN</span> poetry install
-<span style="color: #3b6ea8;">WORKDIR</span> /data
-<span style="color: #3b6ea8;">ENV</span> <span style="color: #cb9aad; font-style: italic;">SHELL</span>=bash
-<span style="color: #3b6ea8;">ENV</span> <span style="color: #cb9aad; font-style: italic;">PS1</span>=<span style="color: #4f894c;">"[drp-cert]# "</span>
-<span style="color: #3b6ea8;">EXPOSE</span> 8000
-<span style="color: #3b6ea8;">EXPOSE</span> 8001
-<span style="color: #3b6ea8;">CMD</span> <span style="color: #4f894c;">"/usr/bin/bash"</span> <span style="color: #4f894c;">"-c"</span> <span style="color: #4f894c;">"poetry shell"</span>
+<pre class="src src-dockerfile"><span style="color: #ff4e00;">FROM</span> <span style="color: #7cb518; font-weight: bold;">fedora</span>
+<span style="color: #ff4e00;">VOLUME</span> /data <span style="color: #707a6a; font-style: italic;"># </span><span style="color: #707a6a; font-style: italic;">mount this directory here.</span>
+<span style="color: #ff4e00;">RUN</span> dnf install -y poetry jq curl bash
+<span style="color: #707a6a; font-style: italic;"># </span><span style="color: #707a6a; font-style: italic;">pre-fetch deps</span>
+<span style="color: #ff4e00;">COPY</span> pyproject.toml /pyproject.toml 
+<span style="color: #ff4e00;">RUN</span> poetry install
+<span style="color: #ff4e00;">WORKDIR</span> /data
+<span style="color: #ff4e00;">ENV</span> <span style="color: #7cb518; font-style: italic;">SHELL</span>=bash
+<span style="color: #ff4e00;">ENV</span> <span style="color: #7cb518; font-style: italic;">PS1</span>=<span style="color: #c5ac6b;">"[drp-cert]# "</span>
+<span style="color: #ff4e00;">EXPOSE</span> 8000
+<span style="color: #ff4e00;">EXPOSE</span> 8001
+<span style="color: #ff4e00;">CMD</span> <span style="color: #c5ac6b;">"/usr/bin/bash"</span> <span style="color: #c5ac6b;">"-c"</span> <span style="color: #c5ac6b;">"poetry shell"</span>
 </pre>
 </div>
 
@@ -165,8 +165,8 @@ and invoking it with <a href="docker build . -t drp/cert &amp;&amp; docker run -
 </p>
 </div>
 
-<div id="outline-container-orgc48f890" class="outline-5">
-<h5 id="orgc48f890"><span class="section-number-5">1.1.2.1.</span> <span class="todo NEXT">NEXT</span> Provide a <code>docker-compose.yml</code> to compose the swagger, status server, shell together</h5>
+<div id="outline-container-orga1bd74f" class="outline-5">
+<h5 id="orga1bd74f"><span class="section-number-5">1.1.2.1.</span> <span class="todo NEXT">NEXT</span> Provide a <code>docker-compose.yml</code> to compose the swagger, status server, shell together</h5>
 <div class="outline-text-5" id="text-1-1-2-1">
 <p>
 This whole "build the shell three times" is going to be tiring quite quickly. Until something like that is in place, work inside this micro-environment will not reliably persist, and data is not going to be shared between different instances of the same container &#x2013; at least provide guidance for using <code>docker exec</code> to enter in to the running shell.
@@ -177,8 +177,8 @@ This whole "build the shell three times" is going to be tiring quite quickly. Un
 </div>
 </div>
 
-<div id="outline-container-org627dd4e" class="outline-2">
-<h2 id="org627dd4e"><span class="section-number-2">2.</span> Utilities Provided by your System</h2>
+<div id="outline-container-org2c8e7e1" class="outline-2">
+<h2 id="org2c8e7e1"><span class="section-number-2">2.</span> Utilities Provided by your System</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 You'll need to have <a href="https://stedolan.github.io/jq/">JQ</a> installed. You'll need to have <a href="https://curl.se/">curl</a> installed.
@@ -198,8 +198,8 @@ They're included in the <code>nix-shell</code>.
 </div>
 </div>
 
-<div id="outline-container-org173a87e" class="outline-2">
-<h2 id="org173a87e"><span class="section-number-2">3.</span> <code>genjwts</code>: JWT generation script</h2>
+<div id="outline-container-org1bbde82" class="outline-2">
+<h2 id="org1bbde82"><span class="section-number-2">3.</span> <code>genjwts</code>: JWT generation script</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 <a href="./src/datarightsprotocol/tools/genjwts.py">tools/genjwts.py</a> is a script to generate JWTs signed by a bundled certificate as if it came from a test Authorized Agent.
@@ -270,7 +270,7 @@ claims can be overridden by passing any <code>--override</code> options:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-shell">genjwts -t jwts/simple.json -o <span style="color: #cb9aad; font-style: italic;">name</span>=<span style="color: #4f894c;">"ryan rix"</span> -o <span style="color: #cb9aad; font-style: italic;">email</span>=<span style="color: #4f894c;">"drp@rix.si"</span> 
+<pre class="src src-shell">genjwts -t jwts/simple.json -o <span style="color: #7cb518; font-style: italic;">name</span>=<span style="color: #c5ac6b;">"ryan rix"</span> -o <span style="color: #7cb518; font-style: italic;">email</span>=<span style="color: #c5ac6b;">"drp@rix.si"</span> 
 </pre>
 </div>
 
@@ -306,17 +306,17 @@ eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJwaXAtdGVzdC1zdWl0ZSIsImF1ZCI6InR
 </p>
 </div>
 
-<div id="outline-container-orgd8d5337" class="outline-3">
-<h3 id="orgd8d5337"><span class="section-number-3">3.1.</span> What about the secrets?</h3>
+<div id="outline-container-org48162b6" class="outline-3">
+<h3 id="org48162b6"><span class="section-number-3">3.1.</span> What about the secrets?</h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
 This thing basically only supports <code>HS256</code> signature-only JWTs in its current implementation, and loads the secret from an environment variable <code>JWT_SECRET</code>. So:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-shell"><span style="color: #29838d;">export</span> <span style="color: #cb9aad; font-style: italic;">JWT_SECRET</span>=<span style="color: #4f894c;">''</span>; <span style="color: #29838d;">echo</span> secret is $<span style="color: #cb9aad; font-style: italic;">JWT_SECRET</span> <span style="color: #b1b1b1;"># </span><span style="color: #b1b1b1;">default embedded in the code!</span>
+<pre class="src src-shell"><span style="color: #ffbf00;">export</span> <span style="color: #7cb518; font-style: italic;">JWT_SECRET</span>=<span style="color: #c5ac6b;">''</span>; <span style="color: #ffbf00;">echo</span> secret is $<span style="color: #7cb518; font-style: italic;">JWT_SECRET</span> <span style="color: #707a6a; font-style: italic;"># </span><span style="color: #707a6a; font-style: italic;">default embedded in the code!</span>
 genjwts -t jwts/simple.json 2&gt;/dev/null
-<span style="color: #29838d;">export</span> <span style="color: #cb9aad; font-style: italic;">JWT_SECRET</span>=<span style="color: #4f894c;">'thisisdifferent!'</span>; <span style="color: #29838d;">echo</span> secret is $<span style="color: #cb9aad; font-style: italic;">JWT_SECRET</span>
+<span style="color: #ffbf00;">export</span> <span style="color: #7cb518; font-style: italic;">JWT_SECRET</span>=<span style="color: #c5ac6b;">'thisisdifferent!'</span>; <span style="color: #ffbf00;">echo</span> secret is $<span style="color: #7cb518; font-style: italic;">JWT_SECRET</span>
 genjwts -t jwts/simple.json 2&gt;/dev/null
 </pre>
 </div>
@@ -333,14 +333,14 @@ It will need to be extended to support referring to an x509 certificate or multi
 </p>
 </div>
 
-<div id="outline-container-org4a277d7" class="outline-4">
-<h4 id="org4a277d7"><span class="section-number-4">3.1.1.</span> <span class="todo NEXT">NEXT</span> develop an interface for configuring the JWT security algorithms</h4>
+<div id="outline-container-orgad861e5" class="outline-4">
+<h4 id="orgad861e5"><span class="section-number-4">3.1.1.</span> <span class="todo NEXT">NEXT</span> develop an interface for configuring the JWT security algorithms</h4>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgdaedb87" class="outline-2">
-<h2 id="orgdaedb87"><span class="section-number-2">4.</span> <code>genreqs</code>: Rights Request generation script</h2>
+<div id="outline-container-org6893db1" class="outline-2">
+<h2 id="org6893db1"><span class="section-number-2">4.</span> <code>genreqs</code>: Rights Request generation script</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 <a href="./src/datarightsprotocol/tools/genreqs.py">tools/genreqs.py</a> composes with the JWT generation script to create entire Data Rights Requests. Like the JWT generation script, <code>stderr</code> can be stuff in to <code>/dev/null</code> for cleaner output.
@@ -416,7 +416,7 @@ Overrides can be set in the <code>genreqs</code> script:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-shell">genreqs -j jwts/simple.json -t reqs/donotsell.json -o <span style="color: #cb9aad; font-style: italic;">regime</span>=voluntary 2&gt;/dev/null
+<pre class="src src-shell">genreqs -j jwts/simple.json -t reqs/donotsell.json -o <span style="color: #7cb518; font-style: italic;">regime</span>=voluntary 2&gt;/dev/null
 </pre>
 </div>
 
@@ -426,8 +426,8 @@ Overrides can be set in the <code>genreqs</code> script:
 </div>
 </div>
 
-<div id="outline-container-orgcda8e2b" class="outline-2">
-<h2 id="orgcda8e2b"><span class="section-number-2">5.</span> <span class="todo INPROGRESS">INPROGRESS</span> Test Suite's Request collection</h2>
+<div id="outline-container-orgdadd728" class="outline-2">
+<h2 id="orgdadd728"><span class="section-number-2">5.</span> <span class="todo INPROGRESS">INPROGRESS</span> Test Suite's Request collection</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 each DRR will be used to validate the "happy path" protocol guardrails, each will be used to exercise 3-5 time to validate that the PIP workflow can move between the multiplicative of <code>rights action * valid end state</code> and maybe one or two constants like CCPA v. voluntary compliance regulatory regimes.
@@ -439,8 +439,8 @@ Each one will have a JWT that'll need to be composed with the above generation s
 </div>
 </div>
 
-<div id="outline-container-org9c7242c" class="outline-2">
-<h2 id="org9c7242c"><span class="section-number-2">6.</span> <code>openapi.yaml</code> and a Swagger server to submit to the PIP</h2>
+<div id="outline-container-org0757a71" class="outline-2">
+<h2 id="org0757a71"><span class="section-number-2">6.</span> <code>openapi.yaml</code> and a Swagger server to submit to the PIP</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 the <a href="https://www.openapis.org/">OpenAPI</a> specification is a machine-readable description schema for describing APIs on the web. We'll be using this with a tool called <a href="https://swagger.io/">Swagger</a> which provides an web app that can submit requests to APIs based on that <code>openapi</code> spec. This combination will allow for the "DRP certifier" to submit DRRs copied out of static JSON files or construct their own with DRRs generated by the above tooling.
@@ -484,8 +484,8 @@ Running <code>swagger</code> will print the URL it is visible on in the terminal
 </div>
 </div>
 
-<div id="outline-container-org6fb849c" class="outline-2">
-<h2 id="org6fb849c"><span class="section-number-2">7.</span> <code>statusserver</code> Status Callback Server</h2>
+<div id="outline-container-org8324fa3" class="outline-2">
+<h2 id="org8324fa3"><span class="section-number-2">7.</span> <code>statusserver</code> Status Callback Server</h2>
 <div class="outline-text-2" id="text-7">
 <p>
 Recall that the DRP specification defines a "<a href="https://github.com/rrix/data-rights-protocol/blob/main/data-rights-protocol.md#204-post-status_callback-data-rights-status-callback-endpoint"><code>status_callback</code></a>" which is to be implemented by the <b>Authorized Agent</b> so that the <b>Privacy Infrastructure Provider or Covered Business</b> can push status changes to the AA rather than force the AA to poll a server every hour or day.
@@ -517,8 +517,8 @@ Now, somehow, this needs to be hosted on the World Wide Web so that your PIP imp
 </p>
 </div>
 
-<div id="outline-container-orgcd21a00" class="outline-4">
-<h4 id="orgcd21a00"><span class="section-number-4">7.0.1.</span> <span class="todo NEXT">NEXT</span> provide better guidance on tunneling setup</h4>
+<div id="outline-container-org648319a" class="outline-4">
+<h4 id="org648319a"><span class="section-number-4">7.0.1.</span> <span class="todo NEXT">NEXT</span> provide better guidance on tunneling setup</h4>
 <div class="outline-text-4" id="text-7-0-1">
 <p>
 just pick a tool, give installation guidance, free account setup, create a command which starts the tunnel tool, grabs the URL for you to put in DRRs
@@ -527,8 +527,8 @@ just pick a tool, give installation guidance, free account setup, create a comma
 </div>
 </div>
 
-<div id="outline-container-org50e64e3" class="outline-2">
-<h2 id="org50e64e3"><span class="section-number-2">8.</span> <span class="todo INPROGRESS">INPROGRESS</span> The <a href="../../../Code/data-rights-protocol/cert/pip-conformance-tests.html#ID-20220209T171652.987733">Test Plan</a> document</h2>
+<div id="outline-container-orgc09f329" class="outline-2">
+<h2 id="orgc09f329"><span class="section-number-2">8.</span> <span class="todo INPROGRESS">INPROGRESS</span> The <a href="pip-conformance-tests.html#ID-20220209T171652.987733">Test Plan</a> document</h2>
 <div class="outline-text-2" id="text-8">
 <p>
 That is what this document is shaping up to be so far &#x2013; a set of Test Cases, the inputs that go in to them, and simple scripts which can be used to validate the request on any UNIX-like system with a handful of tools installed in it. (i suppose we could just ship this in a docker container too)
@@ -536,8 +536,8 @@ That is what this document is shaping up to be so far &#x2013; a set of Test Cas
 </div>
 </div>
 
-<div id="outline-container-orgaf490ff" class="outline-2">
-<h2 id="orgaf490ff"><span class="section-number-2">9.</span> <span class="todo NEXT">NEXT</span> A spreadsheet to track and record Test Plan results</h2>
+<div id="outline-container-org115b211" class="outline-2">
+<h2 id="org115b211"><span class="section-number-2">9.</span> <span class="todo NEXT">NEXT</span> A spreadsheet to track and record Test Plan results</h2>
 <div class="outline-text-2" id="text-9">
 <p>
 In a "perfect world" we would all use Emacs Org-mode and this document could be the test-plan but <b>also</b> execute the test plan but <b>also</b> collect and bubble up the results within the document for reporting. But I'm not going to ask you to use an obscure markup language to work with this system.
@@ -553,16 +553,16 @@ This spreadsheet will be used to refine the database schema for a future automat
 </div>
 </div>
 
-<div id="outline-container-org0141b91" class="outline-2">
-<h2 id="org0141b91"><span class="section-number-2">10.</span> Simple Tools for working with the Org Mode documents</h2>
+<div id="outline-container-org0ab3096" class="outline-2">
+<h2 id="org0ab3096"><span class="section-number-2">10.</span> Simple Tools for working with the Org Mode documents</h2>
 <div class="outline-text-2" id="text-10">
 <p>
-In <a href="../../../Code/data-rights-protocol/cert/pip-conformance-tests.html#ID-20220305T172433.835616">PIP Test Suite's Appendix 1</a> I explain a bit why and how these documents are structured as Org Mode instead of Markdown or DOCX or PDF or something. It's fine to not use these tools interactively, though 3rd party plugins for org markup support can be somewhat limited. You probably don't even need to, but if you do, make sure the HTML export is kept in sync. 
+In <a href="pip-conformance-tests.html#ID-20220305T172433.835616">PIP Test Suite's Appendix 1</a> I explain a bit why and how these documents are structured as Org Mode instead of Markdown or DOCX or PDF or something. It's fine to not use these tools interactively, though 3rd party plugins for org markup support can be somewhat limited. You probably don't even need to, but if you do, make sure the HTML export is kept in sync. 
 </p>
 </div>
 
-<div id="outline-container-org1910393" class="outline-3">
-<h3 id="org1910393"><span class="section-number-3">10.1.</span> Org Mode can be exported to HTML and <a href="https://orgmode.org/worg/org-tutorials/org-publish-html-tutorial.html">published</a>:</h3>
+<div id="outline-container-org4f6e9c6" class="outline-3">
+<h3 id="org4f6e9c6"><span class="section-number-3">10.1.</span> Org Mode can be exported to HTML and <a href="https://orgmode.org/worg/org-tutorials/org-publish-html-tutorial.html">published</a>:</h3>
 <div class="outline-text-3" id="text-10-1">
 <p>
 This <code>drp-publish.el</code> file can be executed in a terminal like:
@@ -574,21 +574,21 @@ This <code>drp-publish.el</code> file can be executed in a terminal like:
 </div>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp">(<span style="color: #3b6ea8;">defun</span> <span style="color: #29838d;">publish-drp-test-suite</span> ()
-  (<span style="color: #3b6ea8;">interactive</span>)
-  (<span style="color: #3b6ea8;">let*</span> ((base-dir (file-name-directory (buffer-file-name))) <span style="color: #b1b1b1;">; </span><span style="color: #b1b1b1;">this file's directory</span>
-         (pub-dir (expand-file-name <span style="color: #4f894c;">"docs"</span> base-dir))        <span style="color: #b1b1b1;">; </span><span style="color: #b1b1b1;">the subdirectory "docs" of this directory for ghpages..</span>
-         (org-export-babel-evaluate nil))                    <span style="color: #b1b1b1;">; </span><span style="color: #b1b1b1;">no sense evaluating code on export</span>
-    <span style="color: #b1b1b1;">;; </span><span style="color: #b1b1b1;">this seems more legible than using a magic ` quote instead of building the project definition procedurally...</span>
+<pre class="src src-emacs-lisp">(<span style="color: #ff4e00;">defun</span> <span style="color: #ff7000;">publish-drp-test-suite</span> ()
+  (<span style="color: #ff4e00;">interactive</span>)
+  (<span style="color: #ff4e00;">let*</span> ((base-dir (file-name-directory (buffer-file-name))) <span style="color: #707a6a; font-style: italic;">; </span><span style="color: #707a6a; font-style: italic;">this file's directory</span>
+         (pub-dir (expand-file-name <span style="color: #c5ac6b;">"docs"</span> base-dir))        <span style="color: #707a6a; font-style: italic;">; </span><span style="color: #707a6a; font-style: italic;">the subdirectory "docs" of this directory for ghpages..</span>
+         (org-export-babel-evaluate nil))                    <span style="color: #707a6a; font-style: italic;">; </span><span style="color: #707a6a; font-style: italic;">no sense evaluating code on export</span>
+    <span style="color: #707a6a; font-style: italic;">;; </span><span style="color: #707a6a; font-style: italic;">this seems more legible than using a magic ` quote instead of building the project definition procedurally...</span>
     (org-publish
-     (append '(<span style="color: #4f894c;">"drp-cert"</span>
-               <span style="color: #29838d;">:base-extension</span> <span style="color: #4f894c;">"org</span><span style="color: #3b6ea8; font-weight: bold;">\\</span><span style="color: #3b6ea8; font-weight: bold;">|</span><span style="color: #4f894c;">md"</span>
-               <span style="color: #29838d;">:recursive</span> t
-               <span style="color: #29838d;">:headline-levels</span> 4
-               <span style="color: #29838d;">:publishing-function</span> org-html-publish-to-html)
-             (list <span style="color: #29838d;">:publishing-directory</span> pub-dir)
-             (list <span style="color: #29838d;">:base-directory</span> base-dir)))))
-(<span style="color: #3b6ea8;">provide</span> '<span style="color: #97365b;">drp-publish</span>)
+     (append '(<span style="color: #c5ac6b;">"drp-cert"</span>
+               <span style="color: #ffbf00;">:base-extension</span> <span style="color: #c5ac6b;">"org</span><span style="color: #ffbf00; font-weight: bold;">\\</span><span style="color: #ffbf00; font-weight: bold;">|</span><span style="color: #c5ac6b;">md"</span>
+               <span style="color: #ffbf00;">:recursive</span> t
+               <span style="color: #ffbf00;">:headline-levels</span> 4
+               <span style="color: #ffbf00;">:publishing-function</span> org-html-publish-to-html)
+             (list <span style="color: #ffbf00;">:publishing-directory</span> pub-dir)
+             (list <span style="color: #ffbf00;">:base-directory</span> base-dir)))))
+(<span style="color: #ff4e00;">provide</span> '<span style="color: #ff7000;">drp-publish</span>)
 </pre>
 </div>
 </div>
@@ -611,7 +611,7 @@ Unfortunately it's not so simple to add a command line flag because of how the F
 </div></div>
 <div id="postamble" class="status">
 <p class="author">Author: Ryan Rix</p>
-<p class="date">Created: 2022-03-21 Mon 11:12</p>
+<p class="date">Created: 2022-04-14 Thu 11:18</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

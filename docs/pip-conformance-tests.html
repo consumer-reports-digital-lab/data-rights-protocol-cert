@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2022-03-21 Mon 11:12 -->
+<!-- 2022-04-14 Thu 11:18 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>DRP PIP Conformance Test Suite</title>
@@ -26,62 +26,62 @@ html {
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org0f26801">1. Introduction and Set Up</a></li>
-<li><a href="#org7c47552">2. Test Plan</a>
+<li><a href="#org2d7db2a">1. Introduction and Set Up</a></li>
+<li><a href="#orgf5c01e0">2. Test Plan</a>
 <ul>
-<li><a href="#orgb498d94">2.1. Data Rights Discovery Endpoint</a>
+<li><a href="#org63af649">2.1. Data Rights Discovery Endpoint</a>
 <ul>
-<li><a href="#orgd3c6dd1">2.1.1. Covered Business's domain SHOULD have a <code>/.well-known/data-rights.json</code></a></li>
-<li><a href="#org37121ad">2.1.2. Discovery Endpoint MUST Be Valid JSON</a></li>
-<li><a href="#org69e5232">2.1.3. Discovery Endpoint MUST contain a version field</a></li>
-<li><a href="#org3cdea14">2.1.4. Discovery Endpoint MUST provide an API base</a></li>
-<li><a href="#orgd2728b1">2.1.5. Discovery Endpoint MUST provide a list of actions</a>
+<li><a href="#org4c5b63d">2.1.1. Covered Business's domain SHOULD have a <code>/.well-known/data-rights.json</code></a></li>
+<li><a href="#org65bd85a">2.1.2. Discovery Endpoint MUST Be Valid JSON</a></li>
+<li><a href="#orgce79d9c">2.1.3. Discovery Endpoint MUST contain a version field</a></li>
+<li><a href="#org309da73">2.1.4. Discovery Endpoint MUST provide an API base</a></li>
+<li><a href="#orga977755">2.1.5. Discovery Endpoint MUST provide a list of actions</a>
 <ul>
-<li><a href="#org0ed5246">2.1.5.1. <span class="todo NEXT">NEXT</span> validate that these are all defined under Supported Rights Actions.</a></li>
-<li><a href="#org6d9ae2c">2.1.5.2. <span class="todo NEXT">NEXT</span> validate that these are all matching regexp <code>[0-9a-z:\-_]</code></a></li>
+<li><a href="#orgebc66ce">2.1.5.1. <span class="todo NEXT">NEXT</span> validate that these are all defined under Supported Rights Actions.</a></li>
+<li><a href="#org2ef11cb">2.1.5.2. <span class="todo NEXT">NEXT</span> validate that these are all matching regexp <code>[0-9a-z:\-_]</code></a></li>
 </ul>
 </li>
-<li><a href="#org4dbf0cc">2.1.6. Discovery endpoint MAY contain a <code>user_relationships</code> hint set</a></li>
+<li><a href="#orga0b458f">2.1.6. Discovery endpoint MAY contain a <code>user_relationships</code> hint set</a></li>
 </ul>
 </li>
-<li><a href="#orgb204205">2.2. <span class="todo NEXT">NEXT</span> OIDC flows</a>
+<li><a href="#orgb47283c">2.2. <span class="todo NEXT">NEXT</span> OIDC flows</a>
 <ul>
-<li><a href="#org2300ef1">2.2.1. <span class="todo NEXT">NEXT</span> OIDC flow is under-specified, and we need to come up with a roadmap to onboard</a></li>
-<li><a href="#orgf15910c">2.2.2. Discovery Endpoint references OIDC AS</a></li>
-<li><a href="#orgd1e7a2b">2.2.3. OIDC Flow generates a JWT</a></li>
+<li><a href="#orgf650b15">2.2.1. <span class="todo NEXT">NEXT</span> OIDC flow is under-specified, and we need to come up with a roadmap to onboard</a></li>
+<li><a href="#org46ad9aa">2.2.2. Discovery Endpoint references OIDC AS</a></li>
+<li><a href="#orge31b042">2.2.3. OIDC Flow generates a JWT</a></li>
 </ul>
 </li>
-<li><a href="#orgda0ddb1">2.3. Data Rights Requests</a>
+<li><a href="#org830fcff">2.3. Data Rights Requests</a>
 <ul>
-<li><a href="#orgb637dc3">2.3.1. Submitting Data Rights Requests using the Tools for the DRP Conformance Test Suite</a>
+<li><a href="#orga340746">2.3.1. Submitting Data Rights Requests using the Tools for the DRP Conformance Test Suite</a>
 <ul>
-<li><a href="#org243b88b">2.3.1.1. Test Cases</a></li>
+<li><a href="#org9307695">2.3.1.1. Test Cases</a></li>
 </ul>
 </li>
-<li><a href="#orgb66b317">2.3.2. Testing Valid Request flows</a>
+<li><a href="#org72a0161">2.3.2. Testing Valid Request flows</a>
 <ul>
-<li><a href="#org9e96e15">2.3.2.1. Recipe</a></li>
-<li><a href="#org48adfb8">2.3.2.2. Behaviors</a></li>
+<li><a href="#orgd075313">2.3.2.1. Recipe</a></li>
+<li><a href="#orgbc403ab">2.3.2.2. Behaviors</a></li>
 </ul>
 </li>
-<li><a href="#orgc3b9620">2.3.3. <span class="todo NEXT">NEXT</span> Agent Revocation</a></li>
-<li><a href="#org6c2b212">2.3.4. <span class="todo NEXT">NEXT</span> Status Callback validation</a></li>
-<li><a href="#orgb39830e">2.3.5. <span class="todo NEXT">NEXT</span> Access Requests</a></li>
-<li><a href="#orga70e6c8">2.3.6. <span class="todo INPROGRESS">INPROGRESS</span> Test for all Final States</a>
+<li><a href="#org0ff0cde">2.3.3. <span class="todo NEXT">NEXT</span> Agent Revocation</a></li>
+<li><a href="#org0dba5fb">2.3.4. <span class="todo NEXT">NEXT</span> Status Callback validation</a></li>
+<li><a href="#orgf60e9b2">2.3.5. <span class="todo NEXT">NEXT</span> Access Requests</a></li>
+<li><a href="#orga4708ca">2.3.6. <span class="todo INPROGRESS">INPROGRESS</span> Test for all Final States</a>
 <ul>
-<li><a href="#org80ce673">2.3.6.1. Recipe</a></li>
-<li><a href="#orgcd19a6c">2.3.6.2. Behaviors</a></li>
+<li><a href="#org7baa2c5">2.3.6.1. Recipe</a></li>
+<li><a href="#org3b1d5af">2.3.6.2. Behaviors</a></li>
 </ul>
 </li>
-<li><a href="#org1fca8c2">2.3.7. <span class="todo NEXT">NEXT</span> Need User Verification testing</a></li>
+<li><a href="#orgc717c53">2.3.7. <span class="todo NEXT">NEXT</span> Need User Verification testing</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#org2ed4b3b">3. Appendices</a>
+<li><a href="#org0d5b8dd">3. Appendices</a>
 <ul>
-<li><a href="#org596e93d">3.1. 1: But what is this org-mode document, why is this not a Markdown or HTML file?</a></li>
-<li><a href="#org722f34d">3.2. 2: But what is "verified" what is meant by "marked"?</a></li>
+<li><a href="#org570e290">3.1. 1: But what is this org-mode document, why is this not a Markdown or HTML file?</a></li>
+<li><a href="#org5ac00a5">3.2. 2: But what is "verified" what is meant by "marked"?</a></li>
 </ul>
 </li>
 </ul>
@@ -95,8 +95,8 @@ This is the working space for the <a href="http://datarightsprotocol.org/">Data 
 This work product is licensed under the <a href="./LICENSE.md">Apache Software License v2</a> and owned by the <a href="https://digital-lab.consumerreports.org/">Consumer Reports Digital Lab</a> until transferred in to a <a href="http://datarightsprotocol.org/">DRP</a> governance organization.
 </p>
 
-<div id="outline-container-org0f26801" class="outline-2">
-<h2 id="org0f26801"><span class="section-number-2">1.</span> Introduction and Set Up</h2>
+<div id="outline-container-org2d7db2a" class="outline-2">
+<h2 id="org2d7db2a"><span class="section-number-2">1.</span> Introduction and Set Up</h2>
 <div class="outline-text-2" id="text-1">
 <ul class="org-ul">
 <li>This assumes a UNIX-like environment. Developed on linux, mostly assumed to be compatible with macOS and <a href="https://docs.microsoft.com/en-us/windows/wsl/about">WSL2</a>, I will work with folks to debug issues.</li>
@@ -114,8 +114,8 @@ This work product is licensed under the <a href="./LICENSE.md">Apache Software L
 </div>
 </div>
 
-<div id="outline-container-org7c47552" class="outline-2">
-<h2 id="org7c47552"><span class="section-number-2">2.</span> Test Plan</h2>
+<div id="outline-container-orgf5c01e0" class="outline-2">
+<h2 id="orgf5c01e0"><span class="section-number-2">2.</span> Test Plan</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 This thing uses bash, curl, jq, and a bit of python to run conformance validations.
@@ -143,9 +143,9 @@ These are variables you will want to change when you copy this in to the shell:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-shell"><span id="coderef-1" class="coderef-off"><span style="color: #29838d;">export</span> <span style="color: #cb9aad; font-style: italic;">DRP_TEST_CACHE</span>=/tmp/drp-test/ <span style="color: #b1b1b1;">#</span> (1)</span>
-<span id="coderef-2" class="coderef-off"><span style="color: #29838d;">export</span> <span style="color: #cb9aad; font-style: italic;">JWT_SECRET</span>=my_jwts_are_secure <span style="color: #b1b1b1;">#</span> (2)</span>
-<span id="coderef-3" class="coderef-off"><span style="color: #29838d;">export</span> <span style="color: #cb9aad; font-style: italic;">BUSINESS_DOMAIN</span>=example.com   <span style="color: #b1b1b1;">#</span> (3)</span>
+<pre class="src src-shell"><span id="coderef-1" class="coderef-off"><span style="color: #ffbf00;">export</span> <span style="color: #7cb518; font-style: italic;">DRP_TEST_CACHE</span>=/tmp/drp-test/ <span style="color: #707a6a; font-style: italic;">#</span> (1)</span>
+<span id="coderef-2" class="coderef-off"><span style="color: #ffbf00;">export</span> <span style="color: #7cb518; font-style: italic;">JWT_SECRET</span>=my_jwts_are_secure <span style="color: #707a6a; font-style: italic;">#</span> (2)</span>
+<span id="coderef-3" class="coderef-off"><span style="color: #ffbf00;">export</span> <span style="color: #7cb518; font-style: italic;">BUSINESS_DOMAIN</span>=example.com   <span style="color: #707a6a; font-style: italic;">#</span> (3)</span>
 </pre>
 </div>
 
@@ -154,16 +154,16 @@ The test suite will store response data and other "interstitial" data in the loc
 </p>
 </div>
 
-<div id="outline-container-orgb498d94" class="outline-3">
-<h3 id="orgb498d94"><span class="section-number-3">2.1.</span> Data Rights Discovery Endpoint</h3>
+<div id="outline-container-org63af649" class="outline-3">
+<h3 id="org63af649"><span class="section-number-3">2.1.</span> Data Rights Discovery Endpoint</h3>
 <div class="outline-text-3" id="text-2-1">
 <p>
 Validating behavior of <a href="https://github.com/consumer-reports-digital-lab/data-rights-protocol#201-get-well-knowndata-rightsjson-data-rights-discovery-endpoint">Section 2.01</a> of spec.
 </p>
 </div>
 
-<div id="outline-container-orgd3c6dd1" class="outline-4">
-<h4 id="orgd3c6dd1"><span class="section-number-4">2.1.1.</span> Covered Business's domain SHOULD have a <code>/.well-known/data-rights.json</code></h4>
+<div id="outline-container-org4c5b63d" class="outline-4">
+<h4 id="org4c5b63d"><span class="section-number-4">2.1.1.</span> Covered Business's domain SHOULD have a <code>/.well-known/data-rights.json</code></h4>
 <div class="outline-text-4" id="text-2-1-1">
 <p>
 This <code>BUSINESS_DOMAIN</code> in <a href="#coderef-1" class="coderef" onmouseover="CodeHighlightOn(this, 'coderef-1');" onmouseout="CodeHighlightOff(this, 'coderef-1');">1</a> variable is used only in the Discovery Endpoint tests.
@@ -178,22 +178,22 @@ The intent of this test is to ensure that the PIPs which provide a <code>data-ri
 </p>
 
 <div class="org-src-container">
-<pre class="src src-shell">curl -s $<span style="color: #cb9aad; font-style: italic;">BUSINESS_DOMAIN</span>/.well-known/data-rights.json <span style="color: #4f894c;">\</span>
-     -o $<span style="color: #cb9aad; font-style: italic;">DRP_TEST_CACHE</span>/data-rights.json <span style="color: #4f894c;">\</span>
-  || <span style="color: #29838d;">echo</span> <span style="color: #4f894c;">"NO GET: data-rights.json"</span>
+<pre class="src src-shell">curl -s $<span style="color: #7cb518; font-style: italic;">BUSINESS_DOMAIN</span>/.well-known/data-rights.json <span style="color: #c5ac6b;">\</span>
+     -o $<span style="color: #7cb518; font-style: italic;">DRP_TEST_CACHE</span>/data-rights.json <span style="color: #c5ac6b;">\</span>
+  || <span style="color: #ffbf00;">echo</span> <span style="color: #c5ac6b;">"NO GET: data-rights.json"</span>
 
-<span style="color: #29838d;">export</span> <span style="color: #cb9aad; font-style: italic;">DISCOVERY_FOUND</span>=$(<span style="color: #3b6ea8; font-weight: bold;">test -f $DRP_TEST_CACHE/data-rights.json</span>)
-<span style="color: #29838d;">export</span> <span style="color: #cb9aad; font-style: italic;">DISCOVERY_FILE</span>=$<span style="color: #cb9aad; font-style: italic;">DRP_TEST_CACHE</span>/data-rights.json
+<span style="color: #ffbf00;">export</span> <span style="color: #7cb518; font-style: italic;">DISCOVERY_FOUND</span>=$(<span style="color: #ffbf00; font-weight: bold;">test -f $DRP_TEST_CACHE/data-rights.json</span>)
+<span style="color: #ffbf00;">export</span> <span style="color: #7cb518; font-style: italic;">DISCOVERY_FILE</span>=$<span style="color: #7cb518; font-style: italic;">DRP_TEST_CACHE</span>/data-rights.json
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org37121ad" class="outline-4">
-<h4 id="org37121ad"><span class="section-number-4">2.1.2.</span> Discovery Endpoint MUST Be Valid JSON</h4>
+<div id="outline-container-org65bd85a" class="outline-4">
+<h4 id="org65bd85a"><span class="section-number-4">2.1.2.</span> Discovery Endpoint MUST Be Valid JSON</h4>
 <div class="outline-text-4" id="text-2-1-2">
 <div class="org-src-container">
-<pre class="src src-shell">jq . $<span style="color: #cb9aad; font-style: italic;">DISCOVERY_FILE</span>
+<pre class="src src-shell">jq . $<span style="color: #7cb518; font-style: italic;">DISCOVERY_FILE</span>
 </pre>
 </div>
 
@@ -213,28 +213,28 @@ The intent of this test is to ensure that the PIPs which provide a <code>data-ri
 </div>
 </div>
 
-<div id="outline-container-org69e5232" class="outline-4">
-<h4 id="org69e5232"><span class="section-number-4">2.1.3.</span> Discovery Endpoint MUST contain a version field</h4>
+<div id="outline-container-orgce79d9c" class="outline-4">
+<h4 id="orgce79d9c"><span class="section-number-4">2.1.3.</span> Discovery Endpoint MUST contain a version field</h4>
 <div class="outline-text-4" id="text-2-1-3">
 <p>
 This Conformance Suite runs against version 0.4 of the protocol:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-shell">[[ <span style="color: #4f894c;">"$(</span><span style="color: #3b6ea8; font-weight: bold;">jq -r .version $DISCOVERY_FILE</span><span style="color: #4f894c;">)"</span> = <span style="color: #4f894c;">"0.4"</span> ]] <span style="color: #4f894c;">\</span>
-  || <span style="color: #29838d;">echo</span> <span style="color: #4f894c;">"NO VERSION: 0.4"</span>
+<pre class="src src-shell">[[ <span style="color: #c5ac6b;">"$(</span><span style="color: #ffbf00; font-weight: bold;">jq -r .version $DISCOVERY_FILE</span><span style="color: #c5ac6b;">)"</span> = <span style="color: #c5ac6b;">"0.4"</span> ]] <span style="color: #c5ac6b;">\</span>
+  || <span style="color: #ffbf00;">echo</span> <span style="color: #c5ac6b;">"NO VERSION: 0.4"</span>
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org3cdea14" class="outline-4">
-<h4 id="org3cdea14"><span class="section-number-4">2.1.4.</span> Discovery Endpoint MUST provide an API base</h4>
+<div id="outline-container-org309da73" class="outline-4">
+<h4 id="org309da73"><span class="section-number-4">2.1.4.</span> Discovery Endpoint MUST provide an API base</h4>
 <div class="outline-text-4" id="text-2-1-4">
 <div class="org-src-container">
-<pre class="src src-shell">[[ -n <span style="color: #4f894c;">"$(</span><span style="color: #3b6ea8; font-weight: bold;">jq -r .api_base $DISCOVERY_FILE</span><span style="color: #4f894c;">)"</span> ]] <span style="color: #4f894c;">\</span>
-  || <span style="color: #29838d;">echo</span> <span style="color: #4f894c;">"NO API_BASE"</span>
-<span style="color: #29838d;">export</span> <span style="color: #cb9aad; font-style: italic;">API_BASE</span>=$(<span style="color: #3b6ea8; font-weight: bold;">jq -r .api_base $DISCOVERY_FILE</span>)
+<pre class="src src-shell">[[ -n <span style="color: #c5ac6b;">"$(</span><span style="color: #ffbf00; font-weight: bold;">jq -r .api_base $DISCOVERY_FILE</span><span style="color: #c5ac6b;">)"</span> ]] <span style="color: #c5ac6b;">\</span>
+  || <span style="color: #ffbf00;">echo</span> <span style="color: #c5ac6b;">"NO API_BASE"</span>
+<span style="color: #ffbf00;">export</span> <span style="color: #7cb518; font-style: italic;">API_BASE</span>=$(<span style="color: #ffbf00; font-weight: bold;">jq -r .api_base $DISCOVERY_FILE</span>)
 </pre>
 </div>
 
@@ -244,14 +244,14 @@ This Conformance Suite runs against version 0.4 of the protocol:
 </div>
 </div>
 
-<div id="outline-container-orgd2728b1" class="outline-4">
-<h4 id="orgd2728b1"><span class="section-number-4">2.1.5.</span> Discovery Endpoint MUST provide a list of actions</h4>
+<div id="outline-container-orga977755" class="outline-4">
+<h4 id="orga977755"><span class="section-number-4">2.1.5.</span> Discovery Endpoint MUST provide a list of actions</h4>
 <div class="outline-text-4" id="text-2-1-5">
 <div class="org-src-container">
-<pre class="src src-shell">[[ <span style="color: #3b6ea8; font-weight: bold;">!</span> <span style="color: #4f894c;">"$(</span><span style="color: #3b6ea8; font-weight: bold;">jq ".actions|length" $DISCOVERY_FILE</span><span style="color: #4f894c;">)"</span> = <span style="color: #4f894c;">"0"</span> ]] <span style="color: #4f894c;">\</span>
-  || <span style="color: #29838d;">echo</span> <span style="color: #4f894c;">"NO ACTIONS"</span>
-<span style="color: #29838d;">export</span> <span style="color: #cb9aad; font-style: italic;">ACTIONS</span>=$(<span style="color: #3b6ea8; font-weight: bold;">jq -r ".actions|@sh" $DISCOVERY_FILE | tr -d \'</span>)
-<span style="color: #29838d;">echo</span> $<span style="color: #cb9aad; font-style: italic;">ACTIONS</span>
+<pre class="src src-shell">[[ <span style="color: #ffbf00; font-weight: bold;">!</span> <span style="color: #c5ac6b;">"$(</span><span style="color: #ffbf00; font-weight: bold;">jq ".actions|length" $DISCOVERY_FILE</span><span style="color: #c5ac6b;">)"</span> = <span style="color: #c5ac6b;">"0"</span> ]] <span style="color: #c5ac6b;">\</span>
+  || <span style="color: #ffbf00;">echo</span> <span style="color: #c5ac6b;">"NO ACTIONS"</span>
+<span style="color: #ffbf00;">export</span> <span style="color: #7cb518; font-style: italic;">ACTIONS</span>=$(<span style="color: #ffbf00; font-weight: bold;">jq -r ".actions|@sh" $DISCOVERY_FILE | tr -d \'</span>)
+<span style="color: #ffbf00;">echo</span> $<span style="color: #7cb518; font-style: italic;">ACTIONS</span>
 </pre>
 </div>
 
@@ -265,12 +265,12 @@ sale:opt-out sale:opt-in access deletion
 </p>
 </div>
 
-<div id="outline-container-org0ed5246" class="outline-5">
-<h5 id="org0ed5246"><span class="section-number-5">2.1.5.1.</span> <span class="todo NEXT">NEXT</span> validate that these are all defined under <a href="https://github.com/consumer-reports-digital-lab/data-rights-protocol#301-supported-rights-actions">Supported Rights Actions</a>.</h5>
+<div id="outline-container-orgebc66ce" class="outline-5">
+<h5 id="orgebc66ce"><span class="section-number-5">2.1.5.1.</span> <span class="todo NEXT">NEXT</span> validate that these are all defined under <a href="https://github.com/consumer-reports-digital-lab/data-rights-protocol#301-supported-rights-actions">Supported Rights Actions</a>.</h5>
 </div>
 
-<div id="outline-container-org6d9ae2c" class="outline-5">
-<h5 id="org6d9ae2c"><span class="section-number-5">2.1.5.2.</span> <span class="todo NEXT">NEXT</span> validate that these are all matching regexp <code>[0-9a-z:\-_]</code></h5>
+<div id="outline-container-org2ef11cb" class="outline-5">
+<h5 id="org2ef11cb"><span class="section-number-5">2.1.5.2.</span> <span class="todo NEXT">NEXT</span> validate that these are all matching regexp <code>[0-9a-z:\-_]</code></h5>
 <div class="outline-text-5" id="text-2-1-5-2">
 <p>
 This isn't in the spec but it should be&#x2026;
@@ -279,12 +279,12 @@ This isn't in the spec but it should be&#x2026;
 </div>
 </div>
 
-<div id="outline-container-org4dbf0cc" class="outline-4">
-<h4 id="org4dbf0cc"><span class="section-number-4">2.1.6.</span> Discovery endpoint MAY contain a <code>user_relationships</code> hint set</h4>
+<div id="outline-container-orga0b458f" class="outline-4">
+<h4 id="orga0b458f"><span class="section-number-4">2.1.6.</span> Discovery endpoint MAY contain a <code>user_relationships</code> hint set</h4>
 <div class="outline-text-4" id="text-2-1-6">
 <div class="org-src-container">
-<pre class="src src-shell">[[ <span style="color: #3b6ea8; font-weight: bold;">!</span> <span style="color: #4f894c;">"$(</span><span style="color: #3b6ea8; font-weight: bold;">jq ".user_relationships|length" $DISCOVERY_FILE</span><span style="color: #4f894c;">)"</span> = <span style="color: #4f894c;">"0"</span> ]] <span style="color: #4f894c;">\</span>
-  || <span style="color: #29838d;">echo</span> <span style="color: #4f894c;">"NO USER_RELATIONSHIPS"</span>
+<pre class="src src-shell">[[ <span style="color: #ffbf00; font-weight: bold;">!</span> <span style="color: #c5ac6b;">"$(</span><span style="color: #ffbf00; font-weight: bold;">jq ".user_relationships|length" $DISCOVERY_FILE</span><span style="color: #c5ac6b;">)"</span> = <span style="color: #c5ac6b;">"0"</span> ]] <span style="color: #c5ac6b;">\</span>
+  || <span style="color: #ffbf00;">echo</span> <span style="color: #c5ac6b;">"NO USER_RELATIONSHIPS"</span>
 </pre>
 </div>
 
@@ -299,20 +299,20 @@ NO USER<sub>RELATIONSHIPS</sub>
 </div>
 </div>
 
-<div id="outline-container-orgb204205" class="outline-3">
-<h3 id="orgb204205"><span class="section-number-3">2.2.</span> <span class="todo NEXT">NEXT</span> OIDC flows</h3>
+<div id="outline-container-orgb47283c" class="outline-3">
+<h3 id="orgb47283c"><span class="section-number-3">2.2.</span> <span class="todo NEXT">NEXT</span> OIDC flows</h3>
 <div class="outline-text-3" id="text-2-2">
 <p>
 Most of the "is this valid OIDC?" will come through the <a href="https://openid.net/certification/">OpenID conformance suite</a>. What we need is a thing that can get a JWT signed by the Covered Business's <code>IDp</code>.
 </p>
 </div>
 
-<div id="outline-container-org2300ef1" class="outline-4">
-<h4 id="org2300ef1"><span class="section-number-4">2.2.1.</span> <span class="todo NEXT">NEXT</span> OIDC flow is under-specified, and we need to come up with a roadmap to onboard</h4>
+<div id="outline-container-orgf650b15" class="outline-4">
+<h4 id="orgf650b15"><span class="section-number-4">2.2.1.</span> <span class="todo NEXT">NEXT</span> OIDC flow is under-specified, and we need to come up with a roadmap to onboard</h4>
 </div>
 
-<div id="outline-container-orgf15910c" class="outline-4">
-<h4 id="orgf15910c"><span class="section-number-4">2.2.2.</span> Discovery Endpoint references OIDC AS</h4>
+<div id="outline-container-org46ad9aa" class="outline-4">
+<h4 id="org46ad9aa"><span class="section-number-4">2.2.2.</span> Discovery Endpoint references OIDC AS</h4>
 <div class="outline-text-4" id="text-2-2-2">
 <p>
 &#x2026; auto-discovery of the AS and query it for ID tokens
@@ -320,8 +320,8 @@ Most of the "is this valid OIDC?" will come through the <a href="https://openid.
 </div>
 </div>
 
-<div id="outline-container-orgd1e7a2b" class="outline-4">
-<h4 id="orgd1e7a2b"><span class="section-number-4">2.2.3.</span> OIDC Flow generates a JWT</h4>
+<div id="outline-container-orge31b042" class="outline-4">
+<h4 id="orge31b042"><span class="section-number-4">2.2.3.</span> OIDC Flow generates a JWT</h4>
 <div class="outline-text-4" id="text-2-2-3">
 <p>
 Doing this in the shell is probably infeasible&#x2026; little python client with a chromium embedded in it to do the full OIDC flow?
@@ -334,13 +334,13 @@ it'll be needed for assembling a DRR for OIDC-supporting CBs&#x2026;
 </div>
 </div>
 
-<div id="outline-container-orgda0ddb1" class="outline-3">
-<h3 id="orgda0ddb1"><span class="section-number-3">2.3.</span> Data Rights Requests</h3>
+<div id="outline-container-org830fcff" class="outline-3">
+<h3 id="org830fcff"><span class="section-number-3">2.3.</span> Data Rights Requests</h3>
 <div class="outline-text-3" id="text-2-3">
 </div>
 
-<div id="outline-container-orgb637dc3" class="outline-4">
-<h4 id="orgb637dc3"><span class="section-number-4">2.3.1.</span> Submitting Data Rights Requests using the <a href="conformance-tools.html">Tools for the DRP Conformance Test Suite</a></h4>
+<div id="outline-container-orga340746" class="outline-4">
+<h4 id="orga340746"><span class="section-number-4">2.3.1.</span> Submitting Data Rights Requests using the <a href="conformance-tools.html">Tools for the DRP Conformance Test Suite</a></h4>
 <div class="outline-text-4" id="text-2-3-1">
 <ul class="org-ul">
 <li>Requests are generated with the <code>genreqs</code> tool and optionally with <code>genjwts</code> to modify the bundled JWT.</li>
@@ -353,12 +353,12 @@ Most of the sections below consist of a <b>Recipe</b> and a table of <b>Behavior
 </p>
 
 <p>
-The results should be recorded in your tracking tables.
+Record results of the recipes in the tracking sheet
 </p>
 </div>
 
-<div id="outline-container-org243b88b" class="outline-5">
-<h5 id="org243b88b"><span class="section-number-5">2.3.1.1.</span> Test Cases</h5>
+<div id="outline-container-org9307695" class="outline-5">
+<h5 id="org9307695"><span class="section-number-5">2.3.1.1.</span> Test Cases</h5>
 <div class="outline-text-5" id="text-2-3-1-1">
 <p>
 These commands generate Data Rights Requests suitable to be fed in to the swagger tool to run through the Test Matrix to validate API behaviors. The <a href="conformance-tools.html">test tools' documentation</a> describe how these commands' invocations can be modified to change factors of the JWTs and Request objects to suit your needs.
@@ -366,7 +366,7 @@ These commands generate Data Rights Requests suitable to be fed in to the swagge
 </div>
 
 <ol class="org-ol">
-<li><a id="orgc14c938"></a>TC1: <code>reqs/donotsell.json</code> The PIP can accept a simple do not sell request<br />
+<li><a id="org48eb3db"></a>TC1: <code>reqs/donotsell.json</code> The PIP can accept a simple do not sell request<br />
 <div class="outline-text-6" id="text-2-3-1-1-1">
 <p>
 <a href="reqs/donotsell.json">This</a> is a simple CCPA Do Not Sell request with a dummy, "unverified" identity <a href="jwts/simple.json">token</a>. These types of requests are generally considered to have lower identity verification requirements [XXX].
@@ -379,7 +379,7 @@ These commands generate Data Rights Requests suitable to be fed in to the swagge
 </div>
 </li>
 
-<li><a id="org2824605"></a>TC2: <code>jwts/verified.json</code> The PIP can accept "verified" credentials<br />
+<li><a id="org307551d"></a>TC2: <code>jwts/verified.json</code> The PIP can accept "verified" credentials<br />
 <div class="outline-text-6" id="text-2-3-1-1-2">
 <p>
 This test case validates that the PIP can accept a JWT token which has claims "marked" as verified. (See Appendix 2 for discussion)
@@ -392,7 +392,7 @@ This test case validates that the PIP can accept a JWT token which has claims "m
 </div>
 </li>
 
-<li><a id="org7b71f1b"></a>TC3: <code>reqs/deletion.json</code> The PIP can accept deletion requests<br />
+<li><a id="org37a0e4b"></a>TC3: <code>reqs/deletion.json</code> The PIP can accept deletion requests<br />
 <div class="outline-text-6" id="text-2-3-1-1-3">
 <p>
 This will send a CCPA Deletion request with verified credentials attached.
@@ -405,7 +405,7 @@ This will send a CCPA Deletion request with verified credentials attached.
 </div>
 </li>
 
-<li><a id="org9ef6ef7"></a>TC4: <code>reqs/access.json</code> broad access request without any specific scope<br />
+<li><a id="org3666475"></a>TC4: <code>reqs/access.json</code> broad access request without any specific scope<br />
 <div class="outline-text-6" id="text-2-3-1-1-4">
 <div class="org-src-container">
 <pre class="src src-shell">genjwts -t jwts/verified.json | genreqs -t reqs/access.json
@@ -417,16 +417,16 @@ This will send a CCPA Deletion request with verified credentials attached.
 </div>
 </div>
 
-<div id="outline-container-orgb66b317" class="outline-4">
-<h4 id="orgb66b317"><span class="section-number-4">2.3.2.</span> Testing Valid Request flows</h4>
+<div id="outline-container-org72a0161" class="outline-4">
+<h4 id="org72a0161"><span class="section-number-4">2.3.2.</span> Testing Valid Request flows</h4>
 <div class="outline-text-4" id="text-2-3-2">
 <p>
 These requests should all complete in an affirmative end-state to validate the most basic behavior of the PIP.
 </p>
 </div>
 
-<div id="outline-container-org9e96e15" class="outline-5">
-<h5 id="org9e96e15"><span class="section-number-5">2.3.2.1.</span> Recipe</h5>
+<div id="outline-container-orgd075313" class="outline-5">
+<h5 id="orgd075313"><span class="section-number-5">2.3.2.1.</span> Recipe</h5>
 <div class="outline-text-5" id="text-2-3-2-1">
 <p>
 For each <b>Behavior</b> above:
@@ -447,8 +447,8 @@ For each <b>Behavior</b> above:
 </div>
 </div>
 
-<div id="outline-container-org48adfb8" class="outline-5">
-<h5 id="org48adfb8"><span class="section-number-5">2.3.2.2.</span> Behaviors</h5>
+<div id="outline-container-orgbc403ab" class="outline-5">
+<h5 id="orgbc403ab"><span class="section-number-5">2.3.2.2.</span> Behaviors</h5>
 <div class="outline-text-5" id="text-2-3-2-2">
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -509,36 +509,36 @@ For each <b>Behavior</b> above:
 </div>
 </div>
 
-<div id="outline-container-orgc3b9620" class="outline-4">
-<h4 id="orgc3b9620"><span class="section-number-4">2.3.3.</span> <span class="todo NEXT">NEXT</span> Agent Revocation</h4>
+<div id="outline-container-org0ff0cde" class="outline-4">
+<h4 id="org0ff0cde"><span class="section-number-4">2.3.3.</span> <span class="todo NEXT">NEXT</span> Agent Revocation</h4>
 <div class="outline-text-4" id="text-2-3-3">
 <p>
 test cases:
 </p>
 <ul class="org-ul">
 <li>revoke immediately</li>
-<li>revoke in need<sub>user</sub><sub>verification</sub> stage</li>
+<li>revoke in <code>need_user_verification</code> stage</li>
 <li>revoke while being processed <code>in_progress</code> by CB backend</li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org6c2b212" class="outline-4">
-<h4 id="org6c2b212"><span class="section-number-4">2.3.4.</span> <span class="todo NEXT">NEXT</span> Status Callback validation</h4>
+<div id="outline-container-org0dba5fb" class="outline-4">
+<h4 id="org0dba5fb"><span class="section-number-4">2.3.4.</span> <span class="todo NEXT">NEXT</span> Status Callback validation</h4>
 </div>
-<div id="outline-container-orgb39830e" class="outline-4">
-<h4 id="orgb39830e"><span class="section-number-4">2.3.5.</span> <span class="todo NEXT">NEXT</span> Access Requests</h4>
+<div id="outline-container-orgf60e9b2" class="outline-4">
+<h4 id="orgf60e9b2"><span class="section-number-4">2.3.5.</span> <span class="todo NEXT">NEXT</span> Access Requests</h4>
 </div>
-<div id="outline-container-orga70e6c8" class="outline-4">
-<h4 id="orga70e6c8"><span class="section-number-4">2.3.6.</span> <span class="todo INPROGRESS">INPROGRESS</span> Test for all Final States</h4>
+<div id="outline-container-orga4708ca" class="outline-4">
+<h4 id="orga4708ca"><span class="section-number-4">2.3.6.</span> <span class="todo INPROGRESS">INPROGRESS</span> Test for all Final States</h4>
 <div class="outline-text-4" id="text-2-3-6">
 </div>
 
-<div id="outline-container-org80ce673" class="outline-5">
-<h5 id="org80ce673"><span class="section-number-5">2.3.6.1.</span> Recipe</h5>
+<div id="outline-container-org7baa2c5" class="outline-5">
+<h5 id="org7baa2c5"><span class="section-number-5">2.3.6.1.</span> Recipe</h5>
 </div>
-<div id="outline-container-orgcd19a6c" class="outline-5">
-<h5 id="orgcd19a6c"><span class="section-number-5">2.3.6.2.</span> Behaviors</h5>
+<div id="outline-container-org3b1d5af" class="outline-5">
+<h5 id="org3b1d5af"><span class="section-number-5">2.3.6.2.</span> Behaviors</h5>
 <div class="outline-text-5" id="text-2-3-6-2">
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -587,8 +587,8 @@ test cases:
 </div>
 </div>
 
-<div id="outline-container-org1fca8c2" class="outline-4">
-<h4 id="org1fca8c2"><span class="section-number-4">2.3.7.</span> <span class="todo NEXT">NEXT</span> Need User Verification testing</h4>
+<div id="outline-container-orgc717c53" class="outline-4">
+<h4 id="orgc717c53"><span class="section-number-4">2.3.7.</span> <span class="todo NEXT">NEXT</span> Need User Verification testing</h4>
 <div class="outline-text-4" id="text-2-3-7">
 <p>
 ughghghghgh
@@ -615,12 +615,12 @@ The redirect URL is another thing for the little Heroku app? it's a "nice to hav
 </div>
 </div>
 
-<div id="outline-container-org2ed4b3b" class="outline-2">
-<h2 id="org2ed4b3b"><span class="section-number-2">3.</span> Appendices</h2>
+<div id="outline-container-org0d5b8dd" class="outline-2">
+<h2 id="org0d5b8dd"><span class="section-number-2">3.</span> Appendices</h2>
 <div class="outline-text-2" id="text-3">
 </div>
-<div id="outline-container-org596e93d" class="outline-3">
-<h3 id="org596e93d"><span class="section-number-3">3.1.</span> 1: But what is this org-mode document, why is this not a Markdown or HTML file?</h3>
+<div id="outline-container-org570e290" class="outline-3">
+<h3 id="org570e290"><span class="section-number-3">3.1.</span> 1: But what is this org-mode document, why is this not a Markdown or HTML file?</h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
 The author of these documents thinks and develops software using a set of tools called <a href="https://www.gnu.org/software/emacs/">Emacs</a> <a href="https://orgmode.org">Org Mode</a>. It's an outlining and project planning tool with everything and the kitchen sink thrown in. When fully embraced, Emacs is a text and data editor which can be customized and automated to an incredible degree, and org-mode contains features and widely-used extensions which provide a similar level of meta-programming ability to documentation itself. It's also a quite convenient markup format to express things with more metadata and semantic structure than Markdown is capable of providing.
@@ -635,7 +635,7 @@ These documents use features that are basically built in, and an installation of
 </p>
 
 <div class="org-src-container">
-<pre class="src src-shell">emacs -l ob-shell pip-conformance-tests.org --eval <span style="color: #4f894c;">'(display-buffer (get-buffer-create "*drp-conformance*"))'</span>
+<pre class="src src-shell">emacs -l ob-shell pip-conformance-tests.org --eval <span style="color: #c5ac6b;">'(display-buffer (get-buffer-create "*drp-conformance*"))'</span>
 </pre>
 </div>
 
@@ -653,8 +653,8 @@ There are publishing instructions in the <a href="conformance-tools.html#2022032
 </div>
 </div>
 
-<div id="outline-container-org722f34d" class="outline-3">
-<h3 id="org722f34d"><span class="section-number-3">3.2.</span> 2: But what is "verified" what is meant by "marked"?</h3>
+<div id="outline-container-org5ac00a5" class="outline-3">
+<h3 id="org5ac00a5"><span class="section-number-3">3.2.</span> 2: But what is "verified" what is meant by "marked"?</h3>
 <div class="outline-text-3" id="text-3-2">
 <p>
 The claims in the identity tokens are basically based on <a href="https://schema.org/Person">schema.org/Person</a> attributes, but specified in <b>OIDC Core 1.0</b>, <a href="https://openid.net/specs/openid-connect-core-1_0.html#rfc.section.5.1">Section 5.1</a> (Standard Claims). Consider <code>phone_number</code> and <code>phone_number_verified</code>:
@@ -675,7 +675,7 @@ And thus spoke, the question is our "what is our trust framework or contractual 
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Consumer Reports Digital Lab</p>
-<p class="date">Created: 2022-03-21 Mon 11:12</p>
+<p class="date">Created: 2022-04-14 Thu 11:18</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
