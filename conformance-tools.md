@@ -2,7 +2,7 @@
 
 ## Introduction and Setup
 
-These are simple utilities and test fixtures used to drive the [[id:20211116T134053.585822][DRP Conformance Test Suite]].
+These are simple utilities and test fixtures used to drive the Conformance Test Suite.
 
 They're all as simple as can be and written against Python 3.9. Please use a modern Python, the tools here make heavy use of modern Python features like type hinting to provide somewhat "magical" serialization and deserialization of Data Rights Requests.
 
