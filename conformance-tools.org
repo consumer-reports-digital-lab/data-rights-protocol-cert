@@ -5,6 +5,7 @@
 #+TITLE: Tools for the DRP Conformance Test Suite
 #+filetags: :Project:
 #+PROPERTY: header-args:shell :session *drp-conformance* :results drawer
+#+ARCOLOGY_KEY: doc/drp/cert/tools
 
 * Introduction and Setup
 

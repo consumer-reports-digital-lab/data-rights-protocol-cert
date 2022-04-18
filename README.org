@@ -3,6 +3,7 @@
 :ROAM_REFS: https://github.com/consumer-reports-digital-lab/data-rights-protocol-cert
 :END:
 #+TITLE: DRP Certification Test Suite and implementation tools
+#+ARCOLOGY_KEY: doc/drp/cert
 
 This repository contains the test suite and a number of simple automation tools which drive the test suite.
 
