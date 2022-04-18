@@ -25,7 +25,7 @@ The developer of this suite uses a specialized Linux distribution called NixOS. 
 
 [tools/genjwts.py](src/datarightsprotocol/tools/genjwts.py) is a script to generate JWTs signed by a bundled certificate as if it came from a test Authorized Agent.
 
-This will only generate them but not decode or verify existing JWTs. Use [[https://jwt.io][the JWT Debugger]] instead.
+This will only generate them but not decode or verify existing JWTs. Use [the JWT Debugger](https://jwt.io) instead.
 
 ```
 $ genjwts --help
