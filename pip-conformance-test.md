@@ -7,7 +7,7 @@ This document describes a system for testing the implementation of a Privacy Inf
 - This assumes a UNIX-like environment. Developed on linux, mostly assumed to be compatible with macOS and [WSL2](https://docs.microsoft.com/en-us/windows/wsl/about), I will work with folks to debug issues.
 - This assumes you've cloned the [data-rights-protocol](https://github.com/consumer-reports-digital-lab/data-rights-protocol/) specification repository and ran `git submodule init` inside of it.
 - This assumes you're working in a terminal which has been `cd cert`'d from inside of the specification git checkout.
-- Follow the Introduction and Setup of the [Tools for the DRP Conformance Test Suite](conformance-tools.md) document and ensure you can enter a =poetry shell=.
+- Follow the Introduction and Setup of the [Tools for the DRP Conformance Test Suite](conformance-tools.md) document and ensure you can enter a `poetry shell`.
 - Open *three terminals*, make sure they're all inside of `poetry shell`.
   - inside the first run `swagger` to start the Swagger API viewer on http://localhost:8001/swagger .
   - inside the second run `statusserver` to start the testing Authorized Agent's Status Callback Server on http://localhost:8000
@@ -18,7 +18,7 @@ This document describes a system for testing the implementation of a Privacy Inf
 
 This thing uses bash, curl, jq, and a bit of python to run conformance validations.
 
-Remember to be in a =poetry shell=, remember to run =poetry install=
+Remember to be in a `poetry shell`, remember to run =poetry install=
 
 ```
 poetry install
@@ -216,7 +216,6 @@ test cases:
 | Valid-but-garbage token should end in `no_match`                         | TC1 TC3 TC4 |                  |
 | ...                                                                      |             |                  |
 
-
 #### Need User Verification testing
 
 ughghghghgh
@@ -238,4 +237,4 @@ The claims in the identity tokens are basically based on [schema.org/Person](htt
 
 > True if the End-User's phone number has been verified; otherwise false. When this Claim Value is true, this means that the OP took affirmative steps to ensure that this phone number was controlled by the End-User at the time the verification was performed. The means by which a phone number is verified is context-specific, and dependent upon the trust framework or contractual agreements within which the parties are operating. When true, the phone<sub>number</sub> Claim MUST be in E.164 format and any extensions MUST be represented in RFC 3966 format.
 
-And thus spoke, the question is our "what is our trust framework or contractual agreements?". This is work for the [governance documentation](../governance.md) to cover.
+And thus spoke, the question is our "what is our trust framework or contractual agreements?". This is work for the [System Rules]() to cover.
