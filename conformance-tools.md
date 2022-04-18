@@ -19,7 +19,7 @@ You will also need to install [JQ](https://stedolan.github.io/jq/) and [curl](ht
 
 #### Nix Dev Shell
 
-The developer of this suite uses a specialized Linux distribution called NixOS. Folks who use it or the [Nix Packaging Manager](https://nixos.org/) it's built on can use the `shell.nix` provided to create a hermetic environment for the toolkit which can be instantiated via [Nix Shell](https://nixos.wiki/wiki/Development_environment_with_nix-shell) command `nix-shell`.
+The developer of this suite uses a specialized Linux distribution called NixOS. Folks who use it or the [Nix Packaging Manager](https://nixos.org/) it's built on can use the `shell.nix` provided to create a hermetic environment for the toolkit which can be instantiated via [Nix Shell](https://nixos.wiki/wiki/Development_environment_with_nix-shell) command `nix-shell`. If you don't know what Nix is you don't need to know what Nix is. 😄
 
 ## `genjwts`: JWT Generation script
 
